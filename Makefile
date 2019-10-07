@@ -22,7 +22,7 @@ HEADER = include
 
 #------------------------------------FILE--------------------------------------#
 
-FILES = src/
+FILES = src/parser
 #----------------------------------COLOR---------------------------------------#
 
 GREY='\x1b[30m'
@@ -92,6 +92,8 @@ $(NAME): $(OBJ)
 	@printf $(RED)"|_/ \n"
 	@printf $(W)"          \_/__\_/                                            \_/__\_/ \n"
 	@make -C libft/
+	@$(CC) $(FLAGS) $(SRC) -L. libft/libftprintf.a -o $(NAME)
+
 
 object/%.o: src/%.c
 	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<

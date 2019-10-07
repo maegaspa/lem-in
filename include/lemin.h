@@ -16,9 +16,27 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <sys/types.h>
-# include <sys/stat.h>
 # include <fcntl.h>
 # include "../libft/includes/ft_printf.h"
+
+typedef struct slist
+{
+	char *valeur;
+	int		compt;
+	struct slist *suiv;
+}				slist ;
+
+typedef struct slist1
+{
+	char *link;
+	int		compt;
+	struct slist1 *suiv;
+}				slist1;
+
+typedef struct s_info
+{
+	int start;
+	int end;
+} 				t_info;
 
 #endif
