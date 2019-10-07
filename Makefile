@@ -6,7 +6,7 @@
 #    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/07 12:42:40 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2019/10/07 13:37:39 by cgarrot     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -17,7 +17,7 @@ NAME = lemin
 CC = gcc
 DEBUG = -g -fsanitize=address
 FLAGS = -Wall -Wextra -Werror
-INC = /includes/
+INC = include/lemin.h
 HEADER = include
 
 #------------------------------------FILE--------------------------------------#
