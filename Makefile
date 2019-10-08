@@ -6,7 +6,7 @@
 #    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/07 13:37:39 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2019/10/08 13:36:56 by cgarrot     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -57,7 +57,7 @@ $(NAME): $(OBJ)
 	@printf $(YELLOW)"("
 	@printf $(RED)"|___________\_________________|  |----------===============\          "
 	@printf $(W)"(@)\n"
-	@printf $(RED)"    /                  |           (=)       |           (=)|            "
+	@printf $(RED)"    /                  |                 (=) |           (=)|            "
 	@printf $(YELLOW)"/\ "
 	@printf $(RED)"       "
 	@printf $(W)"(@) (@)\n"
@@ -71,7 +71,7 @@ $(NAME): $(OBJ)
 	@printf $(YELLOW)"<>"
 	@printf $(RED)"      ________    |       "
 	@printf $(PURPLE)"lem-in"
-	@printf $(RED)"     |                |________      \     "
+	@printf $(RED)"        |                |________      \     "
 	@printf $(W)"(@)\n"
 	@printf $(RED)" |      /  "
 	@printf $(W)"______"
