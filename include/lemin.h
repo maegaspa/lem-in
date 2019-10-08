@@ -19,24 +19,58 @@
 # include <fcntl.h>
 # include "../libft/includes/ft_printf.h"
 
-typedef struct slist
+typedef struct s_name
 {
-	char *valeur;
-	int		compt;
-	struct slist *suiv;
-}				slist ;
+	char 	*name;
+	int		index;
+	struct s_name *next;
+}				t_name;
 
-typedef struct slist1
+typedef struct s_link
 {
-	char *link;
-	int		compt;
-	struct slist1 *suiv;
-}				slist1;
+	char 	*link;
+	int		index;
+	struct s_link *next;
+}				t_link;
 
 typedef struct s_info
 {
+	int	nb_fourmie;
 	int start;
 	int end;
+	int	size_name;
+	int	size_link;
 } 				t_info;
+
+typedef struct s_cpt
+{
+	int 	yes;
+	int		i;
+	int		j;
+	unsigned int	len;
+	unsigned int	k;
+} 				t_cpt;
+
+typedef struct s_map
+{
+	char	**map_name;
+	char	**map_link;
+	int		**matrix;
+	t_info	inf;
+	t_cpt	cpt;
+}				t_map;
+
+unsigned int	count_word(const char *s, char c);
+void	print_info_map(t_name **name, t_link **link, t_map *map);
+void	print_tab(char **tab);
+void	free_map(char	**map);
+int		insert_link(t_link **link, char *val, int i);
+int		insert_name(t_name **name, char *val, int i);
+void	clear(t_name **name, t_link **link);
+int		list_len(t_name *name, t_link *link, int chose);
+void	print_list(t_name *name, t_link *link);
+void	init_value(t_map *map);
+int		parser(t_name **name, t_link **link, t_map *map);
+int   set_map(t_name **name, t_link **link, t_map *map);
 
 #endif

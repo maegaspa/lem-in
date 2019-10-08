@@ -6,190 +6,123 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 12:57:54 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/07 12:58:07 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/08 18:02:07 by cgarrot     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-
 #include "../include/lemin.h"
 #include <stdio.h>
 
-void insert_link(slist1 **sl, char *Val, int i)
+void	init_value(t_map *map)
 {
-       	slist1 *tmp = NULL;
-        slist1 *csl = *sl;
-        slist1 *elem1 = malloc(sizeof(slist1));
-        if(!elem1) exit(EXIT_FAILURE);
-        elem1->link = Val;
-        elem1->compt = i;
-        while(csl && csl->link < Val && csl->compt < i)
-        {
-            tmp = csl;
-            csl = csl->suiv;
-        }
-        elem1->suiv = csl;
-        if(tmp) tmp->suiv = elem1;
-        else *sl = elem1;
+	map->inf.nb_fourmie = -1;
+	map->cpt.yes = 0;
+	map->cpt.i = 0;
+	map->cpt.j = 0;
+	map->inf.start = 0;
+	map->inf.end = 0;
 }
 
-void insert_name(slist **sl, char *Val, int i)
-{
-        slist *tmp = NULL;
-        slist *csl = *sl;
-        slist *elem = malloc(sizeof(slist));
-        if(!elem) exit(EXIT_FAILURE);
-        elem->valeur = Val;
-        elem->compt = i;
-        while(csl && csl->valeur < Val && csl->compt < i)
-        {
-            tmp = csl;
-            csl = csl->suiv;
-        }
-        elem->suiv = csl;
-        if(tmp) tmp->suiv = elem;
-        else *sl = elem;
-}
-
-void Clear(slist **sl, slist1 **sl1)
-{
-        slist *tmp;
-        while(*sl)
-          {
-             tmp = (*sl)->suiv;
-             free(*sl);
-             *sl = tmp;
-          }
-    slist1 *tmp1;
-        while(*sl1)
-          {
-             tmp1 = (*sl1)->suiv;
-             free(*sl1);
-             *sl1 = tmp1;
-          }
-}
-
-int Length(slist *sl, slist1 *sl1, int i)
-{
-        int n = 0;
-   if (i == 0 || i == 2)
-   {
-        while(sl)
-          {
-              n++;
-              sl = sl->suiv;
-          }
-   }
-   if (i == 1)
-   	n = 0;
-    if (i == 1 || i == 2)
-    {
-         while(sl1)
-          {
-              n++;
-              sl1 = sl1->suiv;
-          }
-      }
-        return n;
-}
-
-void View(slist *sl, slist1 *sl1)
-{
-       while(sl)
-          {
-             printf("%d : [%s]\n", sl->compt, sl->valeur);
-             sl = sl->suiv;
-          }
-       while(sl1)
-          {
-            printf("%d : [%s]\n", sl1->compt, sl1->link);
-            sl1 = sl1->suiv;
-          }
-}
-
-unsigned int	count_word(const char *s, char c)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (*s)
-	{
-		while (*s == c)
-			s++;
-		if (*s != '\0')
-			i++;
-		while (*s && *s != c)
-			s++;
-	}
-	return (i);
-}
-
-int	parser(slist **list, slist1 **list1, t_info *inf)
+int		parser(t_name **name, t_link **link, t_map *map)
 {
 	char	*line;
-	int		info;
-	int		nb_fourmie;
-	int 	i;
 	char	**split;
 
-	line = NULL;
-	nb_fourmie = -1;
-	info = 0;
-	i = 1;
 	while (get_next_line(0, &line))
 	{
-		if (line[0] != '#' && line[0] != 'L' && !info)
+		if (line[0] != '#' && line[0] != 'L' && !map->cpt.yes)
 		{
 			if (count_word(line, ' ') && !(ft_strchr(line, '-')))
 			{
-				nb_fourmie = ft_atoi(line);
-				info++;
+				map->inf.nb_fourmie = ft_atoi(line);
+				map->cpt.yes = 1;
 			}
 		}
-		//printf("[%s]\n", line);
 		if (ft_strstr(line, "##start"))
-			inf->start = i;
+			map->inf.start = map->cpt.i;
 		if (ft_strstr(line, "##end"))
-			inf->end = i;
-		if (line[0] != '#' && line[0] != 'L' && info > 1 && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
+			map->inf.end = map->cpt.i;
+		if (line[0] != '#' && line[0] != 'L' && map->cpt.yes > 1 && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
 		{
-			//printf("1 [%s]\n", line);
 			split = ft_strsplit(line, ' ');
-			insert_name(list, split[0], i);
-			i++;
+			insert_name(name, split[0], map->cpt.i);
+			map->cpt.i++;
 		}
-		if (line[0] != '#' && line[0] != 'L' && count_word(line, '-') == 2 && ft_strchr(line, '-'))
+		if (line[0] != '#' && line[0] != 'L' && count_word(line, ' ') == 1 && count_word(line, '-') == 2 && ft_strchr(line, '-'))
 		{
-			//printf("2 [%s]\n", line);
 			split = ft_strsplit(line, ' ');
-			insert_link(list1, split[0], i);
-			i++;
+			insert_link(link, split[0], map->cpt.j);
+			map->cpt.j++;
 		}
-		info++;
+		if (map->cpt.yes == 1)
+			map->cpt.yes++;
 		ft_strdel(&line);
 	}
-	printf("FOURMIE : [%d]\n", nb_fourmie);
-	printf("Nb d'elements 1 list : [%d]\n", Length(*list, *list1, 0));
-	printf("Nb d'elements 2 list : [%d]\n", Length(*list, *list1, 1));
-	printf("Nb d'elements totals : [%d]\n", Length(*list, *list1, 2));
-    View(*list, *list1);
-    printf("------------------\n");
-    printf("Start : [%d] | End : [%d]\n", inf->start, inf->end);
+	map->inf.size_name = list_len(*name, *link, 0);
+	map->inf.size_link = list_len(*name, *link, 1);
+	print_info_map(name, link, map);
+	return (0);
+}
+
+/*int   set_matrix(t_name **list, t_link **link, t_info *info)
+  {
+  if (!(info->matrix = malloc(sizeof(info->size_name))))
+  return (0);
+  }*/
+
+int   set_map(t_name **name, t_link **link, t_map *map)
+{
+	t_name *tmp_name;
+	t_link *tmp_link;
+
+	map->cpt.i = 0;
+	tmp_name = *name;
+	tmp_link = *link;
+	if (!(map->map_name = malloc(sizeof(char*) * map->inf.size_name + 1)))
+		return (0);
+	while (tmp_name)
+	{
+		map->cpt.k = 0;
+		map->cpt.len = ft_strlen(tmp_name->name);
+		if (!(map->map_name[map->cpt.i] = malloc(sizeof(char) * map->cpt.len + 1)))
+			return (0);
+		map->map_name[map->cpt.i] = ft_strcpy(map->map_name[map->cpt.i], tmp_name->name);
+		map->cpt.i++;
+		tmp_name = tmp_name->next;
+	}
+	map->map_name[map->cpt.i] = 0;
+	//print_tab(map->map_name);
+	map->cpt.i = 0;
+	if (!(map->map_link = malloc(sizeof(char*) * map->inf.size_link + 1)))
+		return (0);
+	while (tmp_link)
+	{
+		map->cpt.k = 0;
+		map->cpt.len = ft_strlen(tmp_link->link);
+		if (!(map->map_link[map->cpt.i] = malloc(sizeof(char) * map->cpt.len + 1)))
+			return (0);
+		map->map_link[map->cpt.i] = ft_strcpy(map->map_link[map->cpt.i], tmp_link->link);
+		map->cpt.i++;
+		tmp_link = tmp_link->next;
+	}
+	map->map_link[map->cpt.i] = 0;
+	//print_tab(map->map_link);
 	return (0);
 }
 
 int	main(void)
 {
-	slist *list;
-	slist1 *list1;
-	t_info info;
+	t_name	*name;
+	t_link	*link;
+	t_map	map;
 
-	list = NULL;
-	list1 = NULL;
-	info.start = 0;
-	info.end = 0;
-
-	parser(&list, &list1, &info);
-	Clear(&list, &list1);
+	name = NULL;
+	link = NULL;
+	init_value(&map);
+	parser(&name, &link, &map);
+	set_map(&name, &link, &map);
+	//set_matrix(&name, &link, &info);
+	clear(&name, &link);
 	return (0);
 }
