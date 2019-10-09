@@ -1,31 +1,17 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-int		insert_link(t_link **link, char *val, int i)
+t_link		*insert_link(char *val, int i)
 {
-	t_link *tmp;
-	t_link *cpy_link;
 	t_link *elem;
 
-	tmp = NULL;
-	cpy_link = *link;
-	if (!(elem = malloc(sizeof(t_link))))
-		return (0);
-	if (!elem)
-		return (0);
-	elem->link = val;
+	if (!(elem = malloc(sizeof(t_link *))))
+		return (NULL);
+	if (!(elem->link = ft_strdup(val)))
+		return (NULL);
 	elem->index = i;
-	while(cpy_link && cpy_link->link < val && cpy_link->index < i)
-	{
-		tmp = cpy_link;
-		cpy_link = cpy_link->next;
-	}
-	elem->next = cpy_link;
-	if (tmp)
-		tmp->next = elem;
-	else
-		*link = elem;
-	return (0);
+	elem->next = NULL;
+	return (elem);
 }
 
 int		insert_name(t_name **name, char *val, int i)
@@ -38,9 +24,8 @@ int		insert_name(t_name **name, char *val, int i)
 	cpy_name = *name;
 	if (!(elem = malloc(sizeof(t_link))))
 		return (0);
-	if (!elem)
+	if (!(elem->name = ft_strdup(val)))
 		return (0);
-	elem->name = val;
 	elem->index = i;
 	while(cpy_name && cpy_name->name < val && cpy_name->index < i)
 	{

@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 12:57:54 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/08 18:02:07 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/09 13:47:33 by cgarrot     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,17 +43,21 @@ int		parser(t_name **name, t_link **link, t_map *map)
 			map->inf.start = map->cpt.i;
 		if (ft_strstr(line, "##end"))
 			map->inf.end = map->cpt.i;
-		if (line[0] != '#' && line[0] != 'L' && map->cpt.yes > 1 && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
+		/*if (line[0] != '#' && line[0] != 'L' && map->cpt.yes > 1 && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
 		{
 			split = ft_strsplit(line, ' ');
 			insert_name(name, split[0], map->cpt.i);
 			map->cpt.i++;
-		}
+		}*/
 		if (line[0] != '#' && line[0] != 'L' && count_word(line, ' ') == 1 && count_word(line, '-') == 2 && ft_strchr(line, '-'))
 		{
 			split = ft_strsplit(line, ' ');
-			insert_link(link, split[0], map->cpt.j);
+			if (map->cpt.yes == 3)
+				(*link)->link = ft_strdup(split[0]);
+			(*link)->next = NULL;//insert_link(split[0], map->cpt.j);
+			*link = (*link)->next;
 			map->cpt.j++;
+			map->cpt.yes = 3;
 		}
 		if (map->cpt.yes == 1)
 			map->cpt.yes++;
@@ -111,6 +115,19 @@ int   set_map(t_name **name, t_link **link, t_map *map)
 	return (0);
 }
 
+int 		init_list(t_name **name, t_link **link)
+{
+	if (!(name = malloc(sizeof(t_name*))))
+		return (0);
+	//(*name)->next = NULL;
+	//(*name)->index = 0;
+	if (!(link = malloc(sizeof(t_link*))))
+		return (0);
+	//(*link)->next = NULL;
+	//(*link)->index = 0;
+	return (0);
+}
+
 int	main(void)
 {
 	t_name	*name;
@@ -119,6 +136,7 @@ int	main(void)
 
 	name = NULL;
 	link = NULL;
+	init_list(&name, &link);
 	init_value(&map);
 	parser(&name, &link, &map);
 	set_map(&name, &link, &map);

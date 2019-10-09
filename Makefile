@@ -16,7 +16,7 @@
 NAME = lemin
 CC = gcc
 DEBUG = -g -fsanitize=address
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 INC = include/lemin.h
 HEADER = include
 
@@ -98,7 +98,7 @@ $(NAME): $(OBJ)
 	@$(CC) $(FLAGS) $(SRC) -L. libft/libftprintf.a -o $(NAME)
 
 
-object/%.o: src/%.c
+object/%.o: src/%.c $(INC)
 	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
 
 clean:
