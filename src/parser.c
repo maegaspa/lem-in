@@ -22,19 +22,17 @@ void	init_value(t_map *map)
 	map->cpt.j = 0;
 	map->inf.start = 0;
 	map->inf.end = 0;
+	map->cpt.start_name = 1;
+	map->cpt.start_link = 1;
 }
 
 int		parser(t_name **name, t_link **link, t_map *map)
 {
 	char	*line;
 	char	**split;
-	int		start_name;
-	int		start_link;
 	t_link 	*tmp_link;
 	t_name 	*tmp_name;
 
-	start_name = 1;
-	start_link = 1;
 	while (get_next_line(0, &line))
 	{
 		if (line[0] != '#' && line[0] != 'L' && !map->cpt.yes)
@@ -49,34 +47,36 @@ int		parser(t_name **name, t_link **link, t_map *map)
 			map->inf.start = map->cpt.i;
 		if (ft_strstr(line, "##end"))
 			map->inf.end = map->cpt.i;
-		if (line[0] != '#' && line[0] != 'L' && map->cpt.yes > 1 && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
+		if (map->cpt.j == 0 && line[0] != '#' && line[0] != 'L' && map->cpt.yes > 1 && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
 		{
 			split = ft_strsplit(line, ' ');
-			if (start_name)
+			if (map->cpt.start_name)
 			{
-				if (!(*name = insert_name(split[0], 0)))
+				if (!(*name = insert_name(split, 0)))
 					return (0);
-				start_name = 0;
+				map->cpt.start_name = 0;
 				tmp_name = *name;
 				//printf("[%s]\n", (*name)->name);
 			}
 			else
 			{
 				//printf("[%s]\n", (*name)->name);
-				if (!(tmp_name->next = insert_name(split[0], map->cpt.i)))
+				if (!(tmp_name->next = insert_name(split, map->cpt.i)))
 					return (0);
 				tmp_name = tmp_name->next;
 			}
 			map->cpt.i++;
 		}
+		if (map->cpt.j != 0 && line[0] != '#' && line[0] != 'L' && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
+			return (-1);
 		if (line[0] != '#' && line[0] != 'L' && count_word(line, ' ') == 1 && count_word(line, '-') == 2 && ft_strchr(line, '-'))
 		{
 			split = ft_strsplit(line, ' ');
-			if (start_link)
+			if (map->cpt.start_link)
 			{
 				if (!(*link = insert_link(split[0], 0)))
 					return (0);
-				start_link = 0;
+				map->cpt.start_link = 0;
 				tmp_link = *link;
 				//printf("[%s]\n", (*link)->link);
 			}
@@ -99,19 +99,31 @@ int		parser(t_name **name, t_link **link, t_map *map)
 	return (0);
 }
 
-/*int   set_matrix(t_name **list, t_link **link, t_info *info)
-  {
-  if (!(info->matrix = malloc(sizeof(info->size_name))))
-  return (0);
-  }*/
+void 	print_tab_int(int **tab, int y, int x)
+{
+	int i = 0;
+	int j = 0;
+
+	while (i < y)
+	{
+		j = 0;
+		while (j < x)
+		{
+			printf("%d ", tab[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
 
 int   set_map(t_name **name, t_link **link, t_map *map)
 {
 	t_name *tmp_name;
 	t_link *tmp_link;
-
 	int 	i;
-	i = 0; 
+
+	i = 0;
 	if (!(map->matrix = malloc(sizeof(int*) * map->inf.size_name)))
 		return (0);
 	while (i < map->inf.size_name)
@@ -126,12 +138,18 @@ int   set_map(t_name **name, t_link **link, t_map *map)
 	tmp_link = *link;
 	if (!(map->map_name = malloc(sizeof(char*) * map->inf.size_name + 1)))
 		return (0);
+	if (!(map->map_co = malloc(sizeof(int*) * map->inf.size_name)))
+		return (0);
 	while (tmp_name)
 	{
 		map->cpt.k = 0;
 		map->cpt.len = ft_strlen(tmp_name->name);
 		/*if (!(map->map_name[map->cpt.i] = malloc(sizeof(char) * map->cpt.len + 1)))
 			return (0);*/
+		if (!(map->map_co[map->cpt.i] = malloc(sizeof(int) * 2)))
+			return (0);
+		map->map_co[map->cpt.i][0] = tmp_name->co_x;
+		map->map_co[map->cpt.i][1] = tmp_name->co_y;
 		map->map_name[map->cpt.i] = ft_strdup(tmp_name->name);
 		//printf("[%s]\n", tmp_name->name);
 		map->cpt.i++;
@@ -154,25 +172,8 @@ int   set_map(t_name **name, t_link **link, t_map *map)
 	}
 	map->map_link[map->cpt.i] = 0;
 	//print_tab(map->map_link);
+	print_tab_int(map->map_co, map->inf.size_name, 2);
 	return (0);
-}
-
-void 	print_tab_int(int **tab, int y, int x)
-{
-	int i = 0;
-	int j = 0;
-
-	while (i < y)
-	{
-		j = 0;
-		while (j < x)
-		{
-			printf("%d ", tab[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
 }
 
 int 	ft_strcheck(char *s1, char *s2)

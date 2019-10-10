@@ -14,14 +14,16 @@ t_link		*insert_link(char *val, int i)
 	return (elem);
 }
 
-t_name		*insert_name(char *val, int i)
+t_name		*insert_name(char **val, int i)
 {
 	t_name	*elem;
 
 	if (!(elem = malloc(sizeof(t_name))))
 		return (NULL);
-	if (!(elem->name = ft_strdup(val)))
+	if (!(elem->name = ft_strdup(val[0])))
 		return (NULL);
+	elem->co_x = ft_atoi(val[1]); // faire un fonction qui check digit pour coor
+	elem->co_y = ft_atoi(val[2]);
 	elem->index = i;
 	elem->next = NULL;
 	return (elem);

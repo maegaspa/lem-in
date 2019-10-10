@@ -23,6 +23,8 @@ typedef struct s_name
 {
 	char 	*name;
 	int		index;
+	int 	co_y;
+	int 	co_x;
 	struct s_name *next;
 }				t_name;
 
@@ -49,12 +51,15 @@ typedef struct s_cpt
 	int		j;
 	unsigned int	len;
 	unsigned int	k;
+	int 	start_name;
+	int 	start_link;
 } 				t_cpt;
 
 typedef struct s_map
 {
 	char	**map_name;
 	char	**map_link;
+	int 	**map_co;
 	int		**matrix;
 	t_info	inf;
 	t_cpt	cpt;
@@ -65,7 +70,7 @@ void	print_info_map(t_name **name, t_link **link, t_map *map);
 void	print_tab(char **tab);
 void	free_map(char	**map);
 t_link			*insert_link(char *val, int i);
-t_name			*insert_name(char *val, int i);
+t_name			*insert_name(char **val, int i);
 void	clear(t_name **name, t_link **link);
 int		list_len(t_name *name, t_link *link, int chose);
 void	print_list(t_name *name, t_link *link);
