@@ -3,9 +3,9 @@
 
 t_link		*insert_link(char *val, int i)
 {
-	t_link *elem;
+	t_link	*elem;
 
-	if (!(elem = malloc(sizeof(t_link *))))
+	if (!(elem = malloc(sizeof(t_link))))
 		return (NULL);
 	if (!(elem->link = ft_strdup(val)))
 		return (NULL);
@@ -14,30 +14,17 @@ t_link		*insert_link(char *val, int i)
 	return (elem);
 }
 
-int		insert_name(t_name **name, char *val, int i)
+t_name		*insert_name(char *val, int i)
 {
-	t_name *tmp;
-	t_name *cpy_name;
-	t_name *elem;
+	t_name	*elem;
 
-	tmp = NULL;
-	cpy_name = *name;
-	if (!(elem = malloc(sizeof(t_link))))
-		return (0);
+	if (!(elem = malloc(sizeof(t_name))))
+		return (NULL);
 	if (!(elem->name = ft_strdup(val)))
-		return (0);
+		return (NULL);
 	elem->index = i;
-	while(cpy_name && cpy_name->name < val && cpy_name->index < i)
-	{
-		tmp = cpy_name;
-		cpy_name = cpy_name->next;
-	}
-	elem->next = cpy_name;
-	if (tmp)
-		tmp->next = elem;
-	else
-		*name = elem;
-	return (0);
+	elem->next = NULL;
+	return (elem);
 }
 
 void	clear(t_name **name, t_link **link)

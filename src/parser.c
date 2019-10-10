@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   parser.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 12:57:54 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/09 13:47:33 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/10 16:31:54 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,7 +28,11 @@ int		parser(t_name **name, t_link **link, t_map *map)
 {
 	char	*line;
 	char	**split;
+	int		start_name;
+	int		start_link;
 
+	start_name = 1;
+	start_link = 1;
 	while (get_next_line(0, &line))
 	{
 		if (line[0] != '#' && line[0] != 'L' && !map->cpt.yes)
@@ -43,19 +47,39 @@ int		parser(t_name **name, t_link **link, t_map *map)
 			map->inf.start = map->cpt.i;
 		if (ft_strstr(line, "##end"))
 			map->inf.end = map->cpt.i;
-		/*if (line[0] != '#' && line[0] != 'L' && map->cpt.yes > 1 && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
+		if (line[0] != '#' && line[0] != 'L' && map->cpt.yes > 1 && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
 		{
 			split = ft_strsplit(line, ' ');
-			insert_name(name, split[0], map->cpt.i);
+			if (start_name)
+			{
+				if (!(*name = insert_name(split[0], 0)))
+					return (0);
+				start_name = 0;
+			}
+			else
+			{
+				if (!((*name)->next = insert_name(split[0], map->cpt.i)))
+					return (0);
+				*name = (*name)->next;
+			}
 			map->cpt.i++;
-		}*/
-		if (line[0] != '#' && line[0] != 'L' && count_word(line, ' ') == 1 && count_word(line, '-') == 2 && ft_strchr(line, '-'))
+		}
+		if (line[0] != '#' && line[0] != 'L' && count_word(line, ' ') == 1 && count_word(line, '-') == 2 && ft_strchr(line, '-')) //strchr inutil
 		{
 			split = ft_strsplit(line, ' ');
-			if (map->cpt.yes == 3)
-				(*link)->link = ft_strdup(split[0]);
-			(*link)->next = NULL;//insert_link(split[0], map->cpt.j);
-			*link = (*link)->next;
+			if (start_link)
+			{
+				if (!(*link = insert_link(split[0], 0)))
+					return (0);
+				start_link = 0;
+			}
+			else
+			{
+				if (!((*link)->next = insert_link(split[0], map->cpt.j)))
+					return (0);
+				*link = (*link)->next;
+			}
+			//(*link)->next = NULL;//insert_link(split[0], map->cpt.j);
 			map->cpt.j++;
 			map->cpt.yes = 3;
 		}
@@ -66,7 +90,7 @@ int		parser(t_name **name, t_link **link, t_map *map)
 	map->inf.size_name = list_len(*name, *link, 0);
 	map->inf.size_link = list_len(*name, *link, 1);
 	print_info_map(name, link, map);
-	return (0);
+	return (1);
 }
 
 /*int   set_matrix(t_name **list, t_link **link, t_info *info)
@@ -117,14 +141,14 @@ int   set_map(t_name **name, t_link **link, t_map *map)
 
 int 		init_list(t_name **name, t_link **link)
 {
-	if (!(name = malloc(sizeof(t_name*))))
+	if (!(*name = malloc(sizeof(t_name))))
 		return (0);
-	//(*name)->next = NULL;
-	//(*name)->index = 0;
-	if (!(link = malloc(sizeof(t_link*))))
+	(*name)->next = NULL;
+	(*name)->index = 0;
+	if (!(*link = malloc(sizeof(t_link))))
 		return (0);
-	//(*link)->next = NULL;
-	//(*link)->index = 0;
+	(*link)->next = NULL;
+	(*link)->index = 0;
 	return (0);
 }
 
@@ -134,9 +158,9 @@ int	main(void)
 	t_link	*link;
 	t_map	map;
 
-	name = NULL;
-	link = NULL;
-	init_list(&name, &link);
+	//name = NULL;
+	//link = NULL;
+	//init_list(&name, &link);
 	init_value(&map);
 	parser(&name, &link, &map);
 	set_map(&name, &link, &map);

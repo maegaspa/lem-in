@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   lemin.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/07 13:35:32 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/10 16:30:23 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -65,7 +65,7 @@ void			print_info_map(t_name **name, t_link **link, t_map *map);
 void			print_tab(char **tab);
 void			free_map(char	**map);
 t_link			*insert_link(char *val, int i);
-int				insert_name(t_name **name, char *val, int i);
+t_name			*insert_name(char *val, int i);
 void			clear(t_name **name, t_link **link);
 int				list_len(t_name *name, t_link *link, int chose);
 void			print_list(t_name *name, t_link *link);

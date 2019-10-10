@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
+#    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/08 13:36:56 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2019/10/10 14:43:26 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,7 +16,7 @@
 NAME = lemin
 CC = gcc
 DEBUG = -g -fsanitize=address
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror $(DEBUG)
 INC = include/lemin.h
 HEADER = include
 
