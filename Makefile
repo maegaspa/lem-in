@@ -16,7 +16,7 @@
 NAME = lemin
 CC = gcc
 DEBUG = -g -fsanitize=address
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 INC = include/lemin.h
 HEADER = include
 
@@ -29,7 +29,7 @@ FILES = src/parser\
 #----------------------------------COLOR---------------------------------------#
 
 GREY='\x1b[30m'
-RED='\x1b[31m'
+RED='\x1b[34m'
 GREEN='\x1b[32m'
 YELLOW='\x1b[33m'
 BLUE='\x1b[34m'

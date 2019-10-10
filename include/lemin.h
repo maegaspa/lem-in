@@ -64,13 +64,13 @@ unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
 void	print_tab(char **tab);
 void	free_map(char	**map);
-int		insert_link(t_link **link, char *val, int i);
-int		insert_name(t_name **name, char *val, int i);
+t_link			*insert_link(char *val, int i);
+t_name			*insert_name(char *val, int i);
 void	clear(t_name **name, t_link **link);
 int		list_len(t_name *name, t_link *link, int chose);
 void	print_list(t_name *name, t_link *link);
 void	init_value(t_map *map);
 int		parser(t_name **name, t_link **link, t_map *map);
-int   set_map(t_name **name, t_link **link, t_map *map);
+int   	set_map(t_name **name, t_link **link, t_map *map);
 
 #endif
