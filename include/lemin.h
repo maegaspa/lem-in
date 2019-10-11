@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/07 13:35:32 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/11 13:51:45 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,6 +23,8 @@ typedef struct s_name
 {
 	char 	*name;
 	int		index;
+	int 	co_y;
+	int 	co_x;
 	struct s_name *next;
 }				t_name;
 
@@ -44,17 +46,20 @@ typedef struct s_info
 
 typedef struct s_cpt
 {
-	int 	yes;
+	int		error;
 	int		i;
 	int		j;
 	unsigned int	len;
 	unsigned int	k;
+	int 	start_name;
+	int 	start_link;
 } 				t_cpt;
 
 typedef struct s_map
 {
 	char	**map_name;
 	char	**map_link;
+	int 	**map_co;
 	int		**matrix;
 	t_info	inf;
 	t_cpt	cpt;
@@ -64,13 +69,13 @@ unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
 void	print_tab(char **tab);
 void	free_map(char	**map);
-int		insert_link(t_link **link, char *val, int i);
-int		insert_name(t_name **name, char *val, int i);
+t_link			*insert_link(char *val, int i);
+t_name			*insert_name(char **val, int i);
 void	clear(t_name **name, t_link **link);
 int		list_len(t_name *name, t_link *link, int chose);
 void	print_list(t_name *name, t_link *link);
 void	init_value(t_map *map);
 int		parser(t_name **name, t_link **link, t_map *map);
-int   set_map(t_name **name, t_link **link, t_map *map);
+int   	set_map(t_name **name, t_link **link, t_map *map);
 
 #endif

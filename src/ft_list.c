@@ -1,58 +1,32 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-int		insert_link(t_link **link, char *val, int i)
+t_link		*insert_link(char *val, int i)
 {
-	t_link *tmp;
-	t_link *cpy_link;
-	t_link *elem;
+	t_link	*elem;
 
-	tmp = NULL;
-	cpy_link = *link;
 	if (!(elem = malloc(sizeof(t_link))))
-		return (0);
-	if (!elem)
-		return (0);
-	elem->link = val;
+		return (NULL);
+	if (!(elem->link = ft_strdup(val)))
+		return (NULL);
 	elem->index = i;
-	while(cpy_link && cpy_link->link < val && cpy_link->index < i)
-	{
-		tmp = cpy_link;
-		cpy_link = cpy_link->next;
-	}
-	elem->next = cpy_link;
-	if (tmp)
-		tmp->next = elem;
-	else
-		*link = elem;
-	return (0);
+	elem->next = NULL;
+	return (elem);
 }
 
-int		insert_name(t_name **name, char *val, int i)
+t_name		*insert_name(char **val, int i)
 {
-	t_name *tmp;
-	t_name *cpy_name;
-	t_name *elem;
+	t_name	*elem;
 
-	tmp = NULL;
-	cpy_name = *name;
-	if (!(elem = malloc(sizeof(t_link))))
-		return (0);
-	if (!elem)
-		return (0);
-	elem->name = val;
+	if (!(elem = malloc(sizeof(t_name))))
+		return (NULL);
+	if (!(elem->name = ft_strdup(val[0])))
+		return (NULL);
+	elem->co_x = ft_atoi(val[1]); // faire un fonction qui check digit pour coor
+	elem->co_y = ft_atoi(val[2]);
 	elem->index = i;
-	while(cpy_name && cpy_name->name < val && cpy_name->index < i)
-	{
-		tmp = cpy_name;
-		cpy_name = cpy_name->next;
-	}
-	elem->next = cpy_name;
-	if (tmp)
-		tmp->next = elem;
-	else
-		*name = elem;
-	return (0);
+	elem->next = NULL;
+	return (elem);
 }
 
 void	clear(t_name **name, t_link **link)
