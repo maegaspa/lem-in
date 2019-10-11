@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 12:57:54 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/08 18:02:07 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/11 19:27:20 by cgarrot     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,261 +14,110 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-void	init_value(t_map *map)
+int			check_ant_line(t_map *map, char *line)
 {
-	map->inf.nb_fourmie = -1;
-	map->cpt.yes = 0;
-	map->cpt.i = 0;
-	map->cpt.j = 0;
-	map->inf.start = 0;
-	map->inf.end = 0;
-	map->cpt.start_name = 1;
-	map->cpt.start_link = 1;
+	while (get_next_line(0, &line) && !(check_str_number(line)) && line[0] == '#')//passe les commentaires
+		ft_strdel(&line);
+	if (line[0] == '\0' || !check_str_number(line))//si pas de nombres de fourmis
+		map->cpt.error = 1;
+	map->inf.nb_fourmi = ft_atoi(line);
+	ft_strdel(&line);
+	if (map->inf.nb_fourmi <= 0)
+		return (-1);
+	return (1);
+}
+
+int			check_link_line(t_link **link, t_map *map, char *line, char **split)
+{
+	if (line[0] != '#' && line[0] != 'L' && count_word(line, ' ') == 1 && count_word(line, '-') == 2 && ft_strchr(line, '-'))
+	{
+		split = ft_strsplit(line, ' ');
+		if (map->cpt.start_link)
+		{
+			if (!(*link = insert_link(split[0], 0)))
+				return (-1);
+			map->cpt.start_link = 0;
+			map->tmp_link = *link;
+		}
+		else
+		{
+			if (!(map->tmp_link->next = insert_link(split[0], map->cpt.j)))
+				return (-1);
+			map->tmp_link = map->tmp_link->next;
+		}
+		map->cpt.j++;
+	}
+	return (1);
+}
+
+int			check_name_line(t_name **name, t_map *map, char *line, char **split)
+{
+	if (map->cpt.j == 0 && line[0] != '#' && line[0] != 'L' && (count_word(line, ' ') >= 1 && !(ft_strchr(line, '-'))))
+	{
+		split = ft_strsplit(line, ' ');
+		if (!split[1] || !split[2] || ft_strlen(split[3]) || !check_str_number(split[1]) || !check_str_number(split[2]))
+			return (-1);
+		if (map->cpt.start_name)
+		{
+			if (!(*name = insert_name(split, 0)))
+				return (-1);
+			map->cpt.start_name = 0;
+			map->tmp_name = *name;
+		}
+		else
+		{
+			if (!(map->tmp_name->next = insert_name(split, map->cpt.i)))
+				return (-1);
+			map->tmp_name = map->tmp_name->next;
+		}
+		map->cpt.i++;
+	}
+	if (map->cpt.j != 0 && line[0] != '#' && line[0] != 'L' && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
+		return (-1);
+	return (1);
+}
+
+void		check_start_end(t_map *map, char **line)
+{
+	if ((ft_strstr(*line, "##start") || ft_strstr(*line, "##end")) && map->cpt.j == 0)//si start/end
+	{
+		if (ft_strstr(*line, "##start"))
+			map->inf.start = map->cpt.i;
+		if (ft_strstr(*line, "##end"))
+			map->inf.end = map->cpt.i;
+		ft_strdel(&(*line));
+		get_next_line(0, &(*line));
+		if (!(map->cpt.j == 0 && *line[0] != '#' && *line[0] != 'L' && (count_word(*line, '-') == 1 && !(ft_strchr(*line, '-')))))//si next line n'est pas une room
+			map->cpt.error = 1;
+	}
 }
 
 int		parser(t_name **name, t_link **link, t_map *map)
 {
 	char	*line;
 	char	**split;
-	t_link 	*tmp_link;
-	t_name 	*tmp_name;
 
+	split = NULL;
+	line = NULL;
+	if ((check_ant_line(map, line) != 1))
+		return (-1);
 	while (get_next_line(0, &line))
 	{
-		if (line[0] != '#' && line[0] != 'L' && !map->cpt.yes)
-		{
-			if (count_word(line, ' ') && !(ft_strchr(line, '-')))
-			{
-				map->inf.nb_fourmie = ft_atoi(line);
-				map->cpt.yes = 1;
-			}
-		}
-		if (ft_strstr(line, "##start"))
-			map->inf.start = map->cpt.i;
-		if (ft_strstr(line, "##end"))
-			map->inf.end = map->cpt.i;
-		if (map->cpt.j == 0 && line[0] != '#' && line[0] != 'L' && map->cpt.yes > 1 && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
-		{
-			split = ft_strsplit(line, ' ');
-			if (map->cpt.start_name)
-			{
-				if (!(*name = insert_name(split, 0)))
-					return (0);
-				map->cpt.start_name = 0;
-				tmp_name = *name;
-				//printf("[%s]\n", (*name)->name);
-			}
-			else
-			{
-				//printf("[%s]\n", (*name)->name);
-				if (!(tmp_name->next = insert_name(split, map->cpt.i)))
-					return (0);
-				tmp_name = tmp_name->next;
-			}
-			map->cpt.i++;
-		}
-		if (map->cpt.j != 0 && line[0] != '#' && line[0] != 'L' && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
+		if (line[0] == '\0' || count_word(line, '-') > 2)//si ligne vide
+			map->cpt.error = 1;
+		check_start_end(map, &line);
+		if ((check_name_line(name, map, line, split) != 1))
 			return (-1);
-		if (line[0] != '#' && line[0] != 'L' && count_word(line, ' ') == 1 && count_word(line, '-') == 2 && ft_strchr(line, '-'))
-		{
-			split = ft_strsplit(line, ' ');
-			if (map->cpt.start_link)
-			{
-				if (!(*link = insert_link(split[0], 0)))
-					return (0);
-				map->cpt.start_link = 0;
-				tmp_link = *link;
-				//printf("[%s]\n", (*link)->link);
-			}
-			else
-			{
-				//printf("[%s]\n", (*link)->link);
-				if (!(tmp_link->next = insert_link(split[0], map->cpt.j)))
-					return (0);
-				tmp_link = tmp_link->next;
-			}
-			map->cpt.j++;
-		}
-		if (map->cpt.yes == 1)
-			map->cpt.yes++;
+		if ((check_link_line(link, map, line, split) != 1))
+			return (-1);
 		ft_strdel(&line);
+		if (map->cpt.error == 1)
+			return (-1);
 	}
+	if (map->inf.start == -1 || map->inf.end == -1 || !map->tmp_link || !map->tmp_name)
+		return (-1);
 	map->inf.size_name = list_len(*name, *link, 0);
 	map->inf.size_link = list_len(*name, *link, 1);
 	//print_info_map(name, link, map);
-	return (0);
-}
-
-void 	print_tab_int(int **tab, int y, int x)
-{
-	int i = 0;
-	int j = 0;
-
-	while (i < y)
-	{
-		j = 0;
-		while (j < x)
-		{
-			printf("%d ", tab[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
-int   set_map(t_name **name, t_link **link, t_map *map)
-{
-	t_name *tmp_name;
-	t_link *tmp_link;
-	int 	i;
-
-	i = 0;
-	if (!(map->matrix = malloc(sizeof(int*) * map->inf.size_name)))
-		return (0);
-	while (i < map->inf.size_name)
-	{
-		if (!(map->matrix[i] = malloc(sizeof(int) * map->inf.size_name)))
-			return (0);
-		ft_bzero(map->matrix[i], map->inf.size_name);
-		i++;
-	}
-	map->cpt.i = 0;
-	tmp_name = *name;
-	tmp_link = *link;
-	if (!(map->map_name = malloc(sizeof(char*) * map->inf.size_name + 1)))
-		return (0);
-	if (!(map->map_co = malloc(sizeof(int*) * map->inf.size_name)))
-		return (0);
-	while (tmp_name)
-	{
-		map->cpt.k = 0;
-		map->cpt.len = ft_strlen(tmp_name->name);
-		/*if (!(map->map_name[map->cpt.i] = malloc(sizeof(char) * map->cpt.len + 1)))
-			return (0);*/
-		if (!(map->map_co[map->cpt.i] = malloc(sizeof(int) * 2)))
-			return (0);
-		map->map_co[map->cpt.i][0] = tmp_name->co_x;
-		map->map_co[map->cpt.i][1] = tmp_name->co_y;
-		map->map_name[map->cpt.i] = ft_strdup(tmp_name->name);
-		//printf("[%s]\n", tmp_name->name);
-		map->cpt.i++;
-		tmp_name = tmp_name->next;
-	}
-	map->map_name[map->cpt.i] = 0;
-	//print_tab(map->map_name);
-	map->cpt.i = 0;
-	if (!(map->map_link = malloc(sizeof(char*) * map->inf.size_link + 1)))
-		return (0);
-	while (tmp_link)
-	{
-		map->cpt.k = 0;
-		map->cpt.len = ft_strlen(tmp_link->link);
-		/*if (!(map->map_link[map->cpt.i] = malloc(sizeof(char) * map->cpt.len + 1)))
-			return (0);*/
-		map->map_link[map->cpt.i] = ft_strdup(tmp_link->link);
-		map->cpt.i++;
-		tmp_link = tmp_link->next;
-	}
-	map->map_link[map->cpt.i] = 0;
-	//print_tab(map->map_link);
-	print_tab_int(map->map_co, map->inf.size_name, 2);
-	return (0);
-}
-
-int 	ft_strcheck(char *s1, char *s2)
-{
-	unsigned int 	i;
-	int 	j;
-	int 	k;
-	int 	len;
-
-	i = 0;
-	j = 0;
-	len = ft_strlen(s2);
-	while (s1[i])
-	{
-		j = 0;
-		k = i;
-		while (s2[j] && s1[k] && s1[k] == s2[j])
-		{
-			k++;
-			j++;
-		}
-		if (len == j)
-		{	
-			//printf("[%s][%s][%d]\n", s1, s2, j);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int 	set_matrix(t_map *map)
-{
-	int 	i;
-	int 	j;
-	int 	save_y;
-	int 	save_x;
-	char	*str;
-	int 	salut;
-
-	i = 0;
-	j = 0;
-	
-	save_x = 0;
-	save_y = 0;
-	while (map->inf.size_link > i)
-	{
-		//map->matrix[i][j] = 0;
-		//printf("[%s]\n", map->map_name[j]);
-		save_y = 0;
-		j = 0;
-		str = NULL;
-		while (map->inf.size_name > j)
-		{
-			salut = ft_strcheck(map->map_link[i], map->map_name[j]);
-			if (salut)
-			{
-				save_y = j;
-				str = map->map_name[j];
-				break;
-			}
-			j++;
-		}
-		save_x = 0;
-		j = 0;
-		while (map->inf.size_name > j)
-		{
-			salut = ft_strcheck(map->map_link[i], map->map_name[j]);
-			if (salut && str)
-				save_x = j;
-			j++;
-		}
-		map->matrix[save_y][save_x] = 1;
-		map->matrix[save_x][save_y] = 1;
-		i++;
-		//printf("[%d][%d]\n", save_y, save_x);
-	}
-	print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name);
-	return (0);
-}
-
-int		main(void)
-{
-	t_name	*name;
-	t_link	*link;
-	t_map	map;
-	
-	init_value(&map);
-	parser(&name, &link, &map);
-	set_map(&name, &link, &map);
-	//print_tab(map.map_name);
-	//print_tab(map.map_link);
-	//print_info_map(&name, &link, &map);
-	set_matrix(&map);
-	//set_matrix(&name, &link, &info);
-	clear(&name, &link);
-	return (0);
+	return (1);
 }

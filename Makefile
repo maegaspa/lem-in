@@ -6,7 +6,7 @@
 #    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/08 13:36:56 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2019/10/11 19:05:09 by cgarrot     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -25,6 +25,10 @@ HEADER = include
 FILES = src/parser\
 		src/ft_list\
 		src/utils\
+		src/utils2\
+		src/init\
+		src/set_all_tab\
+		src/main\
 
 #----------------------------------COLOR---------------------------------------#
 
