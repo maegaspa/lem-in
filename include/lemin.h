@@ -42,7 +42,20 @@ typedef struct s_info
 	int end;
 	int	size_name;
 	int	size_link;
+	int ret;
 } 				t_info;
+
+typedef struct s_matrix
+{
+	int 	i;
+	int 	j;
+	int 	tmp_i;
+	int 	save_y;
+	int 	save_x;
+	char	*name1;
+	char	*name2;
+	char 	**split;
+}				t_matrix;
 
 typedef struct s_cpt
 {
@@ -63,6 +76,7 @@ typedef struct s_map
 	int		**matrix;
 	t_info	inf;
 	t_cpt	cpt;
+	t_matrix mat;
 	t_link	*tmp_link;
 	t_name	*tmp_name;
 }				t_map;
@@ -89,6 +103,9 @@ int			check_ant_line(t_map *map, char *line);
 int			check_link_line(t_link **link, t_map *map, char *line, char **split);
 int			check_name_line(t_name **name, t_map *map, char *line, char **split);
 void		check_start_end(t_map *map, char **line);
+void	init_matrix(t_map *map);
+void	check_all_link_and_name(t_map *map, int i);
+int 	free_and_return(char ***split, int i);
 int		main(void);
 
 #endif

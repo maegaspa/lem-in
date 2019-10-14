@@ -97,3 +97,25 @@ int 	print_and_return(int i)
 	}
 	return (1);
 }
+
+
+int 	free_and_return(char ***split, int i)
+{
+	int 	j;
+
+	j = 0;
+	if (i == 1)
+	{
+		//free split for all blocks
+		return (-1);
+	}
+	if (i == 2)
+	{
+		free(*split[0]);
+		free(*split[1]);
+		free(*split);
+		*split = NULL;
+		return (-1);
+	}
+	return (1);
+}

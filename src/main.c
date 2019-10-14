@@ -31,7 +31,9 @@ int		main(void)
 	//print_tab(map.map_name);
 	//print_tab(map.map_link);
 	//print_info_map(&name, &link, &map);
-	ret = set_matrix(&map);	
+	ret = set_matrix(&map);
+	if (ret != 1)
+		return (print_and_return(ret));
 	//set_matrix(&name, &link, &info);
 	clear(&name, &link);
 	ret = print_and_return(ret);
