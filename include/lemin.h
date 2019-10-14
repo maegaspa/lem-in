@@ -106,6 +106,8 @@ void		check_start_end(t_map *map, char **line);
 void	init_matrix(t_map *map);
 void	check_all_link_and_name(t_map *map, int i);
 int 	free_and_return(char ***split, int i);
+int 	set_tab_link(t_link *tmp_link, t_map *map);
+int 	set_tab_name_and_co(t_name *tmp_name, t_map *map);
 int		main(void);
 
 #endif
