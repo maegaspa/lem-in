@@ -33,6 +33,7 @@ int		main(void)
 	//print_info_map(&name, &link, &map);
 	ret = set_matrix(&map);	
 	//set_matrix(&name, &link, &info);
+	path_1(&map);
 	clear(&name, &link);
 	ret = print_and_return(ret);
 	printf("ca marche sauf si ya error");
