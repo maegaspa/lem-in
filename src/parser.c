@@ -55,7 +55,7 @@ int			check_name_line(t_name **name, t_map *map, char *line, char **split)
 	if (map->cpt.j == 0 && line[0] != '#' && line[0] != 'L' && (count_word(line, ' ') >= 1 && !(ft_strchr(line, '-'))))
 	{
 		split = ft_strsplit(line, ' ');
-		if (!split[1] || !split[2] || ft_strlen(split[3]) || !check_str_number(split[1]) || !check_str_number(split[2]))
+		if (!split[1] || !split[2] || count_word(line, ' ') > 3 || !check_str_number(split[1]) || !check_str_number(split[2]))
 			return (-1);
 		if (map->cpt.start_name)
 		{

@@ -26,3 +26,15 @@ void	init_value(t_map *map)
 	map->cpt.start_link = 1;
 	map->path.next_room = 0;
 }
+
+void	init_matrix(t_map *map)
+{
+	map->mat.i = 0;
+	map->mat.tmp_i = 0;
+	map->mat.j = 0;
+	map->mat.save_x = -1;
+	map->mat.save_y = -1;
+	map->mat.name1 = NULL;
+	map->mat.name2 = NULL;
+	map->mat.split = NULL;
+}
