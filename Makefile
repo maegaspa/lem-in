@@ -16,7 +16,7 @@
 NAME = lemin
 CC = gcc
 DEBUG = -g -fsanitize=address
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra 
 INC = include/lemin.h
 HEADER = include
 
@@ -29,7 +29,7 @@ FILES = src/parser\
 		src/init\
 		src/set_all_tab\
 		src/main\
-		src/path1\
+		src/search_path\
 
 #----------------------------------COLOR---------------------------------------#
 

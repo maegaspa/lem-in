@@ -35,9 +35,9 @@ int		main(void)
 	if (ret != 1)
 		return (print_and_return(ret));
 	//set_matrix(&name, &link, &info);
-	path_1(&map);
 	clear(&name, &link);
 	ret = print_and_return(ret);
+	search_jonc(&map);
 	printf("ca marche sauf si ya error");
 	return (ret);
 }

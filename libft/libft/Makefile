@@ -15,8 +15,8 @@
 
 NAME = libft.a
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
-INC = libft.h
+FLAGS = 
+INC = ./libft.h
 
 #------------------------------------FILE--------------------------------------#
 
@@ -89,7 +89,6 @@ FILES = ft_atoi\
 		ft_hhtoa\
 		ft_strjoinfree\
 		ft_strsubfree\
-		ft_ftoa\
 		get_next_line\
 
 #----------------------------------COLOR---------------------------------------#

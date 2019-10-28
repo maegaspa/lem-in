@@ -101,9 +101,6 @@ int 	print_and_return(int i)
 
 int 	free_and_return(char ***split, int i)
 {
-	int 	j;
-
-	j = 0;
 	if (i == 1)
 	{
 		//free split for all blocks
