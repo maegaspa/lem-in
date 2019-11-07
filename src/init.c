@@ -24,7 +24,6 @@ void	init_value(t_map *map)
 	map->inf.end = -1;
 	map->cpt.start_name = 1;
 	map->cpt.start_link = 1;
-	map->path.next_room = 0;
 }
 
 void	init_matrix(t_map *map)

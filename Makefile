@@ -29,7 +29,6 @@ FILES = src/parser\
 		src/init\
 		src/set_all_tab\
 		src/main\
-		src/path1\
 
 #----------------------------------COLOR---------------------------------------#
 

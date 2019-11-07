@@ -68,14 +68,6 @@ typedef struct s_cpt
 	int 	start_link;
 } 				t_cpt;
 
-typedef struct s_path
-{
-    int     *n_path;
-    int     state;
-    int     next_room;
-    int     next_room2;
-}
-              t_path;
 typedef struct s_map
 {
 	char	**map_name;
@@ -87,15 +79,12 @@ typedef struct s_map
 	t_matrix mat;
 	t_link	*tmp_link;
 	t_name	*tmp_name;
-	t_path  path;
 }				t_map;
 
-int             path_1(t_map *map);
-int             path_2(t_map *map, int num);
 unsigned int	count_word(const char *s, char c);
-void	        print_info_map(t_name **name, t_link **link, t_map *map);
-void	        print_tab(char **tab);
-void	        free_map(char	**map);
+void	print_info_map(t_name **name, t_link **link, t_map *map);
+void	print_tab(char **tab);
+void	free_map(char	**map);
 t_link			*insert_link(char *val, int i);
 t_name			*insert_name(char **val, int i);
 void	clear(t_name **name, t_link **link);
