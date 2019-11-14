@@ -35,8 +35,10 @@ int		main(void)
 	if (ret != 1)
 		return (print_and_return(ret));
 	//set_matrix(&name, &link, &info);
+	bfs(&map);
 	clear(&name, &link);
 	ret = print_and_return(ret);
+	printf("start = %d\n", map.inf.start);
 	printf("ca marche sauf si ya error");
 	return (ret);
 }

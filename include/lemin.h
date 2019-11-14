@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "../libft/includes/ft_printf.h"
+# include <stdio.h>
 
 typedef struct s_name
 {
@@ -68,12 +69,18 @@ typedef struct s_cpt
 	int 	start_link;
 } 				t_cpt;
 
-typedef struct s_map
+typedef struct  s_map
 {
 	char	**map_name;
 	char	**map_link;
 	int 	**map_co;
 	int		**matrix;
+	int     *visited;
+	int     *queue;
+	int     front;
+	int     rear;
+	int     first;
+	int     i;
 	t_info	inf;
 	t_cpt	cpt;
 	t_matrix mat;
@@ -109,5 +116,7 @@ int 	free_and_return(char ***split, int i);
 int 	set_tab_link(t_link *tmp_link, t_map *map);
 int 	set_tab_name_and_co(t_name *tmp_name, t_map *map);
 int		main(void);
+int     init_bfs(t_map *map);
+void    bfs(t_map *map);
 
 #endif
