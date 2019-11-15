@@ -15,7 +15,7 @@
 
 NAME = libftprintf.a
 CC = gcc
-FLAGS = -Wall -Wextra
+FLAGS = -Wall -Wextra -Werror
 INC = /includes/ft_printf.h
 HEADER = include
 
