@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 12:57:54 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:27:20 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/25 15:06:03 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,8 +18,12 @@ int			check_ant_line(t_map *map, char *line)
 {
 	while (get_next_line(0, &line) && !(check_str_number(line)) && line[0] == '#')//passe les commentaires
 		ft_strdel(&line);
+	if (line == NULL)
+		return (-1);
 	if (line[0] == '\0' || !check_str_number(line))//si pas de nombres de fourmis
+	{
 		map->cpt.error = 1;
+	}
 	map->inf.nb_fourmi = ft_atoi(line);
 	ft_strdel(&line);
 	if (map->inf.nb_fourmi <= 0)
@@ -81,10 +85,14 @@ void		check_start_end(t_map *map, char **line)
 {
 	if ((ft_strstr(*line, "##start") || ft_strstr(*line, "##end")) && map->cpt.j == 0)//si start/end
 	{
-		if (ft_strstr(*line, "##start"))
+		if (ft_strstr(*line, "##start") && map->inf.start == -1)
 			map->inf.start = map->cpt.i;
-		if (ft_strstr(*line, "##end"))
+		else
+			map->cpt.error = 1;
+		if (ft_strstr(*line, "##end") && map->inf.end == -1)
 			map->inf.end = map->cpt.i;
+		else
+			map->cpt.error = 1;
 		ft_strdel(&(*line));
 		get_next_line(0, &(*line));
 		if (!(map->cpt.j == 0 && *line[0] != '#' && *line[0] != 'L' && (count_word(*line, '-') == 1 && !(ft_strchr(*line, '-')))))//si next line n'est pas une room
@@ -111,8 +119,6 @@ int		parser(t_name **name, t_link **link, t_map *map)
 		if ((check_link_line(link, map, line, split) != 1))
 			return (-1);
 		ft_strdel(&line);
-		if (map->cpt.error == 1)
-			return (-1);
 	}
 	if (map->inf.start == -1 || map->inf.end == -1 || !map->tmp_link || !map->tmp_name)
 		return (-1);

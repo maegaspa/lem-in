@@ -6,7 +6,7 @@
 /*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/23 13:25:18 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/24 18:04:03 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/25 14:58:09 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,18 +28,6 @@ int		*malloc_int_tab(int size)
 		x++;
 	}
 	return (tab);
-}
-
-void	print_queue(t_bfs *bfs, t_map *map)
-{
-	int x = 0;
-
-	while (x != bfs->q_size)
-	{
-		printf("[%s]", map->map_name[bfs->queue[x]]);
-		x++;
-	}
-	printf("\n");
 }
 
 void	remove_node(t_bfs *bfs)
@@ -72,23 +60,40 @@ void	init_bfs(t_map *map, t_bfs *bfs, int start_node)
 	add_node(bfs, start_node);
 }
 
+int		**change_matrix(int **matrix, t_map *map, t_bfs *bfs)
+{
+	int		x;
+	int		y;
+
+	x = 0;
+	while (x < map->inf.size_name)
+	{
+		y = 0;
+		while (y < map->inf.size_name)
+		{
+			if (matrix[x][y] == 1)
+				matrix[x][y] = bfs->distance[y];
+			y++;
+		}
+		x++;
+	}
+	return (matrix);
+}
+
 void	begin_bfs(t_map *map, int start_node)
 {
 	t_bfs	bfs;
 	int		x;
 
 	init_bfs(map, &bfs, start_node);
-
-//	printf("bfs.queue[0] : %d, start_node : %d\n", bfs.queue[0], start_node);
-
 	while (bfs.queue[0] != map->inf.end)
 	{
 		x = 0;
 		while (x != map->inf.size_name)
 		{
-			if (map->matrix[bfs.queue[0]][x] == 1 && bfs.visited[x] == -1 && bfs.distance[x] <= bfs.distance[bfs.queue[0]] + 1)
+			if (map->matrix[bfs.queue[0]][x] == 1 && bfs.visited[x] == -1 &&
+					bfs.distance[x] <= bfs.distance[bfs.queue[0]] + 1)
 			{
-				printf("%s is linked to %s and unvisited\n", map->map_name[x], map->map_name[bfs.queue[0]]);
 				bfs.visited[x] = 1;
 				bfs.distance[x] = bfs.distance[bfs.queue[0]] + 1;
 				add_node(&bfs, x);
@@ -96,14 +101,7 @@ void	begin_bfs(t_map *map, int start_node)
 			x++;
 		}
 		remove_node(&bfs);
-		print_queue(&bfs, map);
 	}
-	
-	x = 0;
-	while (x < map->inf.size_name)
-	{
-		printf("la distance entre le noeud [%s] et start est %d\n", map->map_name[x], bfs.distance[x]);
-		x++;
-	}
-
+	map->matrix = change_matrix(map->matrix, map, &bfs);
+	reverse_pathfinding(map, &bfs);
 }
