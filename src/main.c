@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:33:44 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/24 17:58:54 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,6 +37,13 @@ int		main(void)
 	//set_matrix(&name, &link, &info);
 	clear(&name, &link);
 	ret = print_and_return(ret);
+	begin_bfs(&map, map.inf.start);
+	ret = 0;
+//	while (map.map_name[ret])
+//	{
+//		printf("%d - %s\n", ret, map.map_name[ret]);
+//		ret++;
+//	}
 	printf("ca marche sauf si ya error");
 	return (ret);
 }
