@@ -17,7 +17,16 @@
 int			check_ant_line(t_map *map, char *line)
 {
 	while (get_next_line(0, &line) && !(check_str_number(line)) && line[0] == '#')//passe les commentaires
+	{
+		if (ft_strstr(line, "##start") || ft_strstr(line, "##end"))
+		{
+			ft_strdel(&line);
+			return (-1);
+		}
 		ft_strdel(&line);
+	}
+	if (!line)
+		return (-1);
 	if (line[0] == '\0' || !check_str_number(line))//si pas de nombres de fourmis
 		map->cpt.error = 1;
 	map->inf.nb_fourmi = ft_atoi(line);
@@ -72,24 +81,37 @@ int			check_name_line(t_name **name, t_map *map, char *line, char **split)
 		}
 		map->cpt.i++;
 	}
+	else if (line[0] == 'L')
+		return (-1);
 	if (map->cpt.j != 0 && line[0] != '#' && line[0] != 'L' && (count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
 		return (-1);
 	return (1);
 }
 
-void		check_start_end(t_map *map, char **line)
+int		check_start_end(t_map *map, char **line)
 {
 	if ((ft_strstr(*line, "##start") || ft_strstr(*line, "##end")) && map->cpt.j == 0)//si start/end
 	{
 		if (ft_strstr(*line, "##start"))
+		{
+			if (map->cpt.yes_start != 0)
+				return (-1);
 			map->inf.start = map->cpt.i;
+			map->cpt.yes_start = 1;
+		}
 		if (ft_strstr(*line, "##end"))
+		{
+			if (map->cpt.yes_end != 0)
+				return (-1);
 			map->inf.end = map->cpt.i;
+			map->cpt.yes_end = 1;
+		}
 		ft_strdel(&(*line));
 		get_next_line(0, &(*line));
 		if (!(map->cpt.j == 0 && *line[0] != '#' && *line[0] != 'L' && (count_word(*line, '-') == 1 && !(ft_strchr(*line, '-')))))//si next line n'est pas une room
 			map->cpt.error = 1;
 	}
+	return (1);
 }
 
 int		parser(t_name **name, t_link **link, t_map *map)
@@ -105,7 +127,8 @@ int		parser(t_name **name, t_link **link, t_map *map)
 	{
 		if (line[0] == '\0' || count_word(line, '-') > 2)//si ligne vide
 			map->cpt.error = 1;
-		check_start_end(map, &line);
+		if ((check_start_end(map, &line) != 1))
+			return (-1);
 		if ((check_name_line(name, map, line, split) != 1))
 			return (-1);
 		if ((check_link_line(link, map, line, split) != 1))

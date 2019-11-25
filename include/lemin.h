@@ -49,6 +49,8 @@ typedef struct s_matrix
 {
 	int 	i;
 	int 	j;
+	int 	start_link_end;
+	int 	end_link_start;
 	int 	tmp_i;
 	int 	save_y;
 	int 	save_x;
@@ -62,6 +64,8 @@ typedef struct s_cpt
 	int		error;
 	int		i;
 	int		j;
+	int 	yes_start;
+	int 	yes_end;
 	unsigned int	len;
 	unsigned int	k;
 	int 	start_name;
@@ -102,9 +106,9 @@ int 	print_and_return(int i);
 int			check_ant_line(t_map *map, char *line);
 int			check_link_line(t_link **link, t_map *map, char *line, char **split);
 int			check_name_line(t_name **name, t_map *map, char *line, char **split);
-void		check_start_end(t_map *map, char **line);
+int		check_start_end(t_map *map, char **line);
 void	init_matrix(t_map *map);
-void	check_all_link_and_name(t_map *map, int i);
+int		check_all_link_and_name(t_map *map, int i);
 int 	free_and_return(char ***split, int i);
 int 	set_tab_link(t_link *tmp_link, t_map *map);
 int 	set_tab_name_and_co(t_name *tmp_name, t_map *map);

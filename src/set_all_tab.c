@@ -82,16 +82,19 @@ int   set_map(t_name **name, t_link **link, t_map *map)
 	return (1);
 }
 
-void	check_all_link_and_name(t_map *map, int i)
+int		check_all_link_and_name(t_map *map, int i)
 {
 	if (i == 1)
 		while (map->inf.size_name > map->mat.j)
 		{
-			//printf("1----|%s|-|%s|\n", map->map_link[map->mat.i], map->map_name[map->mat.j]);
 			if (ft_strcheck(map->map_link[map->mat.i], map->map_name[map->mat.j], 1))
 			{
 				map->mat.save_y = map->mat.j;
 				map->mat.name1 = map->map_name[map->mat.j];
+				if (map->mat.name1 == map->map_name[map->inf.start])
+					map->mat.start_link_end++;
+				if (map->mat.name1 == map->map_name[map->inf.end])
+					map->mat.end_link_start++;
 				break;
 			}
 			map->mat.j++;
@@ -99,15 +102,21 @@ void	check_all_link_and_name(t_map *map, int i)
 	if (i == 2)
 		while (map->inf.size_name > map->mat.j)
 		{
-			//printf("2----|%s|-|%s|\n", map->map_link[map->mat.i], map->map_name[map->mat.j]);
 			if (ft_strcheck(map->map_link[map->mat.i], map->map_name[map->mat.j], 2) && map->mat.name1)
 			{
 				map->mat.save_x = map->mat.j;
 				map->mat.name2 = map->map_name[map->mat.j];
 				map->mat.tmp_i = map->mat.i;
+				if (map->mat.name2 == map->map_name[map->inf.start])
+					map->mat.start_link_end++;
+				if (map->mat.name2 == map->map_name[map->inf.end])
+					map->mat.end_link_start++;
 			}
 			map->mat.j++;
 		}
+	if ((!map->mat.name2 && map->mat.save_x == -1) || (!map->mat.name1 && map->mat.save_y == -1))
+		return (-1);
+	return (1);
 }
 
 int 	set_matrix(t_map *map)
@@ -122,8 +131,8 @@ int 	set_matrix(t_map *map)
 		if (map->mat.name1 == NULL)
 			return (-1);
 		map->mat.j = 0;
-		check_all_link_and_name(map, 2);
-		//printf("%s|----|%s\n", map->mat.name1, map->mat.name2);
+		if (check_all_link_and_name(map, 2) != 1)
+			return (-1);
 		if (map->mat.name1 == map->mat.name2)
 		{
 			map->mat.split = ft_strsplit(map->map_link[map->mat.tmp_i], '-');
@@ -135,6 +144,8 @@ int 	set_matrix(t_map *map)
 		map->matrix[map->mat.save_x][map->mat.save_y] = 1;
 		map->mat.i++;
 	}
+	if (map->mat.start_link_end == 0 || map->mat.end_link_start == 0)
+		return (-1);
 	print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name);
 	return (1);
 }
