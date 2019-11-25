@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils2.c                                         .::    .:/ .      .::   */
+/*   utils3.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
@@ -14,79 +14,70 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-void 	print_tab_int(int **tab, int y, int x)
-{
-	int i = 0;
-	int j = 0;
-
-	while (i < y)
-	{
-		j = 0;
-		while (j < x)
-		{
-			printf("%d ", tab[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
-int		check_valid_co(int **tab, int len)
+int		name_cmp(char *s1, char *s2)
 {
 	int i;
-	int found;
-	int a;
+	int j;
+	int len;
 
-	a = -1;
-	while (++a < len)
-	{
-		found = 0;
-		i = a - 1;
-		while (++i < len)
-		{
-			if (tab[i][0] == tab[a][0] && tab[i][1] == tab[a][1])
-				found++;
-		}
-		if (found > 1)
-			return (-1);
-	}
-	return (1);
-}
-
-int 	print_and_return(int i)
-{
-	if (i == 0)
-	{
-		ft_putstr("ERROR CODE\n");
-		return (0);
-	}
-	if (i == -1)
-	{
-		ft_putstr("ERROR\n");
-		return (-1);
-	}
-	return (1);
-}
-
-
-int 	free_and_return(char ***split, int i)
-{
-	int 	j;
-
+	i = 0;
 	j = 0;
-	if (i == 1)
+	len = ft_strlen(s1);
+	while (s1[i] || s2[i])
 	{
-		//free split for all blocks
-		return (-1);
+		if (s1[i] == s2[i])
+			j++;
+		i++;
 	}
-	if (i == 2)
+	//printf("%d---%d\n", j, len);
+	if (j == len)
+		return (1);
+	return (0);
+}
+
+int 	ft_strcheck(char *s1, char *s2, int chose)
+{
+	unsigned int 	i;
+	unsigned int 	j;
+	char 		**split;
+
+	i = 0;
+	j = 0;
+	split = ft_strsplit(s1, '-');
+	if (chose == 1)
 	{
-		free(*split[0]);
-		free(*split[1]);
-		free(*split);
-		*split = NULL;
-		return (-1);
+		while (s2[i] || split[0][i])
+		{
+			if (s2[i] == split[0][i])
+				j++;
+			i++;
+		}
+		if (j == i)
+		{
+			free(split[0]);
+			free(split[1]);
+			free(split);
+			return (1);
+		}
 	}
-	return (1);
+	if (chose == 2)
+	{
+		while (s2[i] || split[1][i])
+		{
+			if (s2[i] == split[1][i])
+				j++;
+			i++;
+		}
+		if (j == i)
+		{
+			free(split[0]);
+			free(split[1]);
+			free(split);
+			return (1);
+		}
+	}
+	free(split[0]);
+	free(split[1]);
+	free(split);
+	return (0);
 }

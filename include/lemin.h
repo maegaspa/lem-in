@@ -95,7 +95,7 @@ int		parser(t_name **name, t_link **link, t_map *map);
 int   	set_map(t_name **name, t_link **link, t_map *map);
 int 	set_matrix(t_map *map);
 int		check_str_number(char *str);
-int 	ft_strcheck(char *s1, char *s2);
+int 	ft_strcheck(char *s1, char *s2, int chose);
 int		check_valid_co(int **tab, int len);
 void 	print_tab_int(int **tab, int y, int x);
 int 	print_and_return(int i);
@@ -108,6 +108,7 @@ void	check_all_link_and_name(t_map *map, int i);
 int 	free_and_return(char ***split, int i);
 int 	set_tab_link(t_link *tmp_link, t_map *map);
 int 	set_tab_name_and_co(t_name *tmp_name, t_map *map);
+int		name_cmp(char *s1, char *s2);
 int		main(void);
 
 #endif

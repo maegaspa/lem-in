@@ -26,6 +26,7 @@ FILES = src/parser\
 		src/ft_list\
 		src/utils\
 		src/utils2\
+		src/utils3\
 		src/init\
 		src/set_all_tab\
 		src/main\
