@@ -6,7 +6,7 @@
 /*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/25 10:24:52 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/25 14:59:08 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/25 16:36:01 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,9 +25,9 @@ void	get_min_path(t_map *map, t_bfs *bfs)
 	count_end = 0;
 	while (x < map->inf.size_name)
 	{
-		if (map->matrix[map->inf.start][x] == 1)
+		if (map->matrix[map->inf.start][x] != 0)
 			count_start++;
-		if (map->matrix[map->inf.end][x] == 1)
+		if (map->matrix[map->inf.end][x] != 0)
 			count_end++;
 		x++;
 	}

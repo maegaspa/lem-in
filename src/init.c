@@ -24,6 +24,8 @@ void	init_value(t_map *map)
 	map->inf.end = -1;
 	map->cpt.start_name = 1;
 	map->cpt.start_link = 1;
+	map->cpt.yes_start = 0;
+	map->cpt.yes_end = 0;
 }
 
 void	init_matrix(t_map *map)
@@ -36,4 +38,6 @@ void	init_matrix(t_map *map)
 	map->mat.name1 = NULL;
 	map->mat.name2 = NULL;
 	map->mat.split = NULL;
+	map->mat.start_link_end = 0;
+	map->mat.end_link_start = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:01:39 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/25 12:09:09 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/11 19:01:42 by cgarrot     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,14 +70,11 @@ int		check_str_number(char *str)
 	int i;
 
 	i = 0;
-	if (str != NULL)
+	while (str[i])
 	{
-		while (str[i])
-		{
-			if (!(48 <= str[i] && str[i] <= 57))
-				return (0);
-			i++;
-		}
+		if (!(48 <= str[i] && str[i] <= 57))
+			return (0);
+		i++;
 	}
 	return (1);
 }

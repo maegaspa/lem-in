@@ -54,35 +54,6 @@ int		check_valid_co(int **tab, int len)
 	return (1);
 }
 
-int 	ft_strcheck(char *s1, char *s2)
-{
-	unsigned int 	i;
-	int 	j;
-	int 	k;
-	int 	len;
-
-	i = 0;
-	j = 0;
-	len = ft_strlen(s2);
-	while (s1[i])
-	{
-		j = 0;
-		k = i;
-		while (s2[j] && s1[k] && s1[k] == s2[j])
-		{
-			k++;
-			j++;
-		}
-		if (len == j)
-		{	
-			//printf("[%s][%s][%d]\n", s1, s2, j);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
 int 	print_and_return(int i)
 {
 	if (i == 0)

@@ -6,7 +6,7 @@
 /*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/23 13:25:18 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/25 14:58:09 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/25 16:33:43 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,6 +58,7 @@ void	init_bfs(t_map *map, t_bfs *bfs, int start_node)
 	bfs->visited[start_node] = 1;
 	bfs->distance[start_node] = 0;
 	add_node(bfs, start_node);
+	bfs->min_path = 0;
 }
 
 int		**change_matrix(int **matrix, t_map *map, t_bfs *bfs)
