@@ -3,218 +3,106 @@
 /*                                                              /             */
 /*   bfs.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <maegaspa@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/07 15:36:20 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/07 15:36:20 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/11/23 13:25:18 by seanseau     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/25 16:33:43 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
+#include <stdio.h>
 
-int    init_bfs(t_map *map)
+int		*malloc_int_tab(int size)
 {
-    int i;
-    int n;
+	int	*tab;
+	int x;
 
-    i = 0;
-    n = 0;
-    if (!(map->queue = malloc(sizeof(int) * map->inf.size_name)))
-        return (0);
-    if (!(map->visited = malloc(sizeof(int) * map->inf.size_name)))
-        return (0);
-    map->visited[0] = map->inf.start;
-    while (i < map->inf.size_name)
-    {
-        if (map->matrix[map->inf.start][i] == 1)
-        {
-            printf("i = %d\n", i);
-            map->queue[n] = map->matrix[map->inf.start][i];
-            n++;
-        }
-        i++;
-    }
-    return (1);
-}
-
-void    bfs(t_map *map)
-{
-    int n;
-    int p;
-
-    n = 0;
-    p = 0;
-    map->i = map->i + 1;
-    if (map->first == 0)
-        init_bfs(map);
-    while (map->queue && map->i++ < map->inf.size_name)
-    {
-        while (n < map->inf.size_name)
-        {
-            if (map->matrix[0][map->i] == 1 && map->i != map->visited[n])
-            {
-                printf("map->i = %d\n", map->i);
-                map->queue[++map->front] = map->matrix[0][map->i];
-                while (p < map->inf.size_name)
-                {
-                    printf("p = %d\n", p);
-                    printf("queue[%d] = %d\n", p, map->queue[p]);
-                    printf("visited[%d] = %d\n", p, map->visited[p]);
-                    p++;
-                }
-                map->first = 1;
-                bfs(map);
-            }
-            n++;
-        }
-    }
-}
-
-/*struct      vertex
-{
-    char    label;
-    int     visited;
-}
-
-struct  vertex* lstvertices[map->inf.size_name];
-
-void    addvertex(char label)
-{
-    struct vertex* vertex = (struct Vertex*) malloc(sizeof(struct vertex));
-
-    vertex->label = label;
-    vertex->visited = 0;
-    lstvertices[vertexcount++] = vertex;
-}
-
-void    insert(int data)
-{
-    queue[++rear] = data;
-    queueitemcount++;
-}
-
-void        bfs(int vert, t_map *map)
-{
-	int **tab;
-	int *queue;
-	int *visited;
-	int front;
-	int rear;
-	int n;
-
-	if (!(tab = malloc(sizeof(int *) * map->inf.size_name)))
+	x = 0;
+	if (!(tab = (int *)malloc(sizeof(int) * size)))
 		return (0);
-	if (!(queue = malloc(sizeof(int) * map->inf.size_name)))
-	    return (0);
-	i = 1;
-	rear = -1;
-	front = 0;
-	while (i++ <= n)
+	while (x != size)
 	{
-		if (!(tab[vert] = malloc(sizeof(int) * map->inf.size_name)))
-			return (0);
-		if (tab[vert][i] && !visited[i])
-			queue[++rear] = i;
+		tab[x] = -1;
+		x++;
 	}
-	if (front <= rear)
+	return (tab);
+}
+
+void	remove_node(t_bfs *bfs)
+{
+	int x;
+
+	x = 0;
+	while (x != bfs->q_size)
 	{
-		visited[queue[front]] = 1;
-		bfs(queue[front++], map);
+		bfs->queue[x] = bfs->queue[x + 1];
+		x++;
 	}
-}*/
-
-
-/*
-int         isEmpty(t_queue *q)
-{
-    if (q->rear == -1)
-        return (1);
-    else
-        return (0);
+	bfs->q_size--;
 }
 
-struct node;
-
-struct queue* createQueue();
-
-void        bfs(t_map *map, int startvertex)
+void	add_node(t_bfs *bfs, int node)
 {
-    int currentvertex;
-    int *tmp;
-    int adjvertex;
-    struct queue* q = createQueue();
-    struct node* tmp = map->matrix[currentvertex];
-
-    q = createQueue();
-    map->visited[startvertex] = 1;
-    enqueue(q, startvertex);
-    while (!isEmpty(q))
-    {
-        currentvertex = dequeue(q);
-        printf("visited %d\n", currentvertex);
-        //TROUVER CONDITION POUR BOUCLER SUR TMP
-        while (tmp)
-        {
-            adjvertex = tmp->vertex;
-            if (map->visited[][] == 0)
-            {
-                map->visited[] = 1;
-                enqueue(q, adjvertex);
-            }
-            tmp = tmp->next;
-            //ICI TMP PASSE AU NOEUD SUIVANT
-        }
-    }
-
+	bfs->queue[bfs->q_size] = node;
+	bfs->q_size++;
 }
 
-struct node
+void	init_bfs(t_map *map, t_bfs *bfs, int start_node)
 {
-    int vertex;
-    struct node* next;
+	bfs->visited = malloc_int_tab(map->inf.size_name);
+	bfs->distance = malloc_int_tab(map->inf.size_name);
+	bfs->queue = malloc_int_tab(map->inf.size_name);
+	bfs->q_size = 0;
+	bfs->visited[start_node] = 1;
+	bfs->distance[start_node] = 0;
+	add_node(bfs, start_node);
+	bfs->min_path = 0;
 }
 
-struct queue* createQueue()
+int		**change_matrix(int **matrix, t_map *map, t_bfs *bfs)
 {
-    struct queue* q = malloc(sizeof(struct queue));
+	int		x;
+	int		y;
 
-    q->front = -1;
-    q->rear = -1;
-    return (q);
+	x = 0;
+	while (x < map->inf.size_name)
+	{
+		y = 0;
+		while (y < map->inf.size_name)
+		{
+			if (matrix[x][y] == 1)
+				matrix[x][y] = bfs->distance[y];
+			y++;
+		}
+		x++;
+	}
+	return (matrix);
 }
 
-void        enqueue(t_queue *q, int value)
+void	begin_bfs(t_map *map, int start_node)
 {
-    if (q->rear == map->inf.size_name - 1)
-        printf("\nQueue is Full!!");
-    else
-    {
-        if (q->front == -1)
-            q->front = 0;
-        q->rear++;
-        q->items[q->rear] = value;
-    }
+	t_bfs	bfs;
+	int		x;
+
+	init_bfs(map, &bfs, start_node);
+	while (bfs.queue[0] != map->inf.end)
+	{
+		x = 0;
+		while (x != map->inf.size_name)
+		{
+			if (map->matrix[bfs.queue[0]][x] == 1 && bfs.visited[x] == -1 &&
+					bfs.distance[x] <= bfs.distance[bfs.queue[0]] + 1)
+			{
+				bfs.visited[x] = 1;
+				bfs.distance[x] = bfs.distance[bfs.queue[0]] + 1;
+				add_node(&bfs, x);
+			}
+			x++;
+		}
+		remove_node(&bfs);
+	}
+	map->matrix = change_matrix(map->matrix, map, &bfs);
+	reverse_pathfinding(map, &bfs);
 }
-
-
-int         dequeue(t_queue *q)
-{
-    int item;
-    if (isEmpty(q))
-    {
-        printf("Queue is empty");
-        item = -1;
-    }
-    else
-    {
-        item = q->items[q->front];
-        q->front++;
-        if (q->front > q->rear)
-        {
-            printf("Resetting queue");
-            q->front = q->rear = -1;
-        }
-    }
-    return (item);
-}*/

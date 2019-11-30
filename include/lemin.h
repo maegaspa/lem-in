@@ -50,6 +50,8 @@ typedef struct s_matrix
 {
 	int 	i;
 	int 	j;
+	int 	start_link_end;
+	int 	end_link_start;
 	int 	tmp_i;
 	int 	save_y;
 	int 	save_x;
@@ -63,24 +65,37 @@ typedef struct s_cpt
 	int		error;
 	int		i;
 	int		j;
+	int 	yes_start;
+	int 	yes_end;
 	unsigned int	len;
 	unsigned int	k;
 	int 	start_name;
 	int 	start_link;
 } 				t_cpt;
 
-typedef struct  s_map
+typedef struct		s_path
+{
+	int				*path;
+	int				length;
+	struct			s_path *next;
+}					t_path;
+
+typedef struct		s_bfs
+{
+	int				*visited;
+	int				*distance;
+	int				*queue;
+	int				q_size;
+	int				min_path;
+	t_path			*path;
+}					t_bfs;
+
+typedef struct s_map
 {
 	char	**map_name;
 	char	**map_link;
 	int 	**map_co;
 	int		**matrix;
-	int     *visited;
-	int     *queue;
-	int     front;
-	int     rear;
-	int     first;
-	int     i;
 	t_info	inf;
 	t_cpt	cpt;
 	t_matrix mat;
@@ -102,21 +117,28 @@ int		parser(t_name **name, t_link **link, t_map *map);
 int   	set_map(t_name **name, t_link **link, t_map *map);
 int 	set_matrix(t_map *map);
 int		check_str_number(char *str);
-int 	ft_strcheck(char *s1, char *s2);
+int 	ft_strcheck(char *s1, char *s2, int chose);
 int		check_valid_co(int **tab, int len);
 void 	print_tab_int(int **tab, int y, int x);
 int 	print_and_return(int i);
-int			check_ant_line(t_map *map, char *line);
-int			check_link_line(t_link **link, t_map *map, char *line, char **split);
-int			check_name_line(t_name **name, t_map *map, char *line, char **split);
-void		check_start_end(t_map *map, char **line);
+int	    check_ant_line(t_map *map, char *line);
+int		check_link_line(t_link **link, t_map *map, char *line, char **split);
+int		check_name_line(t_name **name, t_map *map, char *line, char **split);
+int		check_start_end(t_map *map, char **line);
 void	init_matrix(t_map *map);
-void	check_all_link_and_name(t_map *map, int i);
+int		check_all_link_and_name(t_map *map, int i);
 int 	free_and_return(char ***split, int i);
 int 	set_tab_link(t_link *tmp_link, t_map *map);
 int 	set_tab_name_and_co(t_name *tmp_name, t_map *map);
+int		name_cmp(char *s1, char *s2);
 int		main(void);
-int     init_bfs(t_map *map);
-void    bfs(t_map *map);
+void	get_min_path(t_map *map, t_bfs *bfs);
+void	reverse_pathfinding(t_map *map, t_bfs *bfs);
+void	remove_node(t_bfs *bfs);
+void	add_node(t_bfs *bfs, int node);
+void	init_bfs(t_map *map, t_bfs *bfs, int start_node);
+int		**change_matrix(int **matrix, t_map *map, t_bfs *bfs);
+void	begin_bfs(t_map *map, int start_node);
+
 
 #endif

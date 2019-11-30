@@ -1,0 +1,33 @@
+1215
+##start
+salut 9 9
+comment 6 6
+ca 8 8
+va 10 10
+bien 12 12
+et 14 14
+toi 18 18
+poke 20 20
+pok 22 22
+non 23 23
+dis 25 25
+##end
+moi 11 11
+5 16 16
+salut-comment
+salut-bien
+salut-poke
+comment-ca
+bien-et
+poke-pok
+ca-5
+ca-va
+et-toi
+et-pok
+pok-et
+pok-non
+va-toi
+va-moi
+toi-moi
+non-dis
+dis-moi
