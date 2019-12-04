@@ -13,7 +13,7 @@
 
 .PHONY: all clean fclean re
 
-NAME = lemin
+NAME = lem-in
 CC = gcc
 DEBUG = -g -fsanitize=address
 FLAGS = -Wall -Wextra -Werror -g
@@ -30,9 +30,9 @@ FILES = src/parser\
 		src/init\
 		src/set_all_tab\
 		src/main\
-		src/algo\
 		src/bfs\
 		src/pathfinder\
+		src/algo\
 
 #----------------------------------COLOR---------------------------------------#
 

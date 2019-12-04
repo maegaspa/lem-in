@@ -16,171 +16,135 @@ int 	*ft_intdup(int *dst, int *src, unsigned int size)
 	return (dst);
 }
 
-int 	**clear_path(int	**path, int nb_path, int nb_fourm, int start, int end, int *file)
+int 	**clear_path(t_map *map, t_display *display, t_path *path)
 {
-	int 	**first_path;
-	int 	**second_path;
-	int 	*new_file_first;
-	int 	*new_file_second;
 	int 	i;
 	int 	j;
-	int		count;
-	int		nb_new_path_first;
-	int		nb_new_path_second;
-	int 	error;
-	int 	occurrence;
 
 	i = 1;
-	occurrence = 0;
-	if (!(new_file_first = malloc(sizeof(int) * nb_path)))
+	path->occur = 0;
+	if (!(path->new_file_first = malloc(sizeof(int) * path->nb_path)))
 		return (0);
-	if (!(new_file_second = malloc(sizeof(int) * nb_path)))
+	if (!(path->new_file_second = malloc(sizeof(int) * path->nb_path)))
 		return (0);
-	if (!(first_path = malloc(sizeof(int*) * nb_path)))
+	if (!(path->first_path = malloc(sizeof(int*) * path->nb_path)))
 		return (0);
-	if (!(second_path = malloc(sizeof(int*) * nb_path)))
+	if (!(path->second_path = malloc(sizeof(int*) * path->nb_path)))
 		return (0);
-	nb_new_path_first = 1;
-	nb_new_path_second = 0;
-	first_path[0] = ft_intdup(first_path[0], path[0], file[0]);
-	while (i < nb_path)
+	path->nb_newfirst = 1;
+	path->nb_newsecond = 0;
+    path->first_path[0] = ft_intdup(path->first_path[0], path->path[0], path->length);
+	while (i < path->nb_path)
 	{
 		j = -1;
-		error = 0;
-		while (++j < file[i])
+		path->error = 0;
+		while (++j < path->file[i])
 		{
-			count = -1;
-			if ((path[i][0] == start) && (path[i][j] != end))
-				while (++count < nb_new_path_first && j < file[i] - 1)
-					if (path[i][j] == first_path[count][j])
+			path->count = -1;
+			if ((path->path[i][0] == map->inf.start) && (path->path[i][j] != map->inf.end))
+				while (path->++count < path->nb_newfirst && j < path->file[i] - 1)
+					if (path->path[i][j] == path->first_path[path->count][j])
 					{
-						occurrence = count;
-						error++;
-						//break;
+						path->occur = path->count;
+						path->error++;
 					}
 		}
 		printf("%d\n", error);
-		if (error > 1)
+		if (path->error > 1)
 		{
-			printf("%d-%d-%d-%d-%d\n", path[i][0], path[i][1], path[i][2], path[i][3], path[i][4]);
+			printf("%d-%d-%d-%d-%d\n", path->path[i][0], path->path[i][1], path->path[i][2], path->path[i][3], path->path[i][4]);
 		}
-		if (error == 1)
+		if (path->error == 1)
 		{
-			first_path[nb_new_path_first] = ft_intdup(first_path[nb_new_path_first], path[i], file[i]);
-			new_file_first[nb_new_path_first] = file[i];
-			nb_new_path_first++;
+			path->first_path[path->nb_newfirst] = ft_intdup(path->first_path[path->nb_newfirst], path->path[i], path->file[i]);
+			path->new_file_first[path->nb_newfirst] = path->file[i];
+			path->nb_newfirst++;
 		}
-		else if ((file[occurrence] > file[i]))
+		else if ((file[path->occur] > path->file[i]))
 		{
-			second_path[nb_new_path_second] = ft_intdup(second_path[nb_new_path_second], first_path[occurrence], file[occurrence]);
-			new_file_second[nb_new_path_second] = file[occurrence];
-			ft_bzero(&first_path[occurrence], file[occurrence]);
-			first_path[occurrence] = path[i];
-			new_file_first[occurrence] = file[i];
-			nb_new_path_second++;
+			path->second_path[path->nb_newsecond] = ft_intdup(path->second_path[path->nb_newsecond], path->first_path[path->occur], path->file[path->occur]);
+			new_file_second[path->nb_newsecond] = path->file[path->occur];
+			ft_bzero(path->&first_path[path->occur], path->file[path->occur]);
+			path->first_path[path->occur] = path->path[i];
+			new_file_first[path->occur] = path->file[i];
+			path->nb_newsecond++;
 		}
-		else if (new_file_first[occurrence] > file[i])
+		else if (new_file_first[path->occur] > path->file[i])
 		{
-			second_path[nb_new_path_second] = ft_intdup(second_path[nb_new_path_second], first_path[occurrence], new_file_first[occurrence]);
-			new_file_second[nb_new_path_second] = file[occurrence];
-			ft_bzero(&first_path[occurrence], file[occurrence]);
-			first_path[occurrence] = path[i];
-			new_file_first[occurrence] = file[i];
-			nb_new_path_second++;
+			path->second_path[path->nb_newsecond] = ft_intdup(path->second_path[nb_new_path_second], path->first_path[path->occur], path->new_file_first[path->occur]);
+			new_file_second[path->nb_newsecond] = path->file[path->occur];
+			ft_bzero(&first_path[path->occur], path->file[path->occur]);
+			path->first_path[path->occur] = path->path[i];
+			path->new_file_first[path->occur] = path->file[i];
+			path->nb_newsecond++;
 		}
 		else
 		{
-			second_path[nb_new_path_second] = ft_intdup(second_path[nb_new_path_second], path[i], file[i]);
-			new_file_second[nb_new_path_second] = file[i];
-			nb_new_path_second++;
+			path->second_path[path->nb_newsecond] = ft_intdup(path->second_path[path->nb_newsecond], path->path[i], path->file[i]);
+			path->new_file_second[path->nb_newsecond] = path->file[i];
+			path->nb_newsecond++;
 		}
 		i++;
 	}
-	printf("%d-%d-%d-%d-%d\n", second_path[1][0], second_path[1][1], second_path[1][2], second_path[1][3], second_path[1][4]);
-	printf("%d-%d-%d-%d-%d-%d\n\n", second_path[0][0], second_path[0][1], second_path[0][2], second_path[0][3], second_path[0][4], second_path[0][5]);
-	return (first_path);
+	printf("%d-%d-%d-%d-%d\n", path->second_path[1][0], path->second_path[1][1], path->second_path[1][2], path->second_path[1][3], path->second_path[1][4]);
+	printf("%d-%d-%d-%d-%d-%d\n\n", path->second_path[0][0], path->second_path[0][1], path->second_path[0][2], path->second_path[0][3], path->second_path[0][4], path->second_path[0][5]);
+	return (path->first_path);
 }
 
-int 	path_line_ant(int	**first_path, int **second_path, int start, int end, int nb_ant, int nb_first_path, int nb_second_path, int *first_file, int *second_file)
+int 	path_line_ant(t_map *map, t_display *display, t_cpt *cpt, t_path *path)
 {
 	int 	i;
 	int 	j;
-	int 	k;
-	int 	l;
-	int		m;
-	int     x;
-	int 	ant_finish;
-	int 	*status_ant;
-	int 	nb_ant_cross;
-	int     ant_num;
-	int     path_size;
 
     i = 0;
-	if (!(status_ant = malloc(sizeof(int) * nb_ant)))
+	if (!(display->status_ant = malloc(sizeof(int) * map->inf.nb_fourmi)))
 		return (0);
-	ant_num = 0;
-	path_size = 3;//tab_len(first_file);
-	while (++ant_num < nb_ant + 1)
+	display->ant_num = 0;
+	display->path_size = 3;
+	while (++display->ant_num < nb_ant + 1)
 	{
-		status_ant[i] = start;
-		//printf("[%d]", status_ant[i
+		display->status_ant[i] = map->inf.start;
 	}
-	ant_finish = 0;
-	nb_ant_cross = 0;
-    ant_num = 1;
-	while (ant_finish < nb_ant)
+	display->ant_finish = 0;
+	display->nb_ant_cross = 0;
+    display->ant_num = 1;
+	while (display->ant_finish < map->inf.nb_fourmi)
 	{
 		i = 0;
-		while (i < nb_first_path)
+		while (i < path->nb_first_path)
 		{
 			j = 0;
-			k = 0;
-			while (j < (nb_first_path + nb_ant_cross))
+			cpt->p = 0;
+			while (j < (path->nb_first_path + display->nb_ant_cross))
 			{
-				l = 1;
-				m = 0;
-				x = 0;
-				//printf("ici [%d] == [%d]\n", first_path[k][l], status_ant[m]);
-				while (m <= first_file[x])
+				cpt->l = 1;
+				cpt->m = 0;
+				cpt->x = 0;
+				while (cpt->m <= path->first_file[cpt->x])
 			    {
-                    //printf("m = %d\n k = %d\n l = %d\n", m, k, l);
-//                    if (first_path[k][l] != )
-//                    if (ant_num == 5)
-//                        printf("WTF");
-                    if (ant_num > nb_ant)
+                    if (display->ant_num > map->inf.nb_fourmi)
                         break;
-                    //printf("first_path[%d][%d] = %d\n", k, l, first_path[k][l]);
-                    printf("L%d-%d ", ant_num, first_path[k][l]);
-                    if (first_path[k][l] == end && ant_num <= nb_ant)
+                    printf("L%d-%d ", display->ant_num, path->first_path[cpt->p][cpt->l]);
+                    if (first_path[cpt->p][cpt->l] == map->inf.end && display->ant_num <= map->inf.nb_fourmi)
                     {
-                        //ant_num++;
-//                        if (ant_num == nb_ant)
-//                            printf("\nL%d-%d ", ant_num, first_path[k][l]);
-                        x++;
-                        m = 0;
-                        ant_finish++;
+                        cpt->x++;
+                        cpt->m = 0;
+                        display->ant_finish++;
                         break;
                     }
-                    ant_num++;
-                    if (first_path[k][l] == end && ant_num >= nb_ant)
-                    {
-                        //printf("L%d-%d ", ant_num, first_path[k][l]);
+                    display->ant_num++;
+                    if (path->first_path[cpt->p][cpt->l] == map->inf.end && display->ant_num >= map->inf.nb_fourmi)
                         break;
-                    }
-                    //else if ()
-                    l++;
-                    m++;
+                    cpt->l++;
+                    cpt->m++;
 				}
-				/*if (first_path[k][l] == end && ant_num == nb_ant)
-                    break;*/
-				k++;
+				cpt->p++;
 				j++;
 				printf("\n");
 			}
 			i++;
 		}
-		ant_finish++;
-		//ant_num++;
+		display->ant_finish++;
 	}
 	return (0);
 }

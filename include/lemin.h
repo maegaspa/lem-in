@@ -71,14 +71,39 @@ typedef struct s_cpt
 	unsigned int	k;
 	int 	start_name;
 	int 	start_link;
+	int     x;
+	int     m;
+	int     l;
+	int     p;
 } 				t_cpt;
 
 typedef struct		s_path
 {
-	int				*path;
+    int             nb_first_path;
+    int             new_file_first;
+    int             new_file_second;
+    int             nb_path;
+	int				**path;
 	int				length;
+	int             occur;
+	int             error;
+	int             nb_newfirst;
+	int             nb_newsecond;
+	int             count;
+	int             **first_path;
+	int             **second_path;
+	int             *file;
 	struct			s_path *next;
 }					t_path;
+
+typedef struct      s_display
+{
+    int             ant_finish;
+    int             *status_ant;
+    int             nb_ant_cross;
+    int             ant_num;
+    int             path_size;
+}                   t_display;
 
 typedef struct		s_bfs
 {
@@ -139,6 +164,5 @@ void	add_node(t_bfs *bfs, int node);
 void	init_bfs(t_map *map, t_bfs *bfs, int start_node);
 int		**change_matrix(int **matrix, t_map *map, t_bfs *bfs);
 void	begin_bfs(t_map *map, int start_node);
-
 
 #endif

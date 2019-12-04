@@ -28,15 +28,13 @@ int		main(void)
 	ret = set_map(&name, &link, &map);
 	if (ret != 1)
 		return (print_and_return(ret));
-	//print_tab(map.map_name);
-	//print_tab(map.map_link);
-	//print_info_map(&name, &link, &map);
 	ret = set_matrix(&map);
 	if (ret != 1)
 		return (print_and_return(ret));
-	//set_matrix(&name, &link, &info);
 	clear(&name, &link);
 	ret = print_and_return(ret);
+	begin_bfs(&map, map.inf.start);
+
 	printf("ca marche sauf si ya error");
 	return (ret);
 }

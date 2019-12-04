@@ -49,5 +49,4 @@ void	reverse_pathfinding(t_map *map, t_bfs *bfs)
 	}
 	get_min_path(map, bfs);
 	printf("min_path : %d\n", bfs->min_path);
-//	printf("")
 }
