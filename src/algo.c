@@ -16,7 +16,7 @@ int 	*ft_intdup(int *dst, int *src, unsigned int size)
 	return (dst);
 }
 
-int 	**clear_path(t_map *map, t_display *display, t_path *path)
+int 	**clear_path(t_map *map, t_display *display, t_path *path, t_bfs *bfs)
 {
 	int 	i;
 	int 	j;
@@ -33,17 +33,17 @@ int 	**clear_path(t_map *map, t_display *display, t_path *path)
 		return (0);
 	path->nb_newfirst = 1;
 	path->nb_newsecond = 0;
-    path->first_path[0] = ft_intdup(path->first_path[0], path->path[0], path->length);
+    path->first_path[0] = ft_intdup(path->first_path[0], bfs->path[0], path->length);
 	while (i < path->nb_path)
 	{
 		j = -1;
 		path->error = 0;
-		while (++j < path->file[i])
+		while (++j < bfs->distance[i])
 		{
 			path->count = -1;
-			if ((path->path[i][0] == map->inf.start) && (path->path[i][j] != map->inf.end))
-				while (path->++count < path->nb_newfirst && j < path->file[i] - 1)
-					if (path->path[i][j] == path->first_path[path->count][j])
+			if ((bfs->path[i][0] == map->inf.start) && (bfs->path[i][j] != map->inf.end))
+				while (path->++count < path->nb_newfirst && j < bfs->distance[i] - 1)
+					if (bfs->path[i][j] == path->first_path[path->count][j])
 					{
 						path->occur = path->count;
 						path->error++;
@@ -52,36 +52,36 @@ int 	**clear_path(t_map *map, t_display *display, t_path *path)
 		printf("%d\n", error);
 		if (path->error > 1)
 		{
-			printf("%d-%d-%d-%d-%d\n", path->path[i][0], path->path[i][1], path->path[i][2], path->path[i][3], path->path[i][4]);
+			printf("%d-%d-%d-%d-%d\n", bfs->path[i][0], bfs->path[i][1], bfs->path[i][2], bfs->path[i][3], bfs->path[i][4]);
 		}
 		if (path->error == 1)
 		{
-			path->first_path[path->nb_newfirst] = ft_intdup(path->first_path[path->nb_newfirst], path->path[i], path->file[i]);
-			path->new_file_first[path->nb_newfirst] = path->file[i];
+			path->first_path[path->nb_newfirst] = ft_intdup(path->first_path[path->nb_newfirst], bfs->path[i], path->file[i]);
+			path->new_file_first[path->nb_newfirst] = bfs->distance[i];
 			path->nb_newfirst++;
 		}
-		else if ((file[path->occur] > path->file[i]))
+		else if ((file[path->occur] > bfs->distance[i]))
 		{
 			path->second_path[path->nb_newsecond] = ft_intdup(path->second_path[path->nb_newsecond], path->first_path[path->occur], path->file[path->occur]);
-			new_file_second[path->nb_newsecond] = path->file[path->occur];
-			ft_bzero(path->&first_path[path->occur], path->file[path->occur]);
-			path->first_path[path->occur] = path->path[i];
-			new_file_first[path->occur] = path->file[i];
+			new_file_second[path->nb_newsecond] = bfs->distance[path->occur];
+			ft_bzero(path->&first_path[path->occur], bfs->distance[path->occur]);
+			path->first_path[path->occur] = bfs->path[i];
+			new_file_first[path->occur] = bfs->distance[i];
 			path->nb_newsecond++;
 		}
-		else if (new_file_first[path->occur] > path->file[i])
+		else if (new_file_first[path->occur] > bfs->distance[i])
 		{
 			path->second_path[path->nb_newsecond] = ft_intdup(path->second_path[nb_new_path_second], path->first_path[path->occur], path->new_file_first[path->occur]);
-			new_file_second[path->nb_newsecond] = path->file[path->occur];
-			ft_bzero(&first_path[path->occur], path->file[path->occur]);
-			path->first_path[path->occur] = path->path[i];
-			path->new_file_first[path->occur] = path->file[i];
+			new_file_second[path->nb_newsecond] = bfs->distance[path->occur];
+			ft_bzero(&first_path[path->occur], bfs->distance[path->occur]);
+			path->first_path[path->occur] = bfs->path[i];
+			path->new_file_first[path->occur] = bfs->distance[i];
 			path->nb_newsecond++;
 		}
 		else
 		{
-			path->second_path[path->nb_newsecond] = ft_intdup(path->second_path[path->nb_newsecond], path->path[i], path->file[i]);
-			path->new_file_second[path->nb_newsecond] = path->file[i];
+			path->second_path[path->nb_newsecond] = ft_intdup(path->second_path[path->nb_newsecond], bfs->path[i], path->file[i]);
+			path->new_file_second[path->nb_newsecond] = bfs->distance[i];
 			path->nb_newsecond++;
 		}
 		i++;

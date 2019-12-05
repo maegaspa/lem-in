@@ -146,6 +146,6 @@ int 	set_matrix(t_map *map)
 	}
 	if (map->mat.start_link_end == 0 || map->mat.end_link_start == 0)
 		return (-1);
-	print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name);
+	//print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name);
 	return (1);
 }

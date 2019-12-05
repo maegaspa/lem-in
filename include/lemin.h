@@ -83,7 +83,6 @@ typedef struct		s_path
     int             new_file_first;
     int             new_file_second;
     int             nb_path;
-	int				**path;
 	int				length;
 	int             occur;
 	int             error;
@@ -111,10 +110,12 @@ typedef struct		s_bfs
 	int				*distance;
 	int				*queue;
 	int				q_size;
-	int				min_path;
-	t_path			*path;
+	int				**paths;
+	int				*tab_next;
+	int				tab_next_size;
+	int				new_path;
+	int				*saved_path;
 }					t_bfs;
-
 typedef struct s_map
 {
 	char	**map_name;
@@ -128,6 +129,11 @@ typedef struct s_map
 	t_name	*tmp_name;
 }				t_map;
 
+
+int		*malloc_int_tab(int size);
+void	begin_bfs(t_map *map, int node);
+void	reverse_pathfinding(t_map *map, t_bfs *bfs);
+int		**paths_malloc(t_map *map);
 unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
 void	print_tab(char **tab);

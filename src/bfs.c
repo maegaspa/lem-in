@@ -1,16 +1,3 @@
-/* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   bfs.c                                            .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/23 13:25:18 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/25 16:33:43 by seanseau    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
-/* ************************************************************************** */
-
 #include "../include/lemin.h"
 #include <stdio.h>
 
@@ -58,7 +45,13 @@ void	init_bfs(t_map *map, t_bfs *bfs, int start_node)
 	bfs->visited[start_node] = 1;
 	bfs->distance[start_node] = 0;
 	add_node(bfs, start_node);
-	bfs->min_path = 0;
+	bfs->tab_next = malloc_int_tab(map->inf.size_name);
+	bfs->tab_next_size = 0;
+	bfs->paths = paths_malloc(map);
+	bfs->saved_path = malloc_int_tab(map->inf.size_name);
+	bfs->paths[0][0] = map->inf.end;
+	bfs->tab_next[0] = map->inf.end;
+
 }
 
 int		**change_matrix(int **matrix, t_map *map, t_bfs *bfs)
@@ -73,7 +66,11 @@ int		**change_matrix(int **matrix, t_map *map, t_bfs *bfs)
 		while (y < map->inf.size_name)
 		{
 			if (matrix[x][y] == 1)
+			{
+				if (bfs->distance[y] == 0)
+					bfs->distance[y] = 1;
 				matrix[x][y] = bfs->distance[y];
+			}
 			y++;
 		}
 		x++;
@@ -85,6 +82,10 @@ void	begin_bfs(t_map *map, int start_node)
 {
 	t_bfs	bfs;
 	int		x;
+
+//	int		**path_tab;
+
+
 
 	init_bfs(map, &bfs, start_node);
 	while (bfs.queue[0] != map->inf.end)
@@ -101,8 +102,11 @@ void	begin_bfs(t_map *map, int start_node)
 			}
 			x++;
 		}
+		//printf("\n");
 		remove_node(&bfs);
 	}
+//	print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name);
 	map->matrix = change_matrix(map->matrix, map, &bfs);
+	//printf("\n");
 	reverse_pathfinding(map, &bfs);
 }

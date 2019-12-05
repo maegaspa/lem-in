@@ -283,7 +283,7 @@ int path_line_ant(int **first_path, int start, int end, int nb_ant, int nb_first
                     if (first_path[k][l] == end)
                     {
                         //ant_status[ant_num - 1] = end;
-                        ant_cross--;
+                        nb_ant_cross--;
                         printf("nb_ant_cross = %d\n", nb_ant_cross);
                         ant_finish++;
                         break;
