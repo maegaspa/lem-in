@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/26 12:07:25 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/05 12:28:32 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,21 +72,17 @@ typedef struct s_cpt
 	int 	start_link;
 } 				t_cpt;
 
-typedef struct		s_path
-{
-	int				*path;
-	int				length;
-	struct			s_path *next;
-}					t_path;
-
 typedef struct		s_bfs
 {
 	int				*visited;
 	int				*distance;
 	int				*queue;
 	int				q_size;
-	int				min_path;
-	t_path			*path;
+	int				**paths;
+	int				*tab_next;
+	int				tab_next_size;
+	int				new_path;
+	int				*saved_path;
 }					t_bfs;
 
 typedef struct s_map
@@ -102,8 +98,17 @@ typedef struct s_map
 	t_name	*tmp_name;
 }				t_map;
 
+
+
+
+
+int		*malloc_int_tab(int size);
 void	begin_bfs(t_map *map, int node);
 void	reverse_pathfinding(t_map *map, t_bfs *bfs);
+int		**paths_malloc(t_map *map);
+
+
+
 
 unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
