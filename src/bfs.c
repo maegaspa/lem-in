@@ -81,6 +81,7 @@ int		**change_matrix(int **matrix, t_map *map, t_bfs *bfs)
 void	begin_bfs(t_map *map, int start_node)
 {
 	t_bfs	bfs;
+	t_path  path;
 	int		x;
 
 //	int		**path_tab;
@@ -108,5 +109,5 @@ void	begin_bfs(t_map *map, int start_node)
 //	print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name);
 	map->matrix = change_matrix(map->matrix, map, &bfs);
 	//printf("\n");
-	reverse_pathfinding(map, &bfs);
+	reverse_pathfinding(map, &bfs, &path);
 }

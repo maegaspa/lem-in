@@ -80,8 +80,8 @@ typedef struct s_cpt
 typedef struct		s_path
 {
     int             nb_first_path;
-    int             new_file_first;
-    int             new_file_second;
+    int             *new_file_first;
+    int             *new_file_second;
     int             nb_path;
 	int				length;
 	int             occur;
@@ -129,10 +129,10 @@ typedef struct s_map
 	t_name	*tmp_name;
 }				t_map;
 
-
+int 	**clear_path(t_map *map, /*t_display *display,*/ t_path *path, t_bfs *bfs);
 int		*malloc_int_tab(int size);
 void	begin_bfs(t_map *map, int node);
-void	reverse_pathfinding(t_map *map, t_bfs *bfs);
+void	reverse_pathfinding(t_map *map, t_bfs *bfs, t_path *path);
 int		**paths_malloc(t_map *map);
 unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
@@ -164,7 +164,6 @@ int 	set_tab_name_and_co(t_name *tmp_name, t_map *map);
 int		name_cmp(char *s1, char *s2);
 int		main(void);
 void	get_min_path(t_map *map, t_bfs *bfs);
-void	reverse_pathfinding(t_map *map, t_bfs *bfs);
 void	remove_node(t_bfs *bfs);
 void	add_node(t_bfs *bfs, int node);
 void	init_bfs(t_map *map, t_bfs *bfs, int start_node);

@@ -260,6 +260,7 @@ int path_line_ant(int **first_path, int start, int end, int nb_ant, int nb_first
         ant_status[ant_num] = start;
         ant_num++;
     }
+    ant_num = 1;
     while (ant_finish < nb_ant)
     {
         i = 0;
@@ -269,27 +270,12 @@ int path_line_ant(int **first_path, int start, int end, int nb_ant, int nb_first
             l = 1;
             k = 0;
             j = 0;
-            while (j < (nb_ant_cross + nb_first_path))
+            while (j < (nb_ant_cross + nb_first_path)) 
             {
+                printf("first_file[x] = %d\n", first_file[x]);
                 while (m < first_file[x])
                 {
-                    ant_status[ant_num - 1] = first_path[k][l];
-                    if (ant_status[ant_num - 1] != start && ant_status[ant_num - 1] != end)
-                        nb_ant_cross++;
-                    nb_ant_cross = nb_first_path;
-                    if (first_path[k][l] != end)
-                        nb_ant_cross++;
-                    printf("L%d-%d ", ant_num, first_path[k][l]);
-                    if (first_path[k][l] == end)
-                    {
-                        //ant_status[ant_num - 1] = end;
-                        nb_ant_cross--;
-                        printf("nb_ant_cross = %d\n", nb_ant_cross);
-                        ant_finish++;
-                        break;
-                    }
-                    if (ant_num == nb_ant)
-                        break;
+
                     m++;
                     l++;
                 }
@@ -306,13 +292,13 @@ int path_line_ant(int **first_path, int start, int end, int nb_ant, int nb_first
 
 
 /*int 	path_line_ant(int	**first_path, int **second_path, int start, int end, int nb_ant, int nb_first_path, int nb_second_path, int *first_file, int *second_file)
-{
+{+
 	int 	i;
 	int 	j;
 	int 	k;
 	int 	l;
 	int		m;
-	int     x;
+
 	int 	ant_finish;
 	int 	*status_ant;
 	int 	nb_ant_cross;

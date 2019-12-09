@@ -27,7 +27,7 @@ void	remove_nodes_path(t_bfs *bfs)
 	bfs->tab_next_size = 0;
 }
 
-void	print_path(t_bfs *bfs, t_map *map)
+void	print_path(t_bfs *bfs, t_map *map, t_path *path)
 {
 	int x;
 	int y;
@@ -36,15 +36,17 @@ void	print_path(t_bfs *bfs, t_map *map)
 	while (bfs->paths[x][0] != -1)
 	{
 		y = 0;
-		printf("%d\n", bfs->distance[1]);
+		//printf("bfs->distance[1]-> %d\n", bfs->distance[1]);
 		printf("%d -> ", x);
 		while (bfs->paths[x][y] != -1)
 		{
-			printf("|%s|", map->map_name[bfs->paths[x][y]]);
+		    //printf("bfs->path[%d][%d] = %d\n", x, y, bfs->paths[x][y]);
+			printf("|%s| ", map->map_name[bfs->paths[x][y]]);
 			y++;
 		}
 		printf("\n");
 		x++;
+		path->nb_path = x;
 	}
 	printf("\n");
 }
@@ -214,9 +216,9 @@ int		all_path_done(t_bfs *bfs, t_map *map)
 	return (1);
 }
 
-void	reverse_pathfinding(t_map *map, t_bfs *bfs)
+void	reverse_pathfinding(t_map *map, t_bfs *bfs, t_path *path)
 {
 	while (all_path_done(bfs, map) != 1)
 		pathfinder(map, bfs, get_paths_nb(bfs));
-	print_path(bfs, map);
+	print_path(bfs, map, path);
 }

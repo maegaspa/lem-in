@@ -32,7 +32,7 @@ FILES = src/parser\
 		src/main\
 		src/bfs\
 		src/pathfinder\
-		#src/algo\#
+		src/algo\
 
 #----------------------------------COLOR---------------------------------------#
 

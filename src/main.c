@@ -19,6 +19,9 @@ int		main(void)
 	t_name	*name;
 	t_link	*link;
 	t_map	map;
+	t_bfs   bfs;
+	t_path  path;
+	/*t_display   display;*/
 	int 	ret;
 
 	init_value(&map);
@@ -34,7 +37,7 @@ int		main(void)
 	clear(&name, &link);
 	ret = print_and_return(ret);
 	begin_bfs(&map, map.inf.start);
-
+    clear_path(&map, /*&display,*/ &path, &bfs);
 	printf("ca marche sauf si ya error");
 	return (ret);
 }
