@@ -97,9 +97,10 @@ typedef struct		s_path
 
 typedef struct      s_display
 {
+    int             remain;
     int             ant_finish;
     int             *status_ant;
-    int             nb_ant_cross;
+    int             ant_cross;
     int             ant_num;
     int             path_size;
 }                   t_display;

@@ -38,6 +38,7 @@ int		main(void)
 	ret = print_and_return(ret);
 	begin_bfs(&map, map.inf.start);
     clear_path(&map, /*&display,*/ &path, &bfs);
+
 	printf("ca marche sauf si ya error");
 	return (ret);
 }

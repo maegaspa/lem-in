@@ -102,63 +102,64 @@ int 	**clear_path(t_map *map, /*t_display *display,*/ t_path *path, t_bfs *bfs)
 	return (path->first_path);
 }
 
-/*int 	path_line_ant(t_map *map, t_display *display, t_cpt *cpt, t_path *path)
+int     dispatch_ant(t_map *map, t_bfs *bfs, t_path *path)
 {
-	int 	i;
-	int 	j;
+	int i;
+	int j;
+	int k;
+	int l;
+	int tmp;
 
-    i = 0;
 	if (!(display->status_ant = malloc(sizeof(int) * map->inf.nb_fourmi)))
 		return (0);
-	display->ant_num = 0;
-	display->path_size = 3;
-	while (++display->ant_num < nb_ant + 1)
+	i = 0;
+	while (i < map->inf.nb_fourmi)
 	{
-		display->status_ant[i] = map->inf.start;
+		display->status_ant[i] = start;
+		i++;
 	}
+	display->dispatch = map->inf.nb_fourmi / path->nb_path;
+	display->remain = map->inf.nb_fourmi % path->nb_path;
+	ft_printf("%d/-/%d\n", display->dispatch, reste);
 	display->ant_finish = 0;
-	display->nb_ant_cross = 0;
-    display->ant_num = 1;
-	while (display->ant_finish < map->inf.nb_fourmi)
+	display->ant_cross = path->nb_path;
+	l = 0;
+	tmp = 1;
+	while (l < map->inf.nb_fourmi / path->nb_path + path->nb_path)
 	{
 		i = 0;
-		while (i < path->nb_first_path)
+		if ((tmp * path->nb_path) <= map->inf.nb_fourmi)
+			display->ant_cross = tmp * path->nb_path;
+		while (i < display->ant_cross)
 		{
 			j = 0;
-			cpt->p = 0;
-			while (j < (path->nb_first_path + display->nb_ant_cross))
+			while (j < path->nb_path)
 			{
-				cpt->l = 1;
-				cpt->m = 0;
-				cpt->x = 0;
-				while (cpt->m <= path->first_file[cpt->x])
-			    {
-                    if (display->ant_num > map->inf.nb_fourmi)
-                        break;
-                    printf("L%d-%d ", display->ant_num, path->first_path[cpt->p][cpt->l]);
-                    if (first_path[cpt->p][cpt->l] == map->inf.end && display->ant_num <= map->inf.nb_fourmi)
-                    {
-                        cpt->x++;
-                        cpt->m = 0;
-                        display->ant_finish++;
-                        break;
-                    }
-                    display->ant_num++;
-                    if (path->first_path[cpt->p][cpt->l] == map->inf.end && display->ant_num >= map->inf.nb_fourmi)
-                        break;
-                    cpt->l++;
-                    cpt->m++;
+				k = 0;
+				while (k < files[j])
+				{
+					if (bfs->path[j][k] == display->status_ant[i] && bfs->path[j][k] != map->inf.end)
+					{
+						display->status_ant[i] = bfs->path[j][k + 1];
+						ft_printf("L%d-%d ", i + 1, display->status_ant[i]);
+						break;
+					}
+					k++;
 				}
-				cpt->p++;
+				i++;
 				j++;
-				printf("\n");
 			}
-			i++;
+			if (i % path->nb_path == 0)
+			{
+				if (i == path->nb_path * tmp && tmp <= map->inf.nb_fourmi)
+					tmp++;
+			}
 		}
-		display->ant_finish++;
+		ft_printf("\n");
+		l++;
 	}
 	return (0);
-}*/
+}
 
 /*
 int 	main(void)
