@@ -58,6 +58,10 @@ int 	dispache_ant(int *files, int nb_file, int nb_ant, int **path, int end)
 					k++;
 				}
 				i++;
+				//contions qui check le status de la fourmie si elle est pas en movement
+				//sinon le j ne dois pas etre incrementer pour pouvoir faire le plus rapide
+				//ducoup mettre une tmp++ au temps ecoule pour le j (et dissocier le j avec j1 et j2 pour le surplus)
+				//et add le reste tout en faisant un calcul avec le nombre de fourmie restante et le chemin le plus court pour pouvoir dispache plus opti
 				j++;
 			}
 			if (i % nb_file == 0)
