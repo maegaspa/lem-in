@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
+#    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/11 19:05:09 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2019/12/12 01:52:26 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -22,14 +22,17 @@ HEADER = include
 
 #------------------------------------FILE--------------------------------------#
 
-FILES = src/parser\
-		src/ft_list\
-		src/utils\
-		src/utils2\
-		src/init\
-		src/set_all_tab\
-		src/main\
-		src/path1\
+FILES = src/parse/parser\
+		src/parse/ft_list\
+		src/parse/utils\
+		src/parse/utils2\
+		src/parse/utils3\
+		src/parse/init\
+		src/parse/set_all_tab\
+		src/parse/main\
+		src/parse/path1\
+		src/algo/ft_foundpaths\
+		src/algo/cleanpath.c\
 
 #----------------------------------COLOR---------------------------------------#
 
@@ -101,7 +104,6 @@ $(NAME): $(OBJ)
 	@printf $(W)"          \_/__\_/                                            \_/__\_/ \n"
 	@make -C libft/
 	@$(CC) $(FLAGS) $(SRC) -L. libft/libftprintf.a -o $(NAME)
-
 
 object/%.o: src/%.c
 	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
