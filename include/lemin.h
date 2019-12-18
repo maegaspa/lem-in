@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/12 17:24:39 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/18 18:36:58 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -124,6 +124,26 @@ typedef struct	s_tempclean
 
 }				t_tempclean;
 
+typedef struct	s_bfs
+{
+	int			start;
+	int			end;
+	int			start_paths;
+	int			nb_paths;
+	int			size_diago;
+	int			**mtx_diago;
+	int			**mtx_state;
+	int			found_paths;
+	int			**queue;
+}				s_bfs;
+
+typedef struct	s_temp_bfs
+{
+	int			actual_path;
+	int			i_queue;
+	
+}				t_temp_bfs;
+
 typedef struct	s_res
 {
 	int			*size_paths;
@@ -163,8 +183,8 @@ int		main(void);
 /*
 **	bfs hmichel
 */
-int			ft_nbpaths_max(t_map map);
-int			ft_set_prealgo(t_map map, t_prealgo *pa);
-void		*ft_allpaths(t_map map, t_prealgo *pa);
-int			ft_bfs(t_map map);
+//int			ft_nbpaths_max(t_map map);
+//int			ft_set_prealgo(t_map map, t_prealgo *pa);
+//void		*ft_allpaths(t_map map, t_prealgo *pa);
+//int			ft_bfs(t_map map);
 #endif
