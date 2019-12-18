@@ -70,7 +70,7 @@ int   set_map(t_name **name, t_link **link, t_map *map)
 	{
 		if (!(map->matrix[map->cpt.i] = malloc(sizeof(int) * map->inf.size_name)))
 			return (0);
-		ft_bzero(map->matrix[map->cpt.i], map->inf.size_name);
+		ft_bzero(map->matrix[map->cpt.i], sizeof(int) * map->inf.size_name);
 		map->cpt.i++;
 	}
 	if ((map->inf.ret = set_tab_name_and_co(tmp_name, map)) && map->inf.ret != 1)

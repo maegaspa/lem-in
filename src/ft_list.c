@@ -42,17 +42,27 @@ t_name		*insert_name(char **val, int i)
 	return (elem);
 }
 
+
 void	clear(t_name **name, t_link **link)
 {
-	while(*name)
+	t_name *name_temp;
+	t_link *link_temp;
+
+	name_temp = *name;
+	link_temp = *link;
+	while(name_temp)
 	{
-		*name = (*name)->next;
+		name_temp = (*name)->next;
+		free((*name)->name);
 		free(*name);
+		*name = name_temp;
 	}
 	while(*link)
 	{
-		*link = (*link)->next;
+		link_temp = (*link)->next;
+		free((*link)->link);
 		free(*link);
+		*link = link_temp;
 	}
 }
 

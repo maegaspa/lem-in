@@ -19,6 +19,21 @@
 # include <fcntl.h>
 # include "../libft/includes/ft_printf.h"
 
+typedef struct s_resize_matrice
+{
+	int 	i;
+	int 	j;
+	int 	k;
+	int 	x;
+	int 	y;
+	int 	save_y;
+	int 	save_x;
+	int 	l;
+	int 	m;
+	int 	n;
+	int 	size_reduct;
+}				t_resize_matrice;
+
 typedef struct s_name
 {
 	char 	*name;
@@ -54,6 +69,7 @@ typedef struct s_matrix
 	int 	tmp_i;
 	int 	save_y;
 	int 	save_x;
+	int 	size;
 	char	*name1;
 	char	*name2;
 	char 	**split;
@@ -78,11 +94,13 @@ typedef struct s_map
 	char	**map_link;
 	int 	**map_co;
 	int		**matrix;
+	int		**new_matrix;
 	t_info	inf;
 	t_cpt	cpt;
 	t_matrix mat;
 	t_link	*tmp_link;
 	t_name	*tmp_name;
+	t_resize_matrice n_mat;
 }				t_map;
 
 unsigned int	count_word(const char *s, char c);
@@ -113,6 +131,8 @@ int 	free_and_return(char ***split, int i);
 int 	set_tab_link(t_link *tmp_link, t_map *map);
 int 	set_tab_name_and_co(t_name *tmp_name, t_map *map);
 int		name_cmp(char *s1, char *s2);
+int 	delete_cul_de_sac(t_map *map);
+int 	resize_matrix(t_map *map);
 int		main(void);
 
 #endif
