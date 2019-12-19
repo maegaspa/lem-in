@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/18 18:36:58 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/19 15:14:19 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -135,13 +135,12 @@ typedef struct	s_bfs
 	int			**mtx_state;
 	int			found_paths;
 	int			**queue;
-}				s_bfs;
+}				t_bfs;
 
 typedef struct	s_temp_bfs
 {
 	int			actual_path;
 	int			i_queue;
-	
 }				t_temp_bfs;
 
 typedef struct	s_res
