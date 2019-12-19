@@ -19,6 +19,12 @@
 # include <fcntl.h>
 # include "../libft/includes/ft_printf.h"
 
+typedef struct s_file_display
+{
+	char 	*line;
+	struct 	s_file_display *next;
+}				t_file_display;
+
 typedef struct s_resize_matrice
 {
 	int 	i;
@@ -101,6 +107,7 @@ typedef struct s_map
 	t_link	*tmp_link;
 	t_name	*tmp_name;
 	t_resize_matrice n_mat;
+	t_file_display	*tmp_f_dis;
 }				t_map;
 
 unsigned int	count_word(const char *s, char c);
@@ -109,11 +116,12 @@ void	print_tab(char **tab);
 void	free_map(char	**map);
 t_link			*insert_link(char *val, int i);
 t_name			*insert_name(char **val, int i);
-void	clear(t_name **name, t_link **link);
+t_file_display		*insert_line(char *line);
+void	clear(t_name **name, t_link **link, t_file_display **f_dis);
 int		list_len(t_name *name, t_link *link, int chose);
 void	print_list(t_name *name, t_link *link);
 void	init_value(t_map *map);
-int		parser(t_name **name, t_link **link, t_map *map);
+int		parser(t_name **name, t_link **link, t_map *map, t_file_display	**f_dis);
 int   	set_map(t_name **name, t_link **link, t_map *map);
 int 	set_matrix(t_map *map);
 int		check_str_number(char *str);
@@ -121,10 +129,11 @@ int 	ft_strcheck(char *s1, char *s2, int chose);
 int		check_valid_co(int **tab, int len);
 void 	print_tab_int(int **tab, int y, int x);
 int 	print_and_return(int i);
-int			check_ant_line(t_map *map, char *line);
+int			check_ant_line(t_map *map, char **line, t_file_display	**f_dis);
 int			check_link_line(t_link **link, t_map *map, char *line, char **split);
 int			check_name_line(t_name **name, t_map *map, char *line, char **split);
-int		check_start_end(t_map *map, char **line);
+int		check_start_end(t_map *map, char **line, t_file_display	**f_dis);
+int 		insert_line_lst(t_map *map, char **line, t_file_display	**f_dis, int *chose);
 void	init_matrix(t_map *map);
 int		check_all_link_and_name(t_map *map, int i);
 int 	free_and_return(char ***split, int i);

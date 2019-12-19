@@ -42,14 +42,28 @@ t_name		*insert_name(char **val, int i)
 	return (elem);
 }
 
+t_file_display		*insert_line(char *line)
+{
+	t_file_display	*elem;
 
-void	clear(t_name **name, t_link **link)
+	//printf("%s\n", line);
+	if (!(elem = malloc(sizeof(t_file_display))))
+		return (NULL);
+	if (!(elem->line = ft_strdup(line)))
+		return (NULL);
+	elem->next = NULL;
+	return (elem);
+}
+
+void	clear(t_name **name, t_link **link, t_file_display **f_dis)
 {
 	t_name *name_temp;
 	t_link *link_temp;
+	t_file_display *f_dis_temp;
 
 	name_temp = *name;
 	link_temp = *link;
+	f_dis_temp = *f_dis;
 	while(name_temp)
 	{
 		name_temp = (*name)->next;
@@ -63,6 +77,13 @@ void	clear(t_name **name, t_link **link)
 		free((*link)->link);
 		free(*link);
 		*link = link_temp;
+	}
+	while (*f_dis)
+	{
+		f_dis_temp = (*f_dis)->next;
+		free((*f_dis)->line);
+		free(*f_dis);
+		*f_dis = f_dis_temp;
 	}
 }
 

@@ -22,14 +22,12 @@ int 	delete_cul_de_sac(t_map *map)
 		map->n_mat.j = -1;
 		map->n_mat.k = 0;
 		while (++map->n_mat.j < map->inf.size_name)
-		{
 			if (map->matrix[map->n_mat.i][map->n_mat.j] == 1 && map->n_mat.i != map->inf.end)
 			{
 				map->n_mat.save_x = map->n_mat.i;
 				map->n_mat.save_y = map->n_mat.j;
 				map->n_mat.k++;
 			}
-		}
 		if (map->n_mat.k == 1)
 		{
 			map->matrix[map->n_mat.save_x][map->n_mat.save_y] = 0;

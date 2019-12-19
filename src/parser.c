@@ -14,23 +14,49 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-int			check_ant_line(t_map *map, char *line)
+int 		insert_line_lst(t_map *map, char **line, t_file_display	**f_dis, int *chose)
 {
-	while (get_next_line(0, &line) && !(check_str_number(line)) && line[0] == '#')//passe les commentaires
+	if (*chose == 0)
 	{
-		if (ft_strstr(line, "##start") || ft_strstr(line, "##end"))
+		if (!(*f_dis = insert_line(*line)))
+				return (-1);
+		map->tmp_f_dis = *f_dis;
+		*chose = 1;
+	}
+	else if (*chose == 1)
+	{
+		if (!(map->tmp_f_dis->next = insert_line(*line)))
+				return (-1);
+		map->tmp_f_dis = map->tmp_f_dis->next;
+	}
+	return (1);
+}
+
+int			check_ant_line(t_map *map, char **line, t_file_display	**f_dis)
+{
+	int  chose;
+
+	chose = 0;
+	while (get_next_line(0, &(*line)) && !(check_str_number(*line)) && *line[0] == '#')//passe les commentaires
+	{
+		if (!insert_line_lst(map, line, f_dis, &chose))
+			return (-1);
+		if (ft_strstr(*line, "##start") || ft_strstr(*line, "##end"))
 		{
-			ft_strdel(&line);
+			ft_strdel(&(*line));
 			return (-1);
 		}
-		ft_strdel(&line);
+		ft_strdel(&(*line));
 	}
-	if (!line)
+	if (!insert_line_lst(map, line, f_dis, &chose))
+			return (-1);
+	if (!*line)
 		return (-1);
-	if (line[0] == '\0' || !check_str_number(line))//si pas de nombres de fourmis
+	if (line[0] == '\0' || !check_str_number(*line))//si pas de nombres de fourmis
 		map->cpt.error = 1;
-	map->inf.nb_fourmi = ft_atoi(line);
-	ft_strdel(&line);
+	map->inf.nb_fourmi = ft_atoi(*line);
+	//printf("|%s|\n", *line);
+	ft_strdel(&(*line));
 	if (map->inf.nb_fourmi <= 0)
 		return (-1);
 	return (1);
@@ -88,8 +114,11 @@ int			check_name_line(t_name **name, t_map *map, char *line, char **split)
 	return (1);
 }
 
-int		check_start_end(t_map *map, char **line)
+int		check_start_end(t_map *map, char **line, t_file_display	**f_dis)
 {
+	int chose;
+
+	chose = 1;
 	if ((ft_strstr(*line, "##start") || ft_strstr(*line, "##end")) && map->cpt.j == 0)//si start/end
 	{
 		if (ft_strstr(*line, "##start"))
@@ -108,26 +137,32 @@ int		check_start_end(t_map *map, char **line)
 		}
 		ft_strdel(&(*line));
 		get_next_line(0, &(*line));
+		if (!insert_line_lst(map, line, f_dis, &chose))
+			return (-1);
 		if (!(map->cpt.j == 0 && *line[0] != '#' && *line[0] != 'L' && (count_word(*line, '-') == 1 && !(ft_strchr(*line, '-')))))//si next line n'est pas une room
 			map->cpt.error = 1;
 	}
 	return (1);
 }
 
-int		parser(t_name **name, t_link **link, t_map *map)
+int		parser(t_name **name, t_link **link, t_map *map, t_file_display	**f_dis)
 {
 	char	*line;
 	char	**split;
+	int 	chose;
 
 	split = NULL;
 	line = NULL;
-	if ((check_ant_line(map, line) != 1))
+	chose = 1;
+	if ((check_ant_line(map, &line, f_dis) != 1))
 		return (-1);
 	while (get_next_line(0, &line))
 	{
+		if (!insert_line_lst(map, &line, f_dis, &chose))
+			return (-1);
 		if (line[0] == '\0' || count_word(line, '-') > 2)//si ligne vide
 			map->cpt.error = 1;
-		if ((check_start_end(map, &line) != 1))
+		if ((check_start_end(map, &line, f_dis) != 1))
 			return (-1);
 		if ((check_name_line(name, map, line, split) != 1))
 			return (-1);
