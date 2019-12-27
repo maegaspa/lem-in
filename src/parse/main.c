@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/04 00:51:26 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/19 17:44:47 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,10 +38,7 @@ int		main(void)
 		return (print_and_return(ret));
 	clear(&name, &link);
 	ret = print_and_return(ret);
-	printf("nb_path = %d\n", ft_nbpaths_max(map));
-	printf("OUI\n\n");
-	if (!ft_bfs(map))
-		return (0);
+	ft_bfs(map);
 	printf("ca marche sauf si ya error");
 	return (ret);
 }

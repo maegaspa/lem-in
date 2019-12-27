@@ -6,7 +6,7 @@
 #    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/12/12 01:52:26 by hmichel     ###    #+. /#+    ###.fr      #
+#    Updated: 2019/12/19 17:29:11 by seanseau    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -31,8 +31,7 @@ FILES = src/parse/parser\
 		src/parse/set_all_tab\
 		src/parse/main\
 		src/parse/path1\
-		src/algo/ft_foundpaths\
-		src/algo/cleanpath.c\
+		src/algo/bfs1\
 
 #----------------------------------COLOR---------------------------------------#
 

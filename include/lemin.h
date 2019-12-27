@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/19 15:14:19 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/19 18:02:57 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -149,6 +149,7 @@ typedef struct	s_res
 	int			**paths;
 }				t_res;
 
+t_bfs	ft_bfs(t_map map);
 unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
 void	print_tab(char **tab);
