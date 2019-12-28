@@ -97,6 +97,7 @@ typedef struct s_cpt
 typedef struct s_map
 {
 	char	**map_name;
+	char	**new_name;
 	char	**map_link;
 	int 	**map_co;
 	int		**matrix;

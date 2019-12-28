@@ -26,6 +26,7 @@ void	init_value(t_map *map)
 	map->cpt.start_link = 1;
 	map->cpt.yes_start = 0;
 	map->cpt.yes_end = 0;
+	map->n_mat.size_reduct = 0;
 }
 
 void	init_matrix(t_map *map)
