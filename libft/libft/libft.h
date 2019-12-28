@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   libft.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/07 08:46:05 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/06 18:57:52 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/28 10:37:15 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,7 +32,6 @@ void			ft_lstadd(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 
-int				*ft_intcpy(int *dst, const int *src, int size);
 size_t			ft_strlen(const char *s);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
@@ -98,6 +97,7 @@ char			*ft_hhtoa(char n);
 char			*ft_strjoinfree(char *s1, char *s2, char i);
 char			*ft_strsubfree(char *s1, size_t start, size_t len);
 char			*ft_ftoa(long double d, int p);
+int				*ft_intcpy(int *dst, const int *src, int size);
 
 int				get_next_line(const int fd, char **line);
 
