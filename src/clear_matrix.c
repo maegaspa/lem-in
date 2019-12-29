@@ -57,6 +57,10 @@ int 	resize_matrix(t_map *map)
 	while (++map->n_mat.i < map->inf.size_name)
 		if (!(map->matrix[0][map->n_mat.i] == -1))
 		{
+		    if (map->n_mat.i == map->inf.start)
+		        map->inf.start = map->n_mat.j;
+		    if (map->n_mat.i == map->inf.end)
+                map->inf.end = map->n_mat.j;
 			if (!(map->new_name[map->n_mat.j] = ft_strdup(map->map_name[map->n_mat.i])))
 				return (0);
 			map->n_mat.j++;

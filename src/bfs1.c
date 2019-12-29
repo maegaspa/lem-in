@@ -23,12 +23,12 @@ int				ft_nb_paths(t_map map)
 	nb1 = 0;
 	nb2 = 0;
 	i = -1;
-	while (++i < map.inf.size_name)
-		if (map.matrix[map.inf.start][i] == 1)
+	while (++i < map.mat.size)
+		if (map.new_matrix[map.inf.start][i] == 1)
 			nb1++;
 	i = -1;
-	while (++i < map.inf.size_name)
-		if (map.matrix[map.inf.end][i] == 1)
+	while (++i < map.mat.size)
+		if (map.new_matrix[map.inf.end][i] == 1)
 			nb2++;
 	if (nb1 < nb2)
 		return (nb1);
@@ -43,7 +43,7 @@ int             ft_nb_paths_start(t_map map)
 	nb = 0;
 	i = -1;
 	while (++i < map.inf.size_name)
-		if (map.matrix[map.inf.start][i] == 1)
+		if (map.new_matrix[map.inf.start][i] == 1)
 			nb++;
 	return (nb);
 
@@ -112,7 +112,8 @@ void            ft_visited(t_bfs *bfs, t_temp_bfs temp, int step)
 	while (bfs->queue[temp.actual_path][temp.i_queue] != -1)
 	{
 		node_to_sign = bfs->queue[temp.actual_path][temp.i_queue];
-		bfs->mtx_state[node_to_sign][temp.actual_path] = step;
+		if (bfs->mtx_state[node_to_sign][temp.actual_path] == -1)
+		    bfs->mtx_state[node_to_sign][temp.actual_path] = step;
 		temp.i_queue++;
 	}
 }
@@ -137,7 +138,8 @@ void			ft_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room)
 {
 	while (bfs->queue[temp.actual_path][temp.i_queue] != -1) //temp en copie donc pas de modif de l'index dans le temp de foundpaths (500IQ)
 		temp.i_queue++;
-	bfs->queue[temp.actual_path][temp.i_queue] = room;
+	if (bfs->queue[temp.actual_path][temp.i_queue - 1] != bfs->end)
+	    bfs->queue[temp.actual_path][temp.i_queue] = room;
 }
 
 void			ft_delactual_room(t_bfs *bfs, int path, t_temp_bfs temp)
@@ -170,18 +172,18 @@ void			print_queue(t_bfs *bfs, t_map *map)
 	int x;
 	int y;
 
-	map->inf.start = map->inf.start;
+	//map->inf.start = map->inf.start;
 	x = 0;
 	while (x < bfs->start_paths)
 	{
-//		printf("queue path[%d] (rooms): ", x);
+		printf("queue path[%d] (rooms): ", x);
 		y = 0;
-		while (y < bfs->size_diago)
+		while (y < map->mat.size)
 		{
-//			printf("[%s]", map->new_name[bfs->queue[x][y]]);
+			printf("bfs->queue[%d][%d] = %d\n", x, y, bfs->queue[x][y]);
 			y++;
 		}
-//		printf("\n");
+		printf("\n");
 		x++;
 	}
 }
@@ -253,6 +255,20 @@ void			ft_setprematrix(t_bfs *bfs, t_temp_bfs temp)
 	remove_room_queue(bfs);
 }
 
+int            all_path_done(t_bfs *bfs)
+{
+    int x;
+
+    x = 0;
+    while (x < bfs->nb_paths)
+    {
+        if (bfs->mtx_state[bfs->end][x] == -1)
+            return (0);
+        x++;
+    }
+    return(1);
+}
+
 void			ft_foundpaths(t_bfs *bfs, int step, t_map *map)
 {
 	t_temp_bfs  temp;
@@ -264,8 +280,7 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map)
 //	printf("\n");
 //	print_matrix_state(bfs, map);
 //	printf("\n");
-
-	if (!(bfs->found_paths == bfs->nb_paths) && step < map->mat.size)
+    if (all_path_done(bfs) != 1)
 	{
 		while (temp.actual_path < bfs->start_paths)
 		{
@@ -323,11 +338,12 @@ t_bfs	ft_bfs(t_map map)
 	t_bfs		bfs;
 
 	ft_setprealgo(map, &bfs);
+	//printf("ET ICI nb_path = %d\n", bfs.nb_paths);
 //	print_tab_int(bfs.mtx_diago, map.mat.size, map.mat.size, &map);
 	ft_foundpaths(&bfs, 2, &map);
-	print_matrix_state(&bfs, &map);
+	//print_matrix_state(&bfs, &map);
 
-//	dig_deep(&bfs, &map);
+	dig_deep(&bfs, &map);
 	return (bfs);
 }
 
