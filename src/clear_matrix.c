@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 18:35:14 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/18 18:35:18 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/28 13:30:16 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,6 +57,10 @@ int 	resize_matrix(t_map *map)
 	while (++map->n_mat.i < map->inf.size_name)
 		if (!(map->matrix[0][map->n_mat.i] == -1))
 		{
+		    if (map->n_mat.i == map->inf.start)
+		        map->inf.start = map->n_mat.j;
+		    if (map->n_mat.i == map->inf.end)
+                map->inf.end = map->n_mat.j;
 			if (!(map->new_name[map->n_mat.j] = ft_strdup(map->map_name[map->n_mat.i])))
 				return (0);
 			map->n_mat.j++;
@@ -93,6 +97,6 @@ int 	resize_matrix(t_map *map)
 		if (map->n_mat.n != 1)
 			map->n_mat.k++;
 	}
-	print_tab_int(map->new_matrix, map->mat.size, map->mat.size);
+//	print_tab_int(map->new_matrix, map->mat.size, map->mat.size, map);
 	return (1);
 }

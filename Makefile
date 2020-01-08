@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
+#    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/11 19:05:09 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/07 16:24:54 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -31,6 +31,9 @@ FILES = src/parser\
 		src/set_all_tab\
 		src/main\
 		src/clear_matrix\
+		src/bfs1\
+		src/bfs2\
+		src/print\
 
 #----------------------------------COLOR---------------------------------------#
 

@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:33:44 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/28 13:30:11 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,8 +52,9 @@ int		main(void)
 	printf("\n");
 	//print_tab_int(map.matrix, map.inf.size_name, map.inf.size_name);
 	resize_matrix(&map);
-	print_file(f_dis);
+//	print_file(f_dis);
 	clear(&name, &link, &f_dis);
 	ret = print_and_return(ret);
+	ft_bfs(map);
 	return (ret);
 }

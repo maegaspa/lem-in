@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   lemin.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:28:17 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/07 17:53:30 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -94,6 +94,25 @@ typedef struct s_cpt
 	int 	start_link;
 } 				t_cpt;
 
+typedef struct	s_temp_bfs
+{
+	int			actual_path;
+	int			i_queue;
+}				t_temp_bfs;
+
+typedef struct	s_bfs
+{
+	int			start;
+	int			end;
+	int			start_paths;
+	int			nb_paths;
+	int			size_diago;
+	int			**mtx_diago;
+	int			**mtx_state;
+	int			found_paths;
+	int			**queue;
+}				t_bfs;
+
 typedef struct s_map
 {
 	char	**map_name;
@@ -111,6 +130,7 @@ typedef struct s_map
 	t_file_display	*tmp_f_dis;
 }				t_map;
 
+t_bfs	ft_bfs(t_map map);
 unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
 void	print_tab(char **tab);
@@ -128,7 +148,7 @@ int 	set_matrix(t_map *map);
 int		check_str_number(char *str);
 int 	ft_strcheck(char *s1, char *s2, int chose);
 int		check_valid_co(int **tab, int len);
-void 	print_tab_int(int **tab, int y, int x);
+void 	print_tab_int(int **tab, int y, int x, t_map *map);
 int 	print_and_return(int i);
 int			check_ant_line(t_map *map, char **line, t_file_display	**f_dis);
 int			check_link_line(t_link **link, t_map *map, char *line, char **split);
@@ -144,5 +164,30 @@ int		name_cmp(char *s1, char *s2);
 int 	delete_cul_de_sac(t_map *map);
 int 	resize_matrix(t_map *map);
 int		main(void);
+
+/*
+**	bfs1.c
+*/
+int				ft_foundroom(t_bfs *bfs, t_temp_bfs temp, int room);
+void			ft_delactual_room(t_bfs *bfs, int path, t_temp_bfs temp);
+
+/*
+**	bfs2.c
+*/
+int			ft_init_queue(t_bfs *bfs);
+void		ft_setqueue(t_bfs *bfs, t_temp_bfs temp);
+void		remove_room_queue(t_bfs *bfs);
+void		ft_pre_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room, int path);
+void		ft_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room);
+int			ft_foundroom(t_bfs *bfs, t_temp_bfs temp, int room);
+void		ft_delactual_room(t_bfs *bfs, int path, t_temp_bfs temp);
+
+/*
+**	print.c
+*/
+void		print_queue(t_bfs *bfs, t_map *map);
+void		print_matrix_state(t_bfs *bfs, t_map *map);
+void		print_path(t_bfs *bfs, t_map *map, int path, int max_length);
+void		dig_deep(t_bfs *bfs, t_map *map);
 
 #endif
