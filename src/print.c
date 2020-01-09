@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/07 15:49:57 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/07 19:03:32 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/08 17:43:10 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,33 +14,32 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-/*
+
 void			print_queue(t_bfs *bfs, t_map *map)
 {
 	int x;
 	int y;
 
-	//map->inf.start = map->inf.start;
 	x = 0;
 	while (x < bfs->start_paths)
 	{
-		printf("queue path[%d] (rooms): ", x);
+		printf("queue path[%d] : ", x);
 		y = 0;
 		while (y < map->mat.size)
 		{
-			printf("bfs->queue[%d][%d] = %d\n", x, y, bfs->queue[x][y]);
+			printf("[%d][%d] = %2d,  ", x, y, bfs->queue[x][y]);
 			y++;
 		}
 		printf("\n");
 		x++;
 	}
-}*/
-
+}
+/*
 void			print_queue(t_bfs *bfs, t_map *map)
 {
 	int y;
 
-	printf("queue path 0 : \n");
+	printf("queue path 1 : \n");
 	y = 0;
 	while (y < map->mat.size)
 	{
@@ -49,7 +48,7 @@ void			print_queue(t_bfs *bfs, t_map *map)
 	}
 	printf("\n");
 }
-
+*/
 void		print_matrix_state(t_bfs *bfs, t_map *map)
 {
 	int x = 0;

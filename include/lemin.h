@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/07 17:53:30 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/09 01:30:39 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,6 +98,7 @@ typedef struct	s_temp_bfs
 {
 	int			actual_path;
 	int			i_queue;
+	int			size_queue;
 }				t_temp_bfs;
 
 typedef struct	s_bfs
@@ -168,8 +169,8 @@ int		main(void);
 /*
 **	bfs1.c
 */
-int				ft_foundroom(t_bfs *bfs, t_temp_bfs temp, int room);
-void			ft_delactual_room(t_bfs *bfs, int path, t_temp_bfs temp);
+int			ft_foundroom(t_bfs *bfs, t_temp_bfs temp, int room);
+void		ft_delactual_room(t_bfs *bfs, int path, t_temp_bfs temp);
 
 /*
 **	bfs2.c
@@ -181,6 +182,8 @@ void		ft_pre_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room, int path);
 void		ft_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room);
 int			ft_foundroom(t_bfs *bfs, t_temp_bfs temp, int room);
 void		ft_delactual_room(t_bfs *bfs, int path, t_temp_bfs temp);
+void		ft_del_rooms(t_bfs *bfs, t_temp_bfs temp);
+int			ft_size_queue(t_bfs bfs, int path);
 
 /*
 **	print.c

@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/07 17:53:07 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/09 05:31:18 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,11 +42,11 @@ int             ft_nb_paths_start(t_map map)
 
 	nb = 0;
 	i = -1;
-	while (++i < map.inf.size_name)
+	while (++i < map.mat.size)
 		if (map.new_matrix[map.inf.start][i] == 1)
 			nb++;
+	// /printf("nb = %d\n", map.mat.size);
 	return (nb);
-
 }
 
 int				ft_setprealgo(t_map map, t_bfs *bfs)
@@ -88,12 +88,20 @@ int				ft_setprealgo(t_map map, t_bfs *bfs)
 void            ft_visited(t_bfs *bfs, t_temp_bfs temp, int step)
 {
 	int node_to_sign;
+
 	temp.i_queue = 0;
 	while (bfs->queue[temp.actual_path][temp.i_queue] != -1)
 	{
 		node_to_sign = bfs->queue[temp.actual_path][temp.i_queue];
-		if (bfs->mtx_state[node_to_sign][temp.actual_path] == -1)
+		if (bfs->mtx_state[node_to_sign][temp.actual_path] == -1) //sense etre deja fait avec la queue correct
 		    bfs->mtx_state[node_to_sign][temp.actual_path] = step;
+		if (node_to_sign == bfs->end)
+		{
+			temp.i_queue = -1;
+			while (bfs->queue[temp.actual_path][++temp.i_queue] != -1)
+				bfs->queue[temp.actual_path][temp.i_queue] = -1;
+			break ;
+		}
 		temp.i_queue++;
 	}
 }
@@ -142,7 +150,7 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 	temp.actual_path = 0;
 	if (step == 2)
 		ft_setprematrix(bfs, temp);
-//	print_queue(bfs, map);
+	//print_queue(bfs, map);
 //	printf("\n");
 //	print_matrix_state(bfs, map);
 //	printf("\n");
@@ -151,16 +159,22 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 		while (temp.actual_path < bfs->start_paths)
 		{
 			temp.i_queue = 0;
-			ft_setqueue(bfs, temp);
+			temp.size_queue = ft_size_queue(*bfs, temp.actual_path);
+			while (temp.i_queue < temp.size_queue)
+			{
+				ft_setqueue(bfs, temp);
+				temp.i_queue++;
+			}
+			ft_del_rooms(bfs, temp);
 			ft_visited(bfs, temp, step);
 			temp.actual_path++;
 		}
-		print_queue(bfs, map);
+		//print_queue(bfs, map);
 		ft_foundpaths(bfs, ++step, map);
 	}
 }
 
-t_bfs	ft_bfs(t_map map) // rajouter fonction retrace all_paths
+t_bfs			ft_bfs(t_map map) // rajouter fonction retrace all_paths
 {
 	t_bfs		bfs;
 
@@ -168,7 +182,7 @@ t_bfs	ft_bfs(t_map map) // rajouter fonction retrace all_paths
 	//printf("ET ICI nb_path = %d\n", bfs.nb_paths);
 //	print_tab_int(bfs.mtx_diago, map.mat.size, map.mat.size, &map);
 	ft_foundpaths(&bfs, 2, &map);
-	//print_matrix_state(&bfs, &map);
+	print_matrix_state(&bfs, &map);
 
 	//dig_deep(&bfs, &map);
 	return (bfs);
