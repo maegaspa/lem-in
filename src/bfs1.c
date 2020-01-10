@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/09 05:31:18 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/10 16:25:03 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -121,7 +121,7 @@ void			ft_setprematrix(t_bfs *bfs, t_temp_bfs temp) // a supp
 		path++;
 	}
 	path = 0;
-	while (path < bfs->nb_paths)
+	while (path < bfs->start_paths)
 	{
 		bfs->mtx_state[bfs->start][path] = 0;
 		path++;
@@ -150,10 +150,6 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 	temp.actual_path = 0;
 	if (step == 2)
 		ft_setprematrix(bfs, temp);
-	//print_queue(bfs, map);
-//	printf("\n");
-//	print_matrix_state(bfs, map);
-//	printf("\n");
     if (all_path_done(bfs) != 1)
 	{
 		while (temp.actual_path < bfs->start_paths)
@@ -169,6 +165,7 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 			ft_visited(bfs, temp, step);
 			temp.actual_path++;
 		}
+//		print_matrix_state(bfs, map);
 		//print_queue(bfs, map);
 		ft_foundpaths(bfs, ++step, map);
 	}
@@ -182,9 +179,9 @@ t_bfs			ft_bfs(t_map map) // rajouter fonction retrace all_paths
 	//printf("ET ICI nb_path = %d\n", bfs.nb_paths);
 //	print_tab_int(bfs.mtx_diago, map.mat.size, map.mat.size, &map);
 	ft_foundpaths(&bfs, 2, &map);
-	print_matrix_state(&bfs, &map);
+//	print_matrix_state(&bfs, &map);
 
-	//dig_deep(&bfs, &map);
+	dig_deep(&bfs, &map);
 	return (bfs);
 }
 

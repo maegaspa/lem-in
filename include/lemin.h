@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/09 01:30:39 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/10 16:55:31 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -112,6 +112,8 @@ typedef struct	s_bfs
 	int			**mtx_state;
 	int			found_paths;
 	int			**queue;
+	int			*room_lowest;
+	int			**paths;
 }				t_bfs;
 
 typedef struct s_map

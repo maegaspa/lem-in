@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/07 15:49:57 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/08 17:43:10 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/10 18:57:39 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,20 +35,20 @@ void			print_queue(t_bfs *bfs, t_map *map)
 	}
 }
 /*
-void			print_queue(t_bfs *bfs, t_map *map)
-{
-	int y;
+   void			print_queue(t_bfs *bfs, t_map *map)
+   {
+   int y;
 
-	printf("queue path 1 : \n");
-	y = 0;
-	while (y < map->mat.size)
-	{
-		printf("  %2d  ", bfs->queue[1][y]);
-		y++;
-	}
-	printf("\n");
-}
-*/
+   printf("queue path 1 : \n");
+   y = 0;
+   while (y < map->mat.size)
+   {
+   printf("  %2d  ", bfs->queue[1][y]);
+   y++;
+   }
+   printf("\n");
+   }
+   */
 void		print_matrix_state(t_bfs *bfs, t_map *map)
 {
 	int x = 0;
@@ -68,42 +68,112 @@ void		print_matrix_state(t_bfs *bfs, t_map *map)
 	}
 }
 
-void	print_path(t_bfs *bfs, t_map *map, int path, int max_length)
+int		pre_path(t_bfs *bfs)
 {
-	int x;
+	int room;
 
-	int step = 0;
-	while (step != max_length + 1)
+	room = -1;
+	while (++room < bfs->size_diago)
 	{
-		x = 0;
-		while (x < map->mat.size)
-		{
-			if (bfs->mtx_state[x][path] == step)
-				printf("|%s|", map->new_name[x]);
-			x++;
-		}
-		step++;
+		if (!(bfs->room_lowest = (int *) malloc(sizeof(int) * 1)))
+			return (0);
 	}
-	printf("|%s|\n", map->new_name[bfs->end]);
+	room = -1;
+	while (++room < bfs->size_diago)
+		bfs->room_lowest[room] = 500;
+	return (1);
+}
+
+int		get_lowest_link(t_bfs *bfs, int actual_room, int path, t_map *map)
+{
+	int room;
+	int lowest_room;
+	int step;
+
+	lowest_room = -1;
+	step = 500;
+	room = 0;
+	if (map->new_matrix[actual_room][bfs->start] > 0)
+		return (bfs->start);
+	while (room < bfs->size_diago)
+	{
+		if (map->new_matrix[actual_room][room] > 0 && bfs->mtx_state[room][path] < step)
+		{
+			//	printf("link between [%s] and [%s]\n", map->new_name[actual_room], map->new_name[room]);
+			//	printf("room [%s] on path %d is at step : %d\n", map->new_name[room], path, bfs->mtx_state[room][path]);
+			if (bfs->mtx_state[room][path] > 0 && bfs->mtx_state[room][path] < bfs->room_lowest[room])
+			{
+				step = bfs->mtx_state[room][path];
+				bfs->room_lowest[room] = step;
+				lowest_room = room;
+			}
+		}
+		room++;
+	}
+	return (lowest_room);
+}
+
+
+/*void	add_to_path(t_bfs *bfs, int room, int path)
+  {
+
+  }*/
+
+void	get_path(t_bfs *bfs, int path, t_map *map)
+{
+	int room_position;
+	int cancel = 0;
+	int	counter = 0;
+
+
+//	int clone_inutile_print;
+
+	room_position = bfs->end;
+	printf("path %d:", path);
+	//	add_to_path(bfs, bfs->end, path);
+	while (room_position != bfs->start)
+	{
+		if (room_position == bfs->end)
+		{
+			room_position = get_lowest_link(bfs, room_position, path, map);
+			if (room_position != -1)
+			{
+				printf(" %s", map->new_name[bfs->end]);
+			}
+			else
+			{
+				cancel = 1;
+				printf("CANCELLED\n");
+				room_position = bfs->start;
+			}
+		}
+		else
+			room_position = get_lowest_link(bfs, room_position, path, map);
+		if (cancel != 1)//found a room
+		{
+		// add_to_path(bfs, room_position, path);
+			printf("\t%s", map->new_name[room_position]);
+		}
+		counter++;
+	}
+	if (cancel != 1)
+		printf("\t\t||%d||", counter);
+	printf("\n");
 }
 
 void	dig_deep(t_bfs *bfs, t_map *map)
 {
-	int y = 0;
-	int x;
-	int path_max;
-	while (y < bfs->start_paths)
+	int path;
+
+	path = 0;
+	if (!(pre_path(bfs)))
+		printf("error\n");
+	else
 	{
-		path_max = 0;
-		x = 0;
-		while (x < map->mat.size)
+		while (path < bfs->start_paths)
 		{
-			if (x != bfs->end && bfs->mtx_state[x][y] > path_max)
-				path_max = bfs->mtx_state[x][y];
-			x++;
+			get_path(bfs, path, map);
+			path++;
 		}
-		printf("path_max de path %d : %d\n", y, path_max);
-		print_path(bfs, map, y, path_max);
-		y++;
 	}
 }
