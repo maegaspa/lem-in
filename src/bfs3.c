@@ -56,7 +56,7 @@ int				ft_init_res(t_bfs *bfs, t_res *res, t_map *map)
 		printf("%d ", res->rank_size[l]);
 	i = -1;
 	while (++i < bfs->nb_paths)
-		if (!(res->paths[i] = (int *)malloc(sizeof(int) * res->size_paths[i])))
+		if (!(res->paths[i] = (int *)malloc(sizeof(int) * res->size_paths[i] + 1)))
 			return (0);
 	return (0);
 }
@@ -112,7 +112,6 @@ void	get_path1(t_bfs *bfs, int path, t_map *map, t_res *res)
 	int i;
 	int 	tmp;
 
-
 	room_position = bfs->end;
 	printf("[path %d]:", path);
 	printf(" %s", map->new_name[bfs->end]);
@@ -124,6 +123,11 @@ void	get_path1(t_bfs *bfs, int path, t_map *map, t_res *res)
 		{
 			if (path == res->rank_size[i])
 				tmp = i;
+		}
+		if (counter == 0)
+		{
+			res->paths[tmp][counter] = map->inf.start;
+			counter++;
 		}
 		res->paths[tmp][counter] = room_position;
 		//printf(" %d", res->paths[path][counter]);

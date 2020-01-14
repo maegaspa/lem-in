@@ -32,6 +32,8 @@ int		main(void)
 	t_name	*name;
 	t_link	*link;
 	t_map	map;
+	t_res	res;
+	t_bfs	bfs;
 	int 	ret;
 
 	init_value(&map);
@@ -53,8 +55,9 @@ int		main(void)
 	//print_tab_int(map.matrix, map.inf.size_name, map.inf.size_name);
 	resize_matrix(&map);
 //	print_file(f_dis);
-	clear(&name, &link, &f_dis);
 	ret = print_and_return(ret);
-	ft_bfs(map);
+	ft_bfs(map, &res, &bfs);
+	display_algo(map, &res, &bfs);
+	clear(&name, &link, &f_dis);
 	return (ret);
 }

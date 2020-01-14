@@ -139,7 +139,19 @@ typedef struct	s_res
 	int  	*rank_size;
 }				t_res;
 
-t_bfs	ft_bfs(t_map map);
+typedef struct 	s_sort
+{
+	int **new_path;
+	int **first_path;
+	int **second_path;
+	int *new_size_first;
+	int *new_size_second;
+	int nb_path_first;
+	int nb_path_second;
+	int *dispache;
+}				t_sort;
+
+int			ft_bfs(t_map map, t_res *res, t_bfs *bfs);
 unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
 void	print_tab(char **tab);
@@ -211,4 +223,7 @@ void		print_matrix_state2(t_bfs *bfs, t_map *map);
 void		print_path(t_bfs *bfs, t_map *map, int path, int max_length);
 void		dig_deep(t_bfs *bfs, t_map *map);
 
+
+int 	clear_path2(t_res *res, t_bfs *bfs, t_sort *sort);
+int 	display_algo(t_map map, t_res *res, t_bfs *bfs);
 #endif

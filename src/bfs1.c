@@ -185,35 +185,33 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 	}
 }
 
-t_bfs			ft_bfs(t_map map) // rajouter fonction retrace all_paths
+int			ft_bfs(t_map map, t_res *res, t_bfs *bfs) // rajouter fonction retrace all_paths
 {
-	t_bfs		bfs;
-	t_res		res;
 	int 		i;
 	int 		j;
 
-	ft_setprealgo(map, &bfs);
+	ft_setprealgo(map, bfs);
 	//printf("ET ICI nb_path = %d\n", bfs.nb_paths);
 //	print_tab_int(bfs.mtx_diago, map.mat.size, map.mat.size, &map);
-	ft_foundpaths(&bfs, 2, &map);
-	if (bfs.start == map.inf.start)
-		print_matrix_state(&bfs, &map);
+	ft_foundpaths(bfs, 2, &map);
+	if (bfs->start == map.inf.start)
+		print_matrix_state(bfs, &map);
 	else
-		print_matrix_state2(&bfs, &map);
+		print_matrix_state2(bfs, &map);
 	//dig_deep(&bfs, &map);
-	ft_init_res(&bfs, &res, &map);
-	dig_deep1(&bfs, &map, &res);
+	ft_init_res(bfs, res, &map);
+	dig_deep1(bfs, &map, res);
 	i = -1;
-	while (++i < bfs.nb_paths)
+	while (++i < bfs->nb_paths)
 	{
 		j = -1;
-		while (++j < res.size_paths[i])
+		while (++j < res->size_paths[i])
 		{
-			printf("%d ", res.paths[i][j]);
+			printf("%d ", res->paths[i][j]);
 		}
 		printf("\n");
 	}
-	return (bfs);
+	return (1);
 }
 
 /*
