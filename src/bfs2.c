@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/07 15:51:35 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/09 05:31:11 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 05:47:35 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,9 +21,9 @@ int			ft_init_queue(t_bfs *bfs)
 
 	//printf("\nsize queue = %d * %d\n\n", bfs->start_paths, bfs->size_diago);
 	i = -1;
-	if (!(bfs->queue = (int **)malloc(sizeof(int *) * bfs->start_paths)))
+	if (!(bfs->queue = (int **)malloc(sizeof(int *) * bfs->nb_paths)))
 		return (0);
-	while (++i < bfs->start_paths)
+	while (++i < bfs->nb_paths)
 	{
 		j = -1;
 		if (!(bfs->queue[i] = (int *)malloc(sizeof(int) * bfs->size_diago)))
@@ -39,6 +39,7 @@ int			ft_foundroom(t_bfs *bfs, t_temp_bfs temp, int room)
 {
 	while (++room < bfs->size_diago)
 	{
+		//printf(" %d\n", bfs->queue[temp.actual_path][temp.i_queue]);
 		if (bfs->mtx_diago[room][bfs->queue[temp.actual_path][temp.i_queue]] == 1)
 		{
 			if (bfs->mtx_state[room][temp.actual_path] == -1)
@@ -69,12 +70,30 @@ void			ft_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room)
 void			ft_setqueue(t_bfs *bfs, t_temp_bfs temp)
 {
 	int		next_room;
+	int		i;
+	int		fked;
 
+	fked = 0;
 	next_room = -1;
 	while ((next_room = ft_foundroom(bfs, temp, next_room)) != -1)
 	{
 		//printf("appel roomtoqueue next_room = %d\n", next_room);
-		ft_roomto_queue(bfs, temp, next_room);
+		if (next_room == bfs->end)
+		{
+			i = -1;
+			while (++i < bfs->nb_paths)
+			{
+				if (bfs->lock_rooms[i] != -1 && bfs->queue[temp.actual_path][temp.i_queue] == bfs->lock_rooms[i])
+					fked = 1;
+				if (bfs->lock_rooms[i] == -1)
+				{
+					bfs->lock_rooms[i] = bfs->queue[temp.actual_path][temp.i_queue];
+				}
+			}
+		}
+		if (!fked)
+			ft_roomto_queue(bfs, temp, next_room);
+		fked = 0;
 	}
 }
 
@@ -135,3 +154,4 @@ void			ft_pre_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room, int path)
 		temp.i_queue++;
 	bfs->queue[path][temp.i_queue] = room;
 }
+

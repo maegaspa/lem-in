@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   print.c                                          .::    .:/ .      .::   */
+/*   bfs3.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/07 15:49:57 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 08:26:43 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/14 02:54:34 by hmichel      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/14 08:23:40 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,80 +14,54 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-
-void			print_queue(t_bfs *bfs, t_map *map)
+int				ft_init_res(t_bfs *bfs, t_res *res, t_map *map)
 {
-	int x;
-	int y;
+	int i;
+	int k;
+	int	j;
+	int l;
 
-	x = 0;
-	while (x < bfs->nb_paths)
+	i = -1;
+	if (!(res->size_paths = (int*)malloc(sizeof(int) * bfs->nb_paths)))
+		return (0);
+	if (!(res->paths = (int **)malloc(sizeof(int *) * bfs->nb_paths)))
+		return (0);
+	if (!(res->rank_size = (int*)malloc(sizeof(int) * bfs->nb_paths)))
+		return (0);
+	if (bfs->start == map->inf.start)
+		k = bfs->start;
+	else
+		k = bfs->end;
+	while (++i < bfs->nb_paths)
 	{
-		printf("queue path[%d] : ", x);
-		y = 0;
-		while (y < map->mat.size)
+		res->size_paths[i] = bfs->mtx_state[k][i];
+		res->rank_size[i] = i;
+	}
+	l = -1;
+	if (bfs->nb_paths > 2)
+	{
+		while (++l < bfs->nb_paths)
 		{
-			printf("[%d][%d] = %2d,  ", x, y, bfs->queue[x][y]);
-			y++;
+			j = -1;
+			while (++j < bfs->nb_paths)
+				if ((j + 1 < bfs->nb_paths) && res->size_paths[j] > res->size_paths[j + 1])
+				{
+					ft_swap(&(res->size_paths[j]), &(res->size_paths[j + 1]));
+					ft_swap(&(res->rank_size[j]), &(res->rank_size[j + 1]));
+				}
 		}
-		printf("\n");
-		x++;
 	}
-}
-/*
-void			print_queue(t_bfs *bfs, t_map *map)
-{
-	int y;
-
-	printf("queue path 1 : \n");
-	y = 0;
-	while (y < map->mat.size)
-	{
-		printf("  %2d  ", bfs->queue[1][y]);
-		y++;
-	}
-	printf("\n");
-}
-*/
-void		print_matrix_state(t_bfs *bfs, t_map *map)
-{
-	int x = 0;
-	int y;
-
-	while (x < map->mat.size)
-	{
-		printf("ROOM[%2s] (step): ", map->new_name[x]);
-		y = 0;
-		while (y < bfs->nb_paths)
-		{
-			printf("[%2d]", bfs->mtx_state[x][y]);
-			y++;
-		}
-		printf("\n");
-		x++;
-	}
+	l = -1;
+	while (++l < bfs->nb_paths)
+		printf("%d ", res->rank_size[l]);
+	i = -1;
+	while (++i < bfs->nb_paths)
+		if (!(res->paths[i] = (int *)malloc(sizeof(int) * res->size_paths[i])))
+			return (0);
+	return (0);
 }
 
-void		print_matrix_state2(t_bfs *bfs, t_map *map)
-{
-	int x = map->mat.size - 1;
-	int y;
-
-	while (x > -1)
-	{
-		printf("ROOM[%2s] (step): ", map->new_name[x]);
-		y = 0;
-		while (y < bfs->nb_paths)
-		{
-			printf("[%2d]", bfs->mtx_state[x][y]);
-			y++;
-		}
-		printf("\n");
-		x--;
-	}
-}
-
-int		pre_path(t_bfs *bfs)
+int		pre_path1(t_bfs *bfs)
 {
 	int paths;
 
@@ -99,7 +73,7 @@ int		pre_path(t_bfs *bfs)
 	return (1);
 }
 
-int		get_lowest_link(t_bfs *bfs, int actual_room, int path, t_map *map)
+int		get_lowest_link1(t_bfs *bfs, int actual_room, int path, t_map *map)
 {
 	int room;
 	int lowest_room;
@@ -131,10 +105,12 @@ int		get_lowest_link(t_bfs *bfs, int actual_room, int path, t_map *map)
 	return (lowest_room);
 }
 
-void	get_path(t_bfs *bfs, int path, t_map *map)
+void	get_path1(t_bfs *bfs, int path, t_map *map, t_res *res)
 {
 	int room_position;
 	int	counter = 0;
+	int i;
+	int 	tmp;
 
 
 	room_position = bfs->end;
@@ -142,7 +118,15 @@ void	get_path(t_bfs *bfs, int path, t_map *map)
 	printf(" %s", map->new_name[bfs->end]);
 	while (room_position != bfs->start)
 	{
-		room_position = get_lowest_link(bfs, room_position, path, map);
+		room_position = get_lowest_link1(bfs, room_position, path, map);
+		i = -1;
+		while (++i < bfs->nb_paths)
+		{
+			if (path == res->rank_size[i])
+				tmp = i;
+		}
+		res->paths[tmp][counter] = room_position;
+		//printf(" %d", res->paths[path][counter]);
 		printf(" %s", map->new_name[room_position]);
 		counter++;
 	}
@@ -150,18 +134,18 @@ void	get_path(t_bfs *bfs, int path, t_map *map)
 	printf("\n");
 }
 
-void	dig_deep(t_bfs *bfs, t_map *map)
+void	dig_deep1(t_bfs *bfs, t_map *map, t_res *res)
 {
 	int path;
 
 	path = 0;
-	if (!(pre_path(bfs)))
+	if (!(pre_path1(bfs)))
 		printf("error\n");
 	else
 	{
 		while (path < bfs->nb_paths)
 		{
-			get_path(bfs, path, map);
+			get_path1(bfs, path, map, res);
 			path++;
 		}
 	}

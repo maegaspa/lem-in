@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/09 01:30:39 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 07:18:50 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -105,13 +105,14 @@ typedef struct	s_bfs
 {
 	int			start;
 	int			end;
-	int			start_paths;
 	int			nb_paths;
 	int			size_diago;
 	int			**mtx_diago;
 	int			**mtx_state;
 	int			found_paths;
 	int			**queue;
+	int			*lock_rooms;
+	int			*room_lowest;
 }				t_bfs;
 
 typedef struct s_map
@@ -130,6 +131,13 @@ typedef struct s_map
 	t_resize_matrice n_mat;
 	t_file_display	*tmp_f_dis;
 }				t_map;
+
+typedef struct	s_res
+{
+	int		**paths;
+	int		*size_paths;
+	int  	*rank_size;
+}				t_res;
 
 t_bfs	ft_bfs(t_map map);
 unsigned int	count_word(const char *s, char c);
@@ -186,10 +194,20 @@ void		ft_del_rooms(t_bfs *bfs, t_temp_bfs temp);
 int			ft_size_queue(t_bfs bfs, int path);
 
 /*
+**	bfs3.c
+*/
+int		pre_path1(t_bfs *bfs);
+int		get_lowest_link1(t_bfs *bfs, int actual_room, int path, t_map *map);
+void	get_path1(t_bfs *bfs, int path, t_map *map, t_res *res);
+void	dig_deep1(t_bfs *bfs, t_map *map, t_res *res);
+int		ft_init_res(t_bfs *bfs, t_res *res, t_map *map);
+
+/*
 **	print.c
 */
 void		print_queue(t_bfs *bfs, t_map *map);
 void		print_matrix_state(t_bfs *bfs, t_map *map);
+void		print_matrix_state2(t_bfs *bfs, t_map *map);
 void		print_path(t_bfs *bfs, t_map *map, int path, int max_length);
 void		dig_deep(t_bfs *bfs, t_map *map);
 
