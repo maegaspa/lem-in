@@ -151,6 +151,31 @@ typedef struct 	s_sort
 	int *dispache;
 }				t_sort;
 
+typedef struct s_dispa
+{
+	int reste;
+	int *status_ant;
+	int ant_finish;
+	int i;
+	int j;
+	int k;
+	int l;
+	int m;
+	int n;
+	int p;
+	int q;
+	int space;
+	int ant_cross;
+	int tmp;
+	int ant_cross_max;
+	int *status_partion;
+	int *start_path;
+	int *status_path;
+	int		count;
+	int 	error;
+	int 	occurrence;
+}				t_dispa;
+
 int			ft_bfs(t_map map, t_res *res, t_bfs *bfs);
 unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);

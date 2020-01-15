@@ -3,15 +3,10 @@
 
 int 	clear_path2(t_res *res, t_bfs *bfs, t_sort *sort)
 {
-	int 	i;
-	int 	j;
-	int 	k;
-	int		count;
-	int 	error;
-	int 	occurrence;
+	t_dispa		dis;
 
-	i = 1;
-	occurrence = 0;
+	dis.i = 1;
+	dis.occurrence = 0;
 	if (!(sort->new_size_first = malloc(sizeof(int) * bfs->nb_paths)))
 		return (0);
 	if (!(sort->new_size_second = malloc(sizeof(int) * bfs->nb_paths)))
@@ -24,62 +19,57 @@ int 	clear_path2(t_res *res, t_bfs *bfs, t_sort *sort)
 	sort->nb_path_second = 0;
 	sort->first_path[0] = res->paths[0];
 	sort->new_size_first[0] = res->size_paths[0];
-	while (i < bfs->nb_paths)
+	while (dis.i < bfs->nb_paths)
 	{
-		count = -1;
-		error = 1;
-		while (++count < sort->nb_path_first/* && j < res->size_paths[i]*/)
+		dis.count = -1;
+		dis.error = 1;
+		while (++dis.count < sort->nb_path_first/* && j < res->size_paths[i]*/)
 		{
-			j = 0;
-				while (++j < res->size_paths[i] - 1)
-				{
-					k = -1;
-					while (++k < sort->new_size_first[count] - 1)
+			dis.j = 0;
+			while (++dis.j < res->size_paths[dis.i] - 1)
+			{
+				dis.k = -1;
+				while (++dis.k < sort->new_size_first[dis.count] - 1)
+					if (res->paths[dis.i][dis.j] == sort->first_path[dis.count][dis.j])
 					{
-						if (res->paths[i][j] == sort->first_path[count][j])
-						{
-							//printf("[%d] == [%d]{%d|%d|%d}\n", res->paths[i][j], sort->first_path[count][j], i, j, count);
-							occurrence = count;
-							error++;
-						}
+						dis.occurrence = dis.count;
+						dis.error++;
 					}
-				}
+			}
 		}
-		printf("{%d}\n", error);
-		if (error == 1)
+		if (dis.error == 1)
 		{
-			printf("%d\n", res->size_paths[i]);
-			sort->first_path[sort->nb_path_first] = res->paths[i];
-			sort->new_size_first[sort->nb_path_first] = res->size_paths[i];
+			printf("%d\n", res->size_paths[dis.i]);
+			sort->first_path[sort->nb_path_first] = res->paths[dis.i];
+			sort->new_size_first[sort->nb_path_first] = res->size_paths[dis.i];
 			sort->nb_path_first++;
 		}
-		else if ((res->size_paths[occurrence] > res->size_paths[i]))
+		else if ((res->size_paths[dis.occurrence] > res->size_paths[dis.i]))
 		{
-			sort->second_path[sort->nb_path_second] = sort->first_path[occurrence];
-			sort->new_size_second[sort->nb_path_second] = res->size_paths[occurrence];
-			ft_bzero(&sort->first_path[occurrence], res->size_paths[occurrence]);
-			sort->first_path[occurrence] = res->paths[i];
-			sort->new_size_first[occurrence] = res->size_paths[i];
+			sort->second_path[sort->nb_path_second] = sort->first_path[dis.occurrence];
+			sort->new_size_second[sort->nb_path_second] = res->size_paths[dis.occurrence];
+			ft_bzero(&sort->first_path[dis.occurrence], res->size_paths[dis.occurrence]);
+			sort->first_path[dis.occurrence] = res->paths[dis.i];
+			sort->new_size_first[dis.occurrence] = res->size_paths[dis.i];
 			sort->nb_path_second++;
 		}
-		else if (sort->new_size_first[occurrence] > res->size_paths[i])
+		else if (sort->new_size_first[dis.occurrence] > res->size_paths[dis.i])
 		{
-			sort->second_path[sort->nb_path_second] = sort->first_path[occurrence];
-			sort->new_size_second[sort->nb_path_second] = res->size_paths[occurrence];
-			ft_bzero(&sort->first_path[occurrence], res->size_paths[occurrence]);
-			sort->first_path[occurrence] = res->paths[i];
-			sort->new_size_first[occurrence] = res->size_paths[i];
+			sort->second_path[sort->nb_path_second] = sort->first_path[dis.occurrence];
+			sort->new_size_second[sort->nb_path_second] = res->size_paths[dis.occurrence];
+			ft_bzero(&sort->first_path[dis.occurrence], res->size_paths[dis.occurrence]);
+			sort->first_path[dis.occurrence] = res->paths[dis.i];
+			sort->new_size_first[dis.occurrence] = res->size_paths[dis.i];
 			sort->nb_path_second++;
 		}
 		else
 		{
-			sort->second_path[sort->nb_path_second] = res->paths[i];
-			sort->new_size_second[sort->nb_path_second] = res->size_paths[i];
+			sort->second_path[sort->nb_path_second] = res->paths[dis.i];
+			sort->new_size_second[sort->nb_path_second] = res->size_paths[dis.i];
 			sort->nb_path_second++;
 		}
-		i++;
+		dis.i++;
 	}
-	printf("[%d|%d]\n", sort->nb_path_first, sort->nb_path_second);
 	return (1);
 }
 
@@ -111,160 +101,142 @@ int 	nb_ant_int_path(t_map map, t_sort *sort, int ant, int index)
 
 int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 {
-	int reste;
-	int *status_ant;
-	int ant_finish;
-	int i;
-	int j;
-	int k;
-	int l;
-	int m;
-	int n;
-	int p;
-	int q;
-	int space;
-	int ant_cross;
-	int tmp;
-	int ant_cross_max;
-	int *status_partion;
-	int *start_path;
-	int *status_path;
+	t_dispa		dis;
 
-	if (!(status_path = malloc(sizeof(int) * map.inf.nb_fourmi)))
+	if (!(dis.status_path = malloc(sizeof(int) * map.inf.nb_fourmi)))
 		return (0);
-	i = 0;
-	while (i < map.inf.nb_fourmi)
+	dis.i = 0;
+	while (dis.i < map.inf.nb_fourmi)
 	{
-		status_path[i] = -1;;
-		i++;
+		dis.status_path[dis.i] = -1;;
+		dis.i++;
 	}
-	if (!(start_path = malloc(sizeof(int) * sort->nb_path_first)))
+	if (!(dis.start_path = malloc(sizeof(int) * sort->nb_path_first)))
 		return (0);
-	i = 0;
-	while (i < sort->nb_path_first)
+	dis.i = 0;
+	while (dis.i < sort->nb_path_first)
 	{
-		start_path[i] = 0;
-		i++;
+		dis.start_path[dis.i] = 0;
+		dis.i++;
 	}
-	if (!(status_ant = malloc(sizeof(int) * map.inf.nb_fourmi)))
+	if (!(dis.status_ant = malloc(sizeof(int) * map.inf.nb_fourmi)))
 		return (0);
-	i = 0;
-	while (i < map.inf.nb_fourmi)
+	dis.i = 0;
+	while (dis.i < map.inf.nb_fourmi)
 	{
-		status_ant[i] = map.inf.start;
-		i++;
+		dis.status_ant[dis.i] = map.inf.start;
+		dis.i++;
 	}
-	if (!(status_partion = malloc(sizeof(int) * sort->nb_path_first)))
+	if (!(dis.status_partion = malloc(sizeof(int) * sort->nb_path_first)))
 		return (0);
-		i = 0;
-	while (i < sort->nb_path_first)
+		dis.i = 0;
+	while (dis.i < sort->nb_path_first)
 	{
-		status_partion[i] = 0;
-		i++;
+		dis.status_partion[dis.i] = 0;
+		dis.i++;
 	}
-	reste = map.inf.nb_fourmi % sort->nb_path_first;
-	ant_finish = 0;
-	ant_cross_max = sort->nb_path_first;
-	l = 0;
-	tmp = 1;
-	ant_cross = 1;
-	m = 0;
-	n = 0;
-	space = 1;
-	while (l < nb_ligne)
+	dis.reste = map.inf.nb_fourmi % sort->nb_path_first;
+	dis.ant_finish = 0;
+	dis.ant_cross_max = sort->nb_path_first;
+	dis.l = 0;
+	dis.tmp = 1;
+	dis.ant_cross = 1;
+	dis.m = 0;
+	dis.n = 0;
+	dis.space = 1;
+	while (dis.l < nb_ligne)
 	{
-		i = 0;
-		if ((tmp * sort->nb_path_first) <= map.inf.nb_fourmi)
-			ant_cross_max = tmp * sort->nb_path_first;
-		if (ant_cross + ant_finish == map.inf.nb_fourmi - reste + 1)
+		dis.i = 0;
+		if ((dis.tmp * sort->nb_path_first) <= map.inf.nb_fourmi)
+			dis.ant_cross_max = dis.tmp * sort->nb_path_first;
+		if (dis.ant_cross + dis.ant_finish == map.inf.nb_fourmi - dis.reste + 1)
 		{
-			ant_cross_max += reste;
+			dis.ant_cross_max += dis.reste;
 		}
-		m = 0;
-		while (i < ant_cross_max)
+		dis.m = 0;
+		while (dis.i < dis.ant_cross_max)
 		{
-			j = 0;
-			n = 0;
-			while (j < sort->nb_path_first)
+			dis.j = 0;
+			dis.n = 0;
+			while (dis.j < sort->nb_path_first)
 			{
-				if (status_partion[j] == sort->dispache[j])
+				if (dis.status_partion[dis.j] == sort->dispache[dis.j])
 				{
-					if (i < map.inf.nb_fourmi && (!(status_ant[i] == map.inf.start)))
-							j = status_path[i];
+					if (dis.i < map.inf.nb_fourmi && (!(dis.status_ant[dis.i] == map.inf.start)))
+							dis.j = dis.status_path[dis.i];
 					else
 					{
-						q = 0;
-						p = 0;
-						while (q < sort->nb_path_first)
+						dis.q = 0;
+						dis.p = 0;
+						while (dis.q < sort->nb_path_first)
 						{
-							if (start_path[q] == 0 && j != q && status_partion[q] != sort->dispache[q])
+							if (dis.start_path[dis.q] == 0 && dis.j != dis.q && dis.status_partion[dis.q] != sort->dispache[dis.q])
 							{
-								p = 1;
-								j = q;
+								dis.p = 1;
+								dis.j = dis.q;
 								break;
 							}
-							q++;
+							dis.q++;
 						}
-						if (p != 1)
+						if (dis.p != 1)
 						{
-							m = 1;
-							i++;
+							dis.m = 1;
+							dis.i++;
 							break;
 						}
 					}
 				}
-				k = 0;
-				while (k < sort->new_size_first[j])
+				dis.k = 0;
+				while (dis.k < sort->new_size_first[dis.j])
 				{
-					if ((i < map.inf.nb_fourmi) && sort->first_path[j][k] == status_ant[i] && sort->first_path[j][k] != map.inf.end)
+					if ((dis.i < map.inf.nb_fourmi) && sort->first_path[dis.j][dis.k] == dis.status_ant[dis.i] && sort->first_path[dis.j][dis.k] != map.inf.end)
 					{
-						//ft_printf("[%d][%d][%d]", i, ant_finish, space);
-						if (space == 1)
-							space = 0;
+						if (dis.space == 1)
+							dis.space = 0;
 						else
 							ft_printf(" ");
-						if (status_ant[i] == map.inf.start)
+						if (dis.status_ant[dis.i] == map.inf.start)
 						{
-							start_path[n] = 1;
-							ant_cross++;
-							n++;
+							dis.start_path[dis.n] = 1;
+							dis.ant_cross++;
+							dis.n++;
 						}
-						if (status_ant[i] == map.inf.start)
-							status_partion[j]++;
-						status_ant[i] = sort->first_path[j][k + 1];
-						status_path[i] = j;
-						if (sort->first_path[j][k + 1] == map.inf.end)
+						if (dis.status_ant[dis.i] == map.inf.start)
+							dis.status_partion[dis.j]++;
+						dis.status_ant[dis.i] = sort->first_path[dis.j][dis.k + 1];
+						dis.status_path[dis.i] = dis.j;
+						if (sort->first_path[dis.j][dis.k + 1] == map.inf.end)
 						{
-							ant_finish++;
-							ant_cross--;
+							dis.ant_finish++;
+							dis.ant_cross--;
 						}
-						ft_printf("L%d-%s", i + 1, map.new_name[status_ant[i]]);
+						ft_printf("L%d-%s", dis.i + 1, map.new_name[dis.status_ant[dis.i]]);
 						break;
 					}
-					k++;
+					dis.k++;
 				}
-				i++;
-				j++;
+				dis.i++;
+				dis.j++;
 			}
-			if (i % sort->nb_path_first == 0)
+			if (dis.i % sort->nb_path_first == 0)
 			{
-				if (i == sort->nb_path_first * tmp && tmp <= map.inf.nb_fourmi)
-					tmp++;
+				if (dis.i == sort->nb_path_first * dis.tmp && dis.tmp <= map.inf.nb_fourmi)
+					dis.tmp++;
 			}
-			if (m == 1)
+			if (dis.m == 1)
 			{
 				break;
 			}
 		}
-		p = 0;
-		while (p < sort->nb_path_first)
+		dis.p = 0;
+		while (dis.p < sort->nb_path_first)
 		{
-			start_path[p] = 0;
-			p++;
+			dis.start_path[dis.p] = 0;
+			dis.p++;
 		}
 		printf("\n");
-		space = 1;
-		l++;
+		dis.space = 1;
+		dis.l++;
 	}
 	return (0);
 }
