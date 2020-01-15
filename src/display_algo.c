@@ -122,6 +122,7 @@ int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 	int n;
 	int p;
 	int q;
+	int space;
 	int ant_cross;
 	int tmp;
 	int ant_cross_max;
@@ -169,7 +170,8 @@ int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 	ant_cross = 1;
 	m = 0;
 	n = 0;
-	while (l < nb_ligne - 1)
+	space = 1;
+	while (l < nb_ligne)
 	{
 		i = 0;
 		if ((tmp * sort->nb_path_first) <= map.inf.nb_fourmi)
@@ -216,6 +218,11 @@ int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 				{
 					if ((i < map.inf.nb_fourmi) && sort->first_path[j][k] == status_ant[i] && sort->first_path[j][k] != map.inf.end)
 					{
+						//ft_printf("[%d][%d][%d]", i, ant_finish, space);
+						if (space == 1)
+							space = 0;
+						else
+							ft_printf(" ");
 						if (status_ant[i] == map.inf.start)
 						{
 							start_path[n] = 1;
@@ -231,7 +238,7 @@ int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 							ant_finish++;
 							ant_cross--;
 						}
-						ft_printf("L%d-%d ", i + 1, status_ant[i]);
+						ft_printf("L%d-%s", i + 1, map.new_name[status_ant[i]]);
 						break;
 					}
 					k++;
@@ -256,6 +263,7 @@ int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 			p++;
 		}
 		printf("\n");
+		space = 1;
 		l++;
 	}
 	return (0);
@@ -274,9 +282,9 @@ int 	display_algo(t_map map, t_res *res, t_bfs *bfs)
 	while (++i < sort.nb_path_first)
 	{
 		j = -1;
-		while (++j < sort.new_size_first[i])
+		while (++j < sort.new_size_first[i] + 1)
 		{
-			printf("%d ", sort.first_path[i][j]);
+			printf("%s ", map.new_name[sort.first_path[i][j]]);
 		}
 		printf("\n");
 	}
@@ -285,7 +293,7 @@ int 	display_algo(t_map map, t_res *res, t_bfs *bfs)
 	while (++i < sort.nb_path_second)
 	{
 		j = -1;
-		while (++j < sort.new_size_second[i])
+		while (++j < sort.new_size_second[i] + 1)
 		{
 			printf("%d ", sort.second_path[i][j]);
 		}

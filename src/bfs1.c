@@ -205,7 +205,7 @@ int			ft_bfs(t_map map, t_res *res, t_bfs *bfs) // rajouter fonction retrace all
 	while (++i < bfs->nb_paths)
 	{
 		j = -1;
-		while (++j < res->size_paths[i])
+		while (++j < res->size_paths[i] + 1)
 		{
 			printf("%d ", res->paths[i][j]);
 		}

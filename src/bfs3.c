@@ -20,6 +20,7 @@ int				ft_init_res(t_bfs *bfs, t_res *res, t_map *map)
 	int k;
 	int	j;
 	int l;
+	int m;
 
 	i = -1;
 	if (!(res->size_paths = (int*)malloc(sizeof(int) * bfs->nb_paths)))
@@ -37,18 +38,22 @@ int				ft_init_res(t_bfs *bfs, t_res *res, t_map *map)
 		res->size_paths[i] = bfs->mtx_state[k][i];
 		res->rank_size[i] = i;
 	}
-	l = -1;
-	if (bfs->nb_paths > 2)
+	if (bfs->nb_paths >= 2)
 	{
-		while (++l < bfs->nb_paths)
+		m = -1;
+		while (++m < bfs->nb_paths) // evitable
 		{
-			j = -1;
-			while (++j < bfs->nb_paths)
-				if ((j + 1 < bfs->nb_paths) && res->size_paths[j] > res->size_paths[j + 1])
-				{
-					ft_swap(&(res->size_paths[j]), &(res->size_paths[j + 1]));
-					ft_swap(&(res->rank_size[j]), &(res->rank_size[j + 1]));
-				}
+			l = -1;
+			while (++l < bfs->nb_paths)
+			{
+				j = -1;
+				while (++j < bfs->nb_paths)
+					if ((j + 1 < bfs->nb_paths) && res->size_paths[j] > res->size_paths[j + 1])
+					{
+						ft_swap(&(res->size_paths[j]), &(res->size_paths[j + 1]));
+						ft_swap(&(res->rank_size[j]), &(res->rank_size[j + 1]));
+					}
+			}
 		}
 	}
 	l = -1;
@@ -69,7 +74,7 @@ int		pre_path1(t_bfs *bfs)
 	if (!(bfs->room_lowest = (int *) malloc(sizeof(int) * bfs->nb_paths)))
 		return (0);
 	while (++paths < bfs->nb_paths)
-		bfs->room_lowest[paths] = 500;
+		bfs->room_lowest[paths] = 2147483647;
 	return (1);
 }
 
@@ -80,7 +85,7 @@ int		get_lowest_link1(t_bfs *bfs, int actual_room, int path, t_map *map)
 	int step;
 
 	lowest_room = -1;
-	step = 500;
+	step = 2147483647;
 	room = 0;
 	if (map->new_matrix[actual_room][bfs->start] > 0)
 		return (bfs->start);
@@ -112,9 +117,10 @@ void	get_path1(t_bfs *bfs, int path, t_map *map, t_res *res)
 	int i;
 	int 	tmp;
 
-	room_position = bfs->end;
-	printf("[path %d]:", path);
-	printf(" %s", map->new_name[bfs->end]);
+	if (bfs->start == map->inf.start)
+		room_position = bfs->start;
+	else
+		room_position = bfs->end;
 	while (room_position != bfs->start)
 	{
 		room_position = get_lowest_link1(bfs, room_position, path, map);
