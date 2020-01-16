@@ -66,7 +66,7 @@ int				ft_init_res(t_bfs *bfs, t_res *res, t_map *map)
 	return (0);
 }
 
-int		pre_path1(t_bfs *bfs)
+int		pre_path1(t_bfs *bfs, t_res *res)
 {
 	int paths;
 
@@ -74,20 +74,20 @@ int		pre_path1(t_bfs *bfs)
 	if (!(bfs->room_lowest = (int *) malloc(sizeof(int) * bfs->nb_paths)))
 		return (0);
 	while (++paths < bfs->nb_paths)
-		bfs->room_lowest[paths] = 2147483647;
+		bfs->room_lowest[paths] = res->size_paths[bfs->nb_paths - 1] + 1;
 	return (1);
 }
 
-int		get_lowest_link1(t_bfs *bfs, int actual_room, int path, t_map *map)
+int		get_lowest_link1(t_bfs *bfs, int actual_room, int path, t_map *map, t_res *res)
 {
 	int room;
 	int lowest_room;
 	int step;
 
 	lowest_room = -1;
-	step = 2147483647;
+	step = res->size_paths[bfs->nb_paths - 1] + 1;
 	room = 0;
-	if (map->new_matrix[actual_room][bfs->start] > 0)
+	if (map->new_matrix[actual_room][bfs->start] > 0 && bfs->mtx_state[actual_room][path] == 1)
 		return (bfs->start);
 	while (room < bfs->size_diago)
 	{
@@ -123,7 +123,7 @@ void	get_path1(t_bfs *bfs, int path, t_map *map, t_res *res)
 		room_position = bfs->end;
 	while (room_position != bfs->start)
 	{
-		room_position = get_lowest_link1(bfs, room_position, path, map);
+		room_position = get_lowest_link1(bfs, room_position, path, map, res);
 		i = -1;
 		while (++i < bfs->nb_paths)
 		{
@@ -149,7 +149,7 @@ void	dig_deep1(t_bfs *bfs, t_map *map, t_res *res)
 	int path;
 
 	path = 0;
-	if (!(pre_path1(bfs)))
+	if (!(pre_path1(bfs, res)))
 		printf("error\n");
 	else
 	{

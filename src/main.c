@@ -59,5 +59,6 @@ int		main(void)
 	ft_bfs(map, &res, &bfs);
 	display_algo(map, &res, &bfs);
 	clear(&name, &link, &f_dis);
+	
 	return (ret);
 }

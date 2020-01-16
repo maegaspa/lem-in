@@ -65,7 +65,7 @@ int 	resize_matrix(t_map *map)
 				return (0);
 			map->n_mat.j++;
 		}
-	map->new_name[map->n_mat.j] = 0;
+	//map->new_name[map->n_mat.j] = 0;
 	if (!(map->new_matrix = malloc(sizeof(int*) * map->mat.size)))
 		return (0);
 	map->n_mat.i = -1;
@@ -97,6 +97,7 @@ int 	resize_matrix(t_map *map)
 		if (map->n_mat.n != 1)
 			map->n_mat.k++;
 	}
+	//free_matrix(map);
 	//print_tab_int(map->new_matrix, map->mat.size, map->mat.size, map);
 	return (1);
 }

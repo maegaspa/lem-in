@@ -35,6 +35,7 @@ FILES = src/parser\
 		src/bfs2\
 		src/bfs3\
 		src/display_algo\
+		src/free\
 		src/print\
 
 #----------------------------------COLOR---------------------------------------#

@@ -30,16 +30,18 @@ int 	clear_path2(t_res *res, t_bfs *bfs, t_sort *sort)
 			{
 				dis.k = -1;
 				while (++dis.k < sort->new_size_first[dis.count] - 1)
-					if (res->paths[dis.i][dis.j] == sort->first_path[dis.count][dis.j])
+				{
+					if (res->paths[dis.i][dis.j] == sort->first_path[dis.count][dis.k])
 					{
 						dis.occurrence = dis.count;
 						dis.error++;
 					}
+				}
 			}
 		}
 		if (dis.error == 1)
 		{
-			printf("%d\n", res->size_paths[dis.i]);
+			//printf("%d\n", res->size_paths[dis.i]);
 			sort->first_path[sort->nb_path_first] = res->paths[dis.i];
 			sort->new_size_first[sort->nb_path_first] = res->size_paths[dis.i];
 			sort->nb_path_first++;
@@ -105,35 +107,23 @@ int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 
 	if (!(dis.status_path = malloc(sizeof(int) * map.inf.nb_fourmi)))
 		return (0);
-	dis.i = 0;
-	while (dis.i < map.inf.nb_fourmi)
-	{
-		dis.status_path[dis.i] = -1;;
-		dis.i++;
-	}
-	if (!(dis.start_path = malloc(sizeof(int) * sort->nb_path_first)))
-		return (0);
-	dis.i = 0;
-	while (dis.i < sort->nb_path_first)
-	{
-		dis.start_path[dis.i] = 0;
-		dis.i++;
-	}
 	if (!(dis.status_ant = malloc(sizeof(int) * map.inf.nb_fourmi)))
 		return (0);
-	dis.i = 0;
-	while (dis.i < map.inf.nb_fourmi)
-	{
-		dis.status_ant[dis.i] = map.inf.start;
-		dis.i++;
-	}
+	if (!(dis.start_path = malloc(sizeof(int) * sort->nb_path_first)))
+		return (0);
 	if (!(dis.status_partion = malloc(sizeof(int) * sort->nb_path_first)))
 		return (0);
-		dis.i = 0;
-	while (dis.i < sort->nb_path_first)
+	dis.i = -1;
+	while (++dis.i < map.inf.nb_fourmi)
 	{
+		dis.status_path[dis.i] = -1;
+		dis.status_ant[dis.i] = map.inf.start;
+	}
+	dis.i = -1;
+	while (++dis.i < sort->nb_path_first)
+	{
+		dis.start_path[dis.i] = 0;
 		dis.status_partion[dis.i] = 0;
-		dis.i++;
 	}
 	dis.reste = map.inf.nb_fourmi % sort->nb_path_first;
 	dis.ant_finish = 0;
@@ -205,7 +195,7 @@ int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 							dis.status_partion[dis.j]++;
 						dis.status_ant[dis.i] = sort->first_path[dis.j][dis.k + 1];
 						dis.status_path[dis.i] = dis.j;
-						if (sort->first_path[dis.j][dis.k + 1] == map.inf.end)
+						if (dis.k + 1 < sort->new_size_first[dis.j] && sort->first_path[dis.j][dis.k + 1] == map.inf.end)
 						{
 							dis.ant_finish++;
 							dis.ant_cross--;

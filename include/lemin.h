@@ -233,8 +233,8 @@ int			ft_size_queue(t_bfs bfs, int path);
 /*
 **	bfs3.c
 */
-int		pre_path1(t_bfs *bfs);
-int		get_lowest_link1(t_bfs *bfs, int actual_room, int path, t_map *map);
+int		pre_path1(t_bfs *bfs, t_res *res);
+int		get_lowest_link1(t_bfs *bfs, int actual_room, int path, t_map *map, t_res *res);
 void	get_path1(t_bfs *bfs, int path, t_map *map, t_res *res);
 void	dig_deep1(t_bfs *bfs, t_map *map, t_res *res);
 int		ft_init_res(t_bfs *bfs, t_res *res, t_map *map);
@@ -251,4 +251,6 @@ void		dig_deep(t_bfs *bfs, t_map *map);
 
 int 	clear_path2(t_res *res, t_bfs *bfs, t_sort *sort);
 int 	display_algo(t_map map, t_res *res, t_bfs *bfs);
+
+void 	free_matrix(t_map *map);
 #endif
