@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 07:49:59 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/18 14:28:46 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -108,6 +108,7 @@ void            ft_visited(t_bfs *bfs, t_temp_bfs temp, int step)
 		    bfs->mtx_state[node_to_sign][temp.actual_path] = step;
 		if (node_to_sign == bfs->end)
 		{
+			bfs->found_paths++;
 			temp.i_queue = -1;
 			while (bfs->queue[temp.actual_path][++temp.i_queue] != -1)
 				bfs->queue[temp.actual_path][temp.i_queue] = -1;
@@ -165,7 +166,7 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 //	printf("\n");
 //	print_matrix_state(bfs, map);
 //	printf("\n");
-    if (all_path_done(bfs) != 1)
+    if (bfs->found_paths < bfs->nb_paths)//if (all_path_done(bfs) != 1)
 	{
 		while (temp.actual_path < bfs->nb_paths)
 		{

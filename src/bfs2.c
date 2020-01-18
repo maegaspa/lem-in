@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/07 15:51:35 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 05:47:35 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/18 15:48:12 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,12 +71,12 @@ void			ft_setqueue(t_bfs *bfs, t_temp_bfs temp)
 {
 	int		next_room;
 	int		i;
-	int		fked;
+	int		cancel;
 
-	fked = 0;
 	next_room = -1;
 	while ((next_room = ft_foundroom(bfs, temp, next_room)) != -1)
 	{
+		cancel = 0;
 		//printf("appel roomtoqueue next_room = %d\n", next_room);
 		if (next_room == bfs->end)
 		{
@@ -84,16 +84,15 @@ void			ft_setqueue(t_bfs *bfs, t_temp_bfs temp)
 			while (++i < bfs->nb_paths)
 			{
 				if (bfs->lock_rooms[i] != -1 && bfs->queue[temp.actual_path][temp.i_queue] == bfs->lock_rooms[i])
-					fked = 1;
+					cancel = 1;
 				if (bfs->lock_rooms[i] == -1)
 				{
 					bfs->lock_rooms[i] = bfs->queue[temp.actual_path][temp.i_queue];
 				}
 			}
 		}
-		if (!fked)
+		if (!cancel)
 			ft_roomto_queue(bfs, temp, next_room);
-		fked = 0;
 	}
 }
 

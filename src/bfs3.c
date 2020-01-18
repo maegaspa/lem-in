@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 02:54:34 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 08:23:40 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/18 13:59:20 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,8 +57,8 @@ int				ft_init_res(t_bfs *bfs, t_res *res, t_map *map)
 		}
 	}
 	l = -1;
-	while (++l < bfs->nb_paths)
-		printf("%d ", res->rank_size[l]);
+	//while (++l < bfs->nb_paths)
+	//	printf("%d ", res->rank_size[l]);
 	i = -1;
 	while (++i < bfs->nb_paths)
 		if (!(res->paths[i] = (int *)malloc(sizeof(int) * res->size_paths[i] + 1)))
@@ -137,11 +137,11 @@ void	get_path1(t_bfs *bfs, int path, t_map *map, t_res *res)
 		}
 		res->paths[tmp][counter] = room_position;
 		//printf(" %d", res->paths[path][counter]);
-		printf(" %s", map->new_name[room_position]);
+		//printf(" %s", map->new_name[room_position]);
 		counter++;
 	}
-	printf(" ||%d||", counter);
-	printf("\n");
+	//printf(" ||%d||", counter);
+	//printf("\n");
 }
 
 void	dig_deep1(t_bfs *bfs, t_map *map, t_res *res)
