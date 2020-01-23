@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:48 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:33:51 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/28 13:30:22 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -146,6 +146,6 @@ int 	set_matrix(t_map *map)
 	}
 	if (map->mat.start_link_end == 0 || map->mat.end_link_start == 0)
 		return (-1);
-	print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name);
+//	print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name, map);
 	return (1);
 }

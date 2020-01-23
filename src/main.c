@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   main.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:33:44 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/23 01:07:26 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,9 @@ int		main(void)
 	t_name	*name;
 	t_link	*link;
 	t_map	map;
+	//t_res	res;
+	t_bfs	bfs;
+	t_tripaths tri;
 	int 	ret;
 
 	init_value(&map);
@@ -47,13 +50,15 @@ int		main(void)
 	ret = set_matrix(&map);
 	if (ret != 1)
 		return (print_and_return(ret));
-	//set_matrix(&name, &link, &info);
-	delete_cul_de_sac(&map);
+	//delete_cul_de_sac(&map);
 	printf("\n");
 	//print_tab_int(map.matrix, map.inf.size_name, map.inf.size_name);
-	resize_matrix(&map);
-	print_file(f_dis);
-	clear(&name, &link, &f_dis);
+	//resize_matrix(&map);
+//	print_file(f_dis);
 	ret = print_and_return(ret);
+	ft_bfs(map, &bfs, &tri);
+	//display_algo(map, &res, &bfs);
+	//clear(&name, &link, &f_dis);
+	
 	return (ret);
 }

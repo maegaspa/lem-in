@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   lemin.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:28:17 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/23 10:12:32 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,11 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "../libft/includes/ft_printf.h"
+
+# define TRUE		1
+# define FALSE		0
+# define SUCCESS	1
+# define FAILURE	0
 
 typedef struct s_file_display
 {
@@ -94,6 +99,28 @@ typedef struct s_cpt
 	int 	start_link;
 } 				t_cpt;
 
+typedef struct	s_temp_bfs
+{
+	int			actual_path;
+	int			i_queue;
+	int			size_queue;
+}				t_temp_bfs;
+
+typedef struct	s_bfs
+{
+	int			start;
+	int			end;
+	int			nb_paths;
+	int			finish;
+	int			end_links;
+	int			size_diago;
+	int			**mtx_diago;
+	int			**mtx_state;
+	int			found_paths;
+	int			**queue;
+	int			*room_lowest;
+}				t_bfs;
+
 typedef struct s_map
 {
 	char	**map_name;
@@ -111,6 +138,69 @@ typedef struct s_map
 	t_file_display	*tmp_f_dis;
 }				t_map;
 
+typedef struct	s_res
+{
+	int		**paths;
+	int		*size_paths;
+	int  	*rank_size;
+}				t_res;
+
+typedef	struct	s_path
+{
+	int		*path;
+	int		size;
+}				t_path;
+
+typedef struct	s_tripaths
+{
+	t_path		**paths;
+}				t_tripaths;
+
+typedef struct	s_temp_paths
+{
+	int		act_path;
+	int		sub_paths;
+	int		*sub_ends;
+}				t_temp_paths;
+
+typedef struct 	s_sort
+{
+	int **new_path;
+	int **first_path;
+	int **second_path;
+	int *new_size_first;
+	int *new_size_second;
+	int nb_path_first;
+	int nb_path_second;
+	int *dispache;
+}				t_sort;
+
+typedef struct s_dispa
+{
+	int reste;
+	int *status_ant;
+	int ant_finish;
+	int i;
+	int j;
+	int k;
+	int l;
+	int m;
+	int n;
+	int p;
+	int q;
+	int space;
+	int ant_cross;
+	int tmp;
+	int ant_cross_max;
+	int *status_partion;
+	int *start_path;
+	int *status_path;
+	int		count;
+	int 	error;
+	int 	occurrence;
+}				t_dispa;
+
+int			ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri);
 unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
 void	print_tab(char **tab);
@@ -128,7 +218,7 @@ int 	set_matrix(t_map *map);
 int		check_str_number(char *str);
 int 	ft_strcheck(char *s1, char *s2, int chose);
 int		check_valid_co(int **tab, int len);
-void 	print_tab_int(int **tab, int y, int x);
+void 	print_tab_int(int **tab, int y, int x, t_map *map);
 int 	print_and_return(int i);
 int			check_ant_line(t_map *map, char **line, t_file_display	**f_dis);
 int			check_link_line(t_link **link, t_map *map, char *line, char **split);
@@ -145,4 +235,52 @@ int 	delete_cul_de_sac(t_map *map);
 int 	resize_matrix(t_map *map);
 int		main(void);
 
+/*
+**	bfs1.c
+*/
+int			ft_foundroom(t_bfs *bfs, t_temp_bfs temp, int room);
+void		ft_delactual_room(t_bfs *bfs, int path, t_temp_bfs temp);
+
+/*
+**	bfs2.c
+*/
+int			ft_init_queue(t_bfs *bfs);
+void		ft_setqueue(t_bfs *bfs, t_temp_bfs temp);
+void		remove_room_queue(t_bfs *bfs);
+void		ft_pre_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room, int path);
+void		ft_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room);
+int			ft_foundroom(t_bfs *bfs, t_temp_bfs temp, int room);
+void		ft_delactual_room(t_bfs *bfs, int path, t_temp_bfs temp);
+void		ft_del_rooms(t_bfs *bfs, t_temp_bfs temp);
+int			ft_size_queue(t_bfs bfs, int path);
+void		ft_freequeue(t_bfs *bfs);
+
+/*
+**	bfs3.c
+*/
+int			pre_path1(t_bfs *bfs, t_res *res);
+int			get_lowest_link1(t_bfs *bfs, int actual_room, int path, t_map *map, t_res *res);
+void		get_path1(t_bfs *bfs, int path, t_map *map, t_res *res);
+void		dig_deep1(t_bfs *bfs, t_map *map, t_res *res);
+int			ft_init_res(t_bfs *bfs, t_res *res, t_map *map);
+
+/*
+** bfs4.c
+*/
+int			ft_takepaths(t_bfs *bfs, t_tripaths *tri);
+
+/*
+**	print.c
+*/
+void		print_queue(t_bfs *bfs, t_map *map);
+void		print_matrix_state(t_bfs *bfs, t_map *map);
+void		print_matrix_state2(t_bfs *bfs, t_map *map);
+void		print_path(t_bfs *bfs, t_map *map, int path, int max_length);
+void		dig_deep(t_bfs *bfs, t_map *map);
+void		ft_putintstr(int *tab, int size);
+
+int 		clear_path2(t_res *res, t_bfs *bfs, t_sort *sort);
+int 		display_algo(t_map map, t_res *res, t_bfs *bfs);
+
+void 		free_matrix(t_map *map);
 #endif

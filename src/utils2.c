@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:02:07 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:06:06 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/28 11:24:04 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-void 	print_tab_int(int **tab, int y, int x)
+void 	print_tab_int(int **tab, int y, int x, t_map *map)
 {
 	int i = 0;
 	int j = 0;
@@ -22,6 +22,7 @@ void 	print_tab_int(int **tab, int y, int x)
 	while (i < y)
 	{
 		j = 0;
+		printf("|%s| : ", map->map_name[i]);
 		while (j < x)
 		{
 			printf("%d ", tab[i][j]);
