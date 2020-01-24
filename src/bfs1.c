@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 01:19:20 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 05:15:21 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -153,6 +153,17 @@ int            all_path_done(t_bfs *bfs) //a refaire
     return(1);
 }
 */
+static int		ft_availablequeue(t_bfs *bfs)
+{
+	int		i;
+
+	i = -1;
+	while (++i < bfs->nb_paths)
+		if (bfs->queue[i][0] != -1)
+			return (TRUE);
+	return (FALSE);
+}
+
 void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 {
 	t_temp_bfs  temp;
@@ -164,7 +175,7 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 	//printf("\n");
 	//print_matrix_state(bfs, map);
 	//printf("\n");
-    if (bfs->found_paths <= bfs->finish)//if (all_path_done(bfs) != 1)
+    if (bfs->found_paths <= bfs->finish && ft_availablequeue(bfs))//if (all_path_done(bfs) != 1)
 	{
 		while (temp.actual_path < bfs->nb_paths)
 		{

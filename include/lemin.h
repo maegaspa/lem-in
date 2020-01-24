@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 10:12:32 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 02:16:47 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -153,7 +153,7 @@ typedef	struct	s_path
 
 typedef struct	s_tripaths
 {
-	t_path		**paths;
+	struct s_path	**paths;
 }				t_tripaths;
 
 typedef struct	s_temp_paths
@@ -278,6 +278,7 @@ void		print_matrix_state2(t_bfs *bfs, t_map *map);
 void		print_path(t_bfs *bfs, t_map *map, int path, int max_length);
 void		dig_deep(t_bfs *bfs, t_map *map);
 void		ft_putintstr(int *tab, int size);
+void		ft_printallpaths(t_tripaths tri, t_bfs bfs);
 
 int 		clear_path2(t_res *res, t_bfs *bfs, t_sort *sort);
 int 		display_algo(t_map map, t_res *res, t_bfs *bfs);

@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   utils2.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:02:07 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/28 11:24:04 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 05:18:43 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ void 	print_tab_int(int **tab, int y, int x, t_map *map)
 	while (i < y)
 	{
 		j = 0;
-		printf("|%s| : ", map->map_name[i]);
+		printf("|%3s| : ", map->map_name[i]);
 		while (j < x)
 		{
 			printf("%d ", tab[i][j]);

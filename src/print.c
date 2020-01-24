@@ -6,13 +6,27 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/07 15:49:57 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 10:12:13 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 02:17:38 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include <stdio.h>
+
+void			ft_printallpaths(t_tripaths tri, t_bfs bfs)
+{
+	int		paths;
+	int		subs;
+
+	paths = -1;
+	while (++paths < bfs.nb_paths)
+	{
+		subs = -1;
+		while (++subs < bfs.end_links)
+			ft_putintstr(tri.paths[paths][subs].path, tri.paths[paths][subs].size);
+	}
+}
 
 void			ft_putintstr(int *tab, int size)
 {

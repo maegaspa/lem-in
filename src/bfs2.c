@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/07 15:51:35 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 01:12:19 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 04:21:30 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,6 +63,7 @@ void			ft_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room)
 {
 	while (bfs->queue[temp.actual_path][temp.size_queue] != -1) //temp en copie donc pas de modif de l'index dans le temp de foundpaths (500IQ)
 		temp.size_queue++;
+	//printf("bfs->queue[%d][%d] = %d\n", temp.actual_path, temp.size_queue, room);
 	bfs->queue[temp.actual_path][temp.size_queue] = room;
 }
 
@@ -76,7 +77,7 @@ void			ft_setqueue(t_bfs *bfs, t_temp_bfs temp)
 		if (next_room == bfs->end)
 		{
 			bfs->found_paths++;
-			//printf ("chemin trouve pour path[%d] room [%d]\n", temp.actual_path, bfs->queue[temp.actual_path][temp.i_queue]);
+			printf ("chemin trouve pour path[%d] room [%d]\n", temp.actual_path, bfs->queue[temp.actual_path][temp.i_queue]);
 		}
 		else
 		{
