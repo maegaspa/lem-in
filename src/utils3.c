@@ -46,7 +46,9 @@ int 	ft_strcheck(char *s1, char *s2, int chose)
 	split = ft_strsplit(s1, '-');
 	if (chose == 1)
 	{
-		while (split[0][i] || s2[i]) // ||
+		if (ft_strlen(s2) != ft_strlen(split[0]))
+			return (0);
+		while (s2[i] || split[0][i]) // ||
 		{
 			if (s2[i] == split[0][i])
 				j++;
@@ -62,6 +64,8 @@ int 	ft_strcheck(char *s1, char *s2, int chose)
 	}
 	if (chose == 2)
 	{
+		if (ft_strlen(s2) != ft_strlen(split[1]))
+			return (0);
 		while (split[1][i] || s2[i]) // ||
 		{
 			if (s2[i] == split[1][i])
