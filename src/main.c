@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 01:07:26 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 08:19:03 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,7 +32,7 @@ int		main(void)
 	t_name	*name;
 	t_link	*link;
 	t_map	map;
-	//t_res	res;
+	t_res	res;
 	t_bfs	bfs;
 	t_tripaths tri;
 	int 	ret;
@@ -56,9 +56,9 @@ int		main(void)
 	//resize_matrix(&map);
 //	print_file(f_dis);
 	ret = print_and_return(ret);
-	ft_bfs(map, &bfs, &tri);
+	ft_bfs(map, &bfs, &tri, &res);
+	//printf("count_paths = %d\n", tri.count_paths);
 	//display_algo(map, &res, &bfs);
 	//clear(&name, &link, &f_dis);
-	
 	return (ret);
 }

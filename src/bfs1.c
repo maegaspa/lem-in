@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 06:34:46 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 07:01:28 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -201,11 +201,12 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 	//ft_freequeue(bfs);
 }
 
-int			ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri) // rajouter fonction retrace all_paths
+int			ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res) // rajouter fonction retrace all_paths
 {
 	//int 		i;
 	//int 		j;
-
+	
+	tri->count_paths = 0;
 	if (!ft_setprealgo(map, bfs))
 		return (FAILURE);
 	//printf("ET ICI nb_path = %d\n", bfs.nb_paths);
@@ -215,10 +216,11 @@ int			ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri) // rajouter fonction retrac
 		print_matrix_state(bfs, &map);
 	else
 		print_matrix_state2(bfs, &map);
-	if (!ft_takepaths(bfs, tri))
+	if (!ft_takepaths(bfs, tri, res))
 		return (FAILURE);
 	//dig_deep(&bfs, &map);
 	//ft_init_res(bfs, res, &map);
+	//printf("[zob]tri->count_paths = %d \n", tri->count_paths);
 	printf("OUI\n");
 	//dig_deep1(bfs, &map, res);
 	//i = -1;

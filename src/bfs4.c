@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/20 08:26:29 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 05:11:28 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 08:21:07 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,14 +81,8 @@ static int	ft_states_to_paths(t_bfs *bfs, t_tripaths *tri, t_temp_paths tp)
 	int		step;
 	int		prev;
 	int		i_state;
-//	int		i_sub_ends;
 
-//	i_sub_ends = -1;
 	//printf("bfs->mtx_state[tp.sub_ends[tp.sub_paths]][tp.act_path] = %d et tp.sub_ends[tp.sub_paths] = %d\n", bfs->mtx_state[tp.sub_ends[tp.sub_paths]][tp.act_path], tp.sub_ends[tp.sub_paths]);
-	//while (++i_sub_ends < bfs->end_links)
-	//{
-//
-	//}
 	if (bfs->mtx_state[tp.sub_ends[tp.sub_paths]][tp.act_path] == -1)
 	{
 		//printf("tp.subpaths : %d\n", tp.sub_paths);
@@ -119,19 +113,24 @@ static int	ft_states_to_paths(t_bfs *bfs, t_tripaths *tri, t_temp_paths tp)
 			}
 		}
 	}
-	printf ("path OK\n");
+	//printf ("path OK\n");
 	tri->paths[tp.act_path][tp.sub_paths].path[0] = bfs->start;
+	//printf("tri->nb_subs[%d] = %d\n", tp.act_path, tri->nb_subs[tp.act_path]);
 	ft_putintstr(tri->paths[tp.act_path][tp.sub_paths].path, tri->paths[tp.act_path][tp.sub_paths].size);
+	//printf("[zob]tri->count_paths = %d \n", tri->count_paths);
+	tri->count_paths++;
 	return (SUCCESS);
 }
 
-int			ft_takepaths(t_bfs *bfs, t_tripaths *tri)
+int			ft_takepaths(t_bfs *bfs, t_tripaths *tri, t_res	*res)
 {
 	t_temp_paths tp;
 	int		i;
 	int		j;
 
 	i = -1;
+	res = NULL;
+	//tri->count_paths = 0;
 	if (!(tri = (t_tripaths *)malloc(sizeof(t_tripaths))))
 		return (FAILURE);
 	if (!(tri->paths = (t_path **)malloc(sizeof(t_path *) * bfs->nb_paths)))
@@ -165,6 +164,9 @@ int			ft_takepaths(t_bfs *bfs, t_tripaths *tri)
 			if (!ft_states_to_paths(bfs, tri, tp))
 				return (FAILURE);
 	}
+	//printf("count_paths = %d\n", tri->count_paths);
 	//ft_printallpaths(*tri, *bfs);
+	//bfs->count_paths = tri->count_paths;
+	//tri_to_res(res, tri, bfs);
 	return (SUCCESS);
 }

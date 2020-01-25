@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 03:44:10 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 07:03:09 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -119,6 +119,7 @@ typedef struct	s_bfs
 	int			found_paths;
 	int			**queue;
 	int			*room_lowest;
+	int			count_paths;
 }				t_bfs;
 
 typedef struct s_map
@@ -155,6 +156,7 @@ typedef struct	s_tripaths
 {
 	struct s_path	**paths;
 	int				*nb_subs;
+	int				count_paths;
 }				t_tripaths;
 
 typedef struct	s_temp_paths
@@ -201,7 +203,7 @@ typedef struct s_dispa
 	int 	occurrence;
 }				t_dispa;
 
-int			ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri);
+int			ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res);
 unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
 void	print_tab(char **tab);
@@ -268,7 +270,7 @@ int			ft_init_res(t_bfs *bfs, t_res *res, t_map *map);
 /*
 ** bfs4.c
 */
-int			ft_takepaths(t_bfs *bfs, t_tripaths *tri);
+int			ft_takepaths(t_bfs *bfs, t_tripaths *tri, t_res *res);
 
 /*
 **	print.c
@@ -281,8 +283,10 @@ void		dig_deep(t_bfs *bfs, t_map *map);
 void		ft_putintstr(int *tab, int size);
 void		ft_printallpaths(t_tripaths tri, t_bfs bfs);
 
-int 		clear_path2(t_res *res, t_bfs *bfs, t_sort *sort);
-int 		display_algo(t_map map, t_res *res, t_bfs *bfs);
+int 	clear_path2(t_res *res, t_bfs *bfs, t_sort *sort/*, t_tripaths *tri*/);
+int 	display_algo(t_map map, t_res *res, t_bfs *bfs/*, t_tripaths *tri*/);
+int		tri_to_res(t_res *res, t_tripaths *tri, t_bfs *bfs);
+void	ft_shortest(t_sort *sort, t_bfs *bfs, t_res *res);
 
 void 		free_matrix(t_map *map);
 #endif
