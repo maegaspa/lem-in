@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 08:52:49 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 11:47:17 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -173,9 +173,7 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 		ft_setprematrix(bfs, temp);
 	//print_queue(bfs, map);
 	//printf("\n");
-	//print_matrix_state(bfs, map);
-	//printf("\n");
-    if (bfs->found_paths <= bfs->finish && ft_availablequeue(bfs))//if (all_path_done(bfs) != 1)
+    if (bfs->found_paths <= bfs->finish && ft_availablequeue(bfs))//(bfs->nb_paths * 3) && ft_availablequeue(bfs))//bfs->finish && ft_availablequeue(bfs))
 	{
 		while (temp.actual_path < bfs->nb_paths)
 		{
@@ -183,19 +181,14 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 			temp.size_queue = ft_size_queue(*bfs, temp.actual_path);
 			while (temp.i_queue < temp.size_queue)
 			{
-				//print_queue(bfs, map);
 				ft_setqueue(bfs, temp);
 				temp.i_queue++;
 			}
-			//print_queue(bfs, map);
-			//printf("\n");
 			ft_del_rooms(bfs, temp);
-			//print_queue(bfs, map);
-			//printf("\n");
 			ft_visited(bfs, temp, step);
 			temp.actual_path++;
 		}
-		//print_queue(bfs, map);
+		printf("bfs->found_paths = %d\n", bfs->found_paths);
 		ft_foundpaths(bfs, ++step, map);
 	}
 	//ft_freequeue(bfs);
@@ -207,15 +200,16 @@ t_tripaths		ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res) // rajout
 	//int 		j;
 	
 	tri->count_paths = 0;
+	res++;
 	if (!ft_setprealgo(map, bfs))
 		;//return (0);
 	//printf("ET ICI nb_path = %d\n", bfs.nb_paths);
 //	print_tab_int(bfs.mtx_diago, map.inf.size_name, map.inf.size_name, &map);
 	ft_foundpaths(bfs, 2, &map);
-	if (bfs->start == map.inf.start)
-		print_matrix_state(bfs, &map);
-	else
-		print_matrix_state2(bfs, &map);
+	//if (bfs->start == map.inf.start)
+	//	print_matrix_state(bfs, &map);
+	//else
+	//	print_matrix_state2(bfs, &map);
 	if (!(tri = ft_takepaths(bfs, res)))
 		;//return (0);
 	//dig_deep(&bfs, &map);

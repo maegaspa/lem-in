@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/07 15:51:35 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 06:35:49 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 11:16:44 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ int			ft_init_queue(t_bfs *bfs)
 	while (++i < bfs->nb_paths)
 	{
 		j = -1;
-		if (!(bfs->queue[i] = (int *)malloc(sizeof(int) * bfs->size_diago)))
+		if (!(bfs->queue[i] = (int *)malloc(sizeof(int) * bfs->size_diago)))//compliquer a opti car pet segfault si valeur mise en dure
 			return (FAILURE);
 		while (++j < bfs->size_diago)
 			bfs->queue[i][j] = -1;
@@ -77,7 +77,7 @@ void			ft_setqueue(t_bfs *bfs, t_temp_bfs temp)
 		if (next_room == bfs->end)
 		{
 			bfs->found_paths++;
-			printf ("chemin trouve pour path[%d] room [%d]\n", temp.actual_path, bfs->queue[temp.actual_path][temp.i_queue]);
+			//printf ("chemin trouve pour path[%d] room [%d]\n", temp.actual_path, bfs->queue[temp.actual_path][temp.i_queue]);
 		}
 		else
 		{
@@ -175,6 +175,7 @@ void			ft_freequeue(t_bfs *bfs)
 
 	i = -1;
 	while (++i < bfs->nb_paths)
-		free(&(bfs->queue[i]));
-	free(&bfs->queue);
+		free((bfs->queue[i]));
+	free((bfs->queue));
+	bfs->queue = NULL;
 }

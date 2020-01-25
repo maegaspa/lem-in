@@ -6,7 +6,7 @@
 #    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2020/01/24 05:44:40 by hmichel     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/25 11:54:25 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,9 +16,10 @@
 NAME = lemin
 CC = gcc
 DEBUG = -fsanitize=address
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 INC = include/lemin.h
 HEADER = include
+OPTI = -O3 -march=native -flto -ffast-math
 
 #------------------------------------FILE--------------------------------------#
 
@@ -108,11 +109,11 @@ $(NAME): $(OBJ)
 	@printf $(RED)"|_/ \n"
 	@printf $(W)"          \_/__\_/                                            \_/__\_/ \n"
 	@make -C libft/
-	@$(CC) $(FLAGS) $(SRC) -L. libft/libftprintf.a -o $(NAME)
+	@$(CC) $(FLAGS) $(SRC) $(OPTI) -L. libft/libftprintf.a -o $(NAME)
 
 
 object/%.o: src/%.c
-	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
+	@$(CC) $(FLAGS) $(OPTI) -I $(HEADER) -o $@ -c $<
 
 clean:
 	@echo "\033[1m|---------------------------------|\033[0m"

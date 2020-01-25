@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:48 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 05:17:24 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 10:33:12 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -146,6 +146,6 @@ int 	set_matrix(t_map *map)
 	}
 	if (map->mat.start_link_end == 0 || map->mat.end_link_start == 0)
 		return (-1);
-	print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name, map);
+	//print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name, map);
 	return (1);
 }

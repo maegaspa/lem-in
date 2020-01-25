@@ -6,57 +6,55 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/20 08:26:29 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 09:51:22 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 10:29:47 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include <stdio.h>
-/*
-static int	ft_init_tripaths(t_tripaths *tri, t_bfs *bfs)
+
+int			get_nb_sub_path(t_bfs *bfs, t_temp_paths tp, t_tripaths *tri, int path)
+{
+	int 	i;
+	int 	count;
+
+	count = 0;
+	i = -1;
+	while (++i < bfs->end_links)
+	{
+		if (bfs->mtx_state[tp.sub_ends[i]][path] != -1)
+			count++;
+	}
+	tri->nb_subs[path] = count;
+	return (count);
+}
+
+static int	ft_init_tripaths(t_tripaths **tri, t_bfs *bfs, t_temp_paths tp)
 {
 	int		i;
 	int		j;
 
 	i = -1;
-	if (!(tri = (t_tripaths *)malloc(sizeof(t_tripaths))))
-		return (NULL);
-	if (!(tri->paths = (t_path **)malloc(sizeof(t_path *) * bfs->nb_paths)))
-		return (NULL);
-	while (++i < bfs->end_links)
+	if (!(*tri = (t_tripaths *)malloc(sizeof(t_tripaths))))
+		return (FAILURE);
+	if (!((*tri)->nb_subs = (int *)malloc(sizeof(int) * bfs->nb_paths)))
+		return (FAILURE);
+	if (!((*tri)->paths = (t_path **)malloc(sizeof(t_path *) * bfs->nb_paths)))
+		return (FAILURE);
+	while (++i < bfs->nb_paths)
 	{
 		j = -1;
-		if (!(tri->paths[i] = (t_path *)malloc(sizeof(t_path) * bfs->end_links)))
-			return (NULL);
-		while (++j < bfs->end_links)
+		if (!((*tri)->paths[i] = (t_path *)malloc(sizeof(t_path) * get_nb_sub_path(bfs, tp, *tri, i))))
+			return (FAILURE);
+		while (++j < (*tri)->nb_subs[i])
 		{
-			tri->paths[i][j].path = NULL;
-			tri->paths[i][j].size = 0;
+			(*tri)->paths[i][j].path = NULL;
+			(*tri)->paths[i][j].size = 0;
 		}
 	}
+	(*tri)->count_paths = 0;
 	return (SUCCESS);
-}*/
-
-void			get_nb_sub_path(t_bfs *bfs, t_temp_paths tp, t_tripaths *tri)
-{
-	int 	i;
-	int		path;
-	int 	count;
-
-	path  = -1;
-	while (++path < bfs->nb_paths)
-	{
-		count = 0;
-		i = -1;
-		while (++i < bfs->end_links)
-		{
-			if (bfs->mtx_state[tp.sub_ends[i]][path] != -1)
-				count++;
-		}
-		//printf("count = %d\n", count);
-		tri->nb_subs[path] = count;
-	}
 }
 
 static int	ft_sub_ends(t_bfs *bfs, t_temp_paths *tp)
@@ -94,7 +92,7 @@ static int	ft_states_to_paths(t_bfs *bfs, t_tripaths *tri, t_temp_paths *tp)
 		return (SUCCESS);
 	}
 	tri->paths[tp->act_path][tp->i_stp].size = bfs->mtx_state[tp->sub_ends[tp->sub_paths]][tp->act_path] + 2;
-	printf("tp->act_path = %d, tp->sub_paths = %d, tri->paths[tp->act_path][tp->sub_paths].size = %d\n", tp->act_path, tp->sub_paths, tri->paths[tp->act_path][tp->sub_paths].size);
+	//printf("tp->act_path = %d, tp->sub_paths = %d, tri->paths[tp->act_path][tp->tp->i_stp].size = %d\n", tp->act_path, tp->sub_paths, tri->paths[tp->act_path][tp->i_stp].size);
 	if (!(tri->paths[tp->act_path][tp->i_stp].path = (int *)malloc(sizeof(int) *
 		tri->paths[tp->act_path][tp->i_stp].size)))
 		return (FAILURE);
@@ -119,7 +117,7 @@ static int	ft_states_to_paths(t_bfs *bfs, t_tripaths *tri, t_temp_paths *tp)
 	//printf ("path OK\n");
 	tri->paths[tp->act_path][tp->i_stp].path[0] = bfs->start;
 	//printf("tri->nb_subs[%d] = %d\n", tp->act_path, tri->nb_subs[tp->act_path]);
-	ft_putintstr(tri->paths[tp->act_path][tp->i_stp].path, tri->paths[tp->act_path][tp->i_stp].size);
+	//ft_putintstr(tri->paths[tp->act_path][tp->i_stp].path, tri->paths[tp->act_path][tp->i_stp].size);
 	tp->i_stp++;
 	//printf("[zob]tri->count_paths = %d \n", tri->count_paths);
 	tri->count_paths++;
@@ -130,16 +128,16 @@ static int	ft_states_to_paths(t_bfs *bfs, t_tripaths *tri, t_temp_paths *tp)
 {
 	t_temp_paths tp;
 	int		i;
-	int		j;
 	t_tripaths *tri;
 
 	i = -1;
 	res = NULL;
-	//tri->count_paths = 0;
 	if (!ft_sub_ends(bfs, &tp))
 		return (NULL);
-	get_nb_sub_path(bfs, tp, tri);
-	if (!(tri = (t_tripaths *)malloc(sizeof(t_tripaths))))
+	if (!ft_init_tripaths(&tri, bfs, tp))
+		return (NULL);
+	//get_nb_sub_path(bfs, tp, tri);
+	/*if (!(tri = (t_tripaths *)malloc(sizeof(t_tripaths))))
 		return (NULL);
 	if (!(tri->paths = (t_path **)malloc(sizeof(t_path *) * bfs->nb_paths)))
 		return (NULL);
@@ -155,7 +153,7 @@ static int	ft_states_to_paths(t_bfs *bfs, t_tripaths *tri, t_temp_paths *tp)
 		}
 	}
 	if (!(tri->nb_subs = (int *)malloc(sizeof(int) * bfs->nb_paths)))
-		return (NULL);
+		return (NULL);*/
 	//if (!ft_init_tripaths(tri, bfs))
 	//	return (NULL);
 	//if (!ft_sub_ends(bfs, &tp))
