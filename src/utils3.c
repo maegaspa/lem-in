@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   utils3.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:02:07 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:06:06 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 05:44:12 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,7 +46,9 @@ int 	ft_strcheck(char *s1, char *s2, int chose)
 	split = ft_strsplit(s1, '-');
 	if (chose == 1)
 	{
-		while (split[0][i] || s2[i])
+		if (ft_strlen(s2) != ft_strlen(split[0]))
+			return (0);
+		while (s2[i] || split[0][i]) // ||
 		{
 			if (s2[i] == split[0][i])
 				j++;
@@ -62,7 +64,9 @@ int 	ft_strcheck(char *s1, char *s2, int chose)
 	}
 	if (chose == 2)
 	{
-		while (split[1][i] || s2[i])
+		if (ft_strlen(s2) != ft_strlen(split[1]))
+			return (0);
+		while (split[1][i] || s2[i]) // ||
 		{
 			if (s2[i] == split[1][i])
 				j++;

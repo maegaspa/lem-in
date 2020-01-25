@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
+#    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/12/27 18:45:54 by seanseau    ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/24 05:44:40 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -15,7 +15,7 @@
 
 NAME = lemin
 CC = gcc
-DEBUG = -g -fsanitize=address
+DEBUG = -fsanitize=address
 FLAGS = -Wall -Wextra -Werror -g
 INC = include/lemin.h
 HEADER = include
@@ -32,6 +32,12 @@ FILES = src/parser\
 		src/main\
 		src/clear_matrix\
 		src/bfs1\
+		src/bfs2\
+		src/bfs3\
+		src/bfs4\
+		src/display_algo\
+		src/free\
+		src/print\
 
 #----------------------------------COLOR---------------------------------------#
 
