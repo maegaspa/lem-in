@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 07:01:28 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 08:52:49 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -201,14 +201,14 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 	//ft_freequeue(bfs);
 }
 
-int			ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res) // rajouter fonction retrace all_paths
+t_tripaths		ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res) // rajouter fonction retrace all_paths
 {
 	//int 		i;
 	//int 		j;
 	
 	tri->count_paths = 0;
 	if (!ft_setprealgo(map, bfs))
-		return (FAILURE);
+		;//return (0);
 	//printf("ET ICI nb_path = %d\n", bfs.nb_paths);
 //	print_tab_int(bfs.mtx_diago, map.inf.size_name, map.inf.size_name, &map);
 	ft_foundpaths(bfs, 2, &map);
@@ -216,11 +216,11 @@ int			ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res) // rajouter fon
 		print_matrix_state(bfs, &map);
 	else
 		print_matrix_state2(bfs, &map);
-	if (!ft_takepaths(bfs, tri, res))
-		return (FAILURE);
+	if (!(tri = ft_takepaths(bfs, res)))
+		;//return (0);
 	//dig_deep(&bfs, &map);
 	//ft_init_res(bfs, res, &map);
-	//printf("[zob]tri->count_paths = %d \n", tri->count_paths);
+	printf("[zob]tri->count_paths = %d \n", tri->count_paths);
 	printf("OUI\n");
 	//dig_deep1(bfs, &map, res);
 	//i = -1;
@@ -233,7 +233,7 @@ int			ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res) // rajouter fon
 	//	}
 	//	printf("\n");
 	//}
-	return (1);
+	return (*tri);
 }
 
 /*

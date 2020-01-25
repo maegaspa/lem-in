@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 07:03:09 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 09:25:57 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -164,6 +164,7 @@ typedef struct	s_temp_paths
 	int		act_path;
 	int		sub_paths;
 	int		*sub_ends;
+	int		i_stp;
 }				t_temp_paths;
 
 typedef struct 	s_sort
@@ -203,7 +204,7 @@ typedef struct s_dispa
 	int 	occurrence;
 }				t_dispa;
 
-int			ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res);
+t_tripaths		ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res);
 unsigned int	count_word(const char *s, char c);
 void	print_info_map(t_name **name, t_link **link, t_map *map);
 void	print_tab(char **tab);
@@ -270,7 +271,7 @@ int			ft_init_res(t_bfs *bfs, t_res *res, t_map *map);
 /*
 ** bfs4.c
 */
-int			ft_takepaths(t_bfs *bfs, t_tripaths *tri, t_res *res);
+t_tripaths		*ft_takepaths(t_bfs *bfs, t_res	*res);
 
 /*
 **	print.c
