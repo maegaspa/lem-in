@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 05:32:29 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 09:09:22 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -104,17 +104,20 @@ void            ft_visited(t_bfs *bfs, t_temp_bfs temp, int step)
 		node_to_sign = bfs->queue[temp.actual_path][temp.i_queue];
 		//if (bfs->mtx_state[node_to_sign][temp.actual_path] == -1)
 		    bfs->mtx_state[node_to_sign][temp.actual_path] = step;
-		if (node_to_sign == bfs->end)
+		/*if (node_to_sign == bfs->end)
 		{
+			printf ("BRRRRRR\n");
 			bfs->found_paths++;
 			temp.i_queue = -1;
 			while (bfs->queue[temp.actual_path][++temp.i_queue] != -1)
 				bfs->queue[temp.actual_path][temp.i_queue] = -1;
 			break ;
-		}
+		}*/
 		temp.i_queue++;
 	}
 }
+
+//void			ft_signed()
 
 void			ft_setprematrix(t_bfs *bfs, t_temp_bfs temp) // a supp
 {
@@ -150,28 +153,30 @@ static int		ft_availablequeue(t_bfs *bfs)
 	return (FALSE);
 }
 
-void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
+void			ft_foundpaths(t_bfs *bfs, int step, t_map *map)
 {
 	t_temp_bfs  temp;
 
 	temp.actual_path = 0;
 	if (step == 2)
 		ft_setprematrix(bfs, temp);
-	print_queue(bfs, map);
-	printf("\n");
     if (bfs->found_paths <= bfs->finish && ft_availablequeue(bfs))//(bfs->nb_paths * 3) && ft_availablequeue(bfs))//bfs->finish && ft_availablequeue(bfs))
 	{
 		while (temp.actual_path < bfs->nb_paths)
 		{
 			temp.i_queue = 0;
 			temp.size_queue = ft_size_queue(*bfs, temp.actual_path);
+			if (temp.actual_path == 1)
+				printf ("temp.size_queue = %d\n", temp.size_queue);
+			print_queue(bfs, map);
+			printf("\n");
 			while (temp.i_queue < temp.size_queue)
 			{
-				ft_setqueue(bfs, temp);
+				ft_setqueue(bfs, temp, step);
 				temp.i_queue++;
 			}
 			ft_del_rooms(bfs, temp);
-			ft_visited(bfs, temp, step);
+			//ft_visited(bfs, temp, step);
 			temp.actual_path++;
 		}
 		printf("bfs->found_paths = %d\n", bfs->found_paths);

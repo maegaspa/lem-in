@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/07 15:51:35 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 11:16:44 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 08:43:41 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,10 +64,11 @@ void			ft_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room)
 	while (bfs->queue[temp.actual_path][temp.size_queue] != -1) //temp en copie donc pas de modif de l'index dans le temp de foundpaths (500IQ)
 		temp.size_queue++;
 	//printf("bfs->queue[%d][%d] = %d\n", temp.actual_path, temp.size_queue, room);
-	bfs->queue[temp.actual_path][temp.size_queue] = room;
+	//if (bfs->mtx_state[room][temp.actual_path] < 0)
+		bfs->queue[temp.actual_path][temp.size_queue] = room;
 }
 
-void			ft_setqueue(t_bfs *bfs, t_temp_bfs temp)
+void			ft_setqueue(t_bfs *bfs, t_temp_bfs temp, int step)
 {
 	int		next_room;
 
@@ -77,11 +78,13 @@ void			ft_setqueue(t_bfs *bfs, t_temp_bfs temp)
 		if (next_room == bfs->end)
 		{
 			bfs->found_paths++;
-			//printf ("chemin trouve pour path[%d] room [%d]\n", temp.actual_path, bfs->queue[temp.actual_path][temp.i_queue]);
+			printf ("chemin trouve pour path[%d] room [%d]\n", temp.actual_path, bfs->queue[temp.actual_path][temp.i_queue]);
 		}
 		else
 		{
 			//printf("appel roomtoqueue next_room = %d\n", next_room);
+			bfs->mtx_state[next_room][temp.actual_path] = step;
+			//bfs->mtx_state[next_room][temp.actual_path] = -1;
 			ft_roomto_queue(bfs, temp, next_room);
 			//bfs->mtx_state[temp.actual_path][next_room] = 1;
 		}

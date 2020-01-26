@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 05:33:43 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 08:35:16 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -249,7 +249,7 @@ void		ft_delactual_room(t_bfs *bfs, int path, t_temp_bfs temp);
 **	bfs2.c
 */
 int			ft_init_queue(t_bfs *bfs);
-void		ft_setqueue(t_bfs *bfs, t_temp_bfs temp);
+void		ft_setqueue(t_bfs *bfs, t_temp_bfs temp, int step);
 void		remove_room_queue(t_bfs *bfs);
 void		ft_pre_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room, int path);
 void		ft_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room);
