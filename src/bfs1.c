@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 11:47:17 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 05:32:29 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -138,21 +138,7 @@ void			ft_setprematrix(t_bfs *bfs, t_temp_bfs temp) // a supp
 	}
 	remove_room_queue(bfs);
 }
-/*
-int            all_path_done(t_bfs *bfs) //a refaire
-{
-    int x;
 
-    x = 0;
-    while (x < bfs->nb_paths)
-    {
-        if (bfs->mtx_state[bfs->end][x] == -1)
-            return (0);
-        x++;
-    }
-    return(1);
-}
-*/
 static int		ft_availablequeue(t_bfs *bfs)
 {
 	int		i;
@@ -171,8 +157,8 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map) // a reprendre
 	temp.actual_path = 0;
 	if (step == 2)
 		ft_setprematrix(bfs, temp);
-	//print_queue(bfs, map);
-	//printf("\n");
+	print_queue(bfs, map);
+	printf("\n");
     if (bfs->found_paths <= bfs->finish && ft_availablequeue(bfs))//(bfs->nb_paths * 3) && ft_availablequeue(bfs))//bfs->finish && ft_availablequeue(bfs))
 	{
 		while (temp.actual_path < bfs->nb_paths)
@@ -206,10 +192,10 @@ t_tripaths		ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res) // rajout
 	//printf("ET ICI nb_path = %d\n", bfs.nb_paths);
 //	print_tab_int(bfs.mtx_diago, map.inf.size_name, map.inf.size_name, &map);
 	ft_foundpaths(bfs, 2, &map);
-	//if (bfs->start == map.inf.start)
-	//	print_matrix_state(bfs, &map);
-	//else
-	//	print_matrix_state2(bfs, &map);
+	if (bfs->start == map.inf.start)
+		print_matrix_state(bfs, &map);
+	else
+		print_matrix_state2(bfs, &map);
 	if (!(tri = ft_takepaths(bfs, res)))
 		;//return (0);
 	//dig_deep(&bfs, &map);

@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 09:25:57 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 05:33:43 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -282,7 +282,9 @@ void		print_matrix_state2(t_bfs *bfs, t_map *map);
 void		print_path(t_bfs *bfs, t_map *map, int path, int max_length);
 void		dig_deep(t_bfs *bfs, t_map *map);
 void		ft_putintstr(int *tab, int size);
+void		ft_putintstr2(int *tab, int size, t_map *map);
 void		ft_printallpaths(t_tripaths tri, t_bfs bfs);
+void		ft_printallpaths_name(t_tripaths tri, t_bfs bfs, t_map *map);
 
 int 	clear_path2(t_res *res, t_bfs *bfs, t_sort *sort/*, t_tripaths *tri*/);
 int 	display_algo(t_map map, t_res *res, t_bfs *bfs/*, t_tripaths *tri*/);

@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/07 15:49:57 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 07:01:30 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 05:34:13 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,6 +26,28 @@ void			ft_printallpaths(t_tripaths tri, t_bfs bfs)
 		while (++subs < tri.nb_subs[paths])
 			ft_putintstr(tri.paths[paths][subs].path, tri.paths[paths][subs].size);
 	}
+}
+
+void			ft_printallpaths_name(t_tripaths tri, t_bfs bfs, t_map *map)
+{
+	int		paths;
+	int		subs;
+	paths = -1;
+	while (++paths < bfs.nb_paths)
+	{
+		subs = -1;
+		while (++subs < tri.nb_subs[paths])
+			ft_putintstr2(tri.paths[paths][subs].path, tri.paths[paths][subs].size, map);
+	}
+}
+
+void            ft_putintstr2(int *tab, int size, t_map *map)
+{
+    int		i;
+    i = -1;
+    while (++i < size)
+    	printf("%s ", map->map_name[tab[i]]);
+    printf("\n");
 }
 
 void			ft_putintstr(int *tab, int size)
@@ -57,21 +79,7 @@ void			print_queue(t_bfs *bfs, t_map *map)
 		x++;
 	}
 }
-/*
-void			print_queue(t_bfs *bfs, t_map *map)
-{
-	int y;
 
-	printf("queue path 1 : \n");
-	y = 0;
-	while (y < map->mat.size)
-	{
-		printf("  %2d  ", bfs->queue[1][y]);
-		y++;
-	}
-	printf("\n");
-}
-*/
 void		print_matrix_state(t_bfs *bfs, t_map *map)
 {
 	int x = 0;

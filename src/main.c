@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 11:39:48 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 05:35:26 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,7 +61,8 @@ int		main(void)
 	tri.count_paths = 0;
 	tri = ft_bfs(map, &bfs, &tri, &res);
 	printf("count_paths = %d\n", tri.count_paths);
-	ft_printallpaths(tri, bfs);
+	//ft_printallpaths(tri, bfs);
+	ft_printallpaths_name(tri, bfs, &map);
 	//printf("%d\n",tri.paths[1][2].size);
 	//display_algo(map, &res, &bfs);
 	//clear(&name, &link, &f_dis);
