@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 09:09:22 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/27 21:50:29 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -160,26 +160,24 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map)
 	temp.actual_path = 0;
 	if (step == 2)
 		ft_setprematrix(bfs, temp);
-    if (bfs->found_paths <= bfs->finish && ft_availablequeue(bfs))//(bfs->nb_paths * 3) && ft_availablequeue(bfs))//bfs->finish && ft_availablequeue(bfs))
+    if (bfs->found_paths <= bfs->finish && ft_availablequeue(bfs))// (bfs->nb_paths * 3)&& ft_availablequeue(bfs))//bfs->found_paths <= bfs->finish && ft_availablequeue(bfs)
 	{
 		while (temp.actual_path < bfs->nb_paths)
 		{
 			temp.i_queue = 0;
+			temp.add_queue = 0;
 			temp.size_queue = ft_size_queue(*bfs, temp.actual_path);
-			if (temp.actual_path == 1)
-				printf ("temp.size_queue = %d\n", temp.size_queue);
-			print_queue(bfs, map);
-			printf("\n");
 			while (temp.i_queue < temp.size_queue)
 			{
 				ft_setqueue(bfs, temp, step);
 				temp.i_queue++;
 			}
 			ft_del_rooms(bfs, temp);
-			//ft_visited(bfs, temp, step);
 			temp.actual_path++;
 		}
-		printf("bfs->found_paths = %d\n", bfs->found_paths);
+		//printf("bfs->found_paths = %d\n", bfs->found_paths);
+		//print_queue(bfs, map);
+		//printf("\n");
 		ft_foundpaths(bfs, ++step, map);
 	}
 	//ft_freequeue(bfs);
@@ -187,9 +185,6 @@ void			ft_foundpaths(t_bfs *bfs, int step, t_map *map)
 
 t_tripaths		ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res) // rajouter fonction retrace all_paths
 {
-	//int 		i;
-	//int 		j;
-	
 	tri->count_paths = 0;
 	res++;
 	if (!ft_setprealgo(map, bfs))
@@ -197,15 +192,15 @@ t_tripaths		ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res) // rajout
 	//printf("ET ICI nb_path = %d\n", bfs.nb_paths);
 //	print_tab_int(bfs.mtx_diago, map.inf.size_name, map.inf.size_name, &map);
 	ft_foundpaths(bfs, 2, &map);
-	if (bfs->start == map.inf.start)
-		print_matrix_state(bfs, &map);
-	else
-		print_matrix_state2(bfs, &map);
+	//if (bfs->start == map.inf.start)
+	//	print_matrix_state(bfs, &map);
+	//else
+	//	print_matrix_state2(bfs, &map);
 	if (!(tri = ft_takepaths(bfs, res)))
 		;//return (0);
 	//dig_deep(&bfs, &map);
 	//ft_init_res(bfs, res, &map);
-	printf("[zob]tri->count_paths = %d \n", tri->count_paths);
+	//printf("[zob]tri->count_paths = %d \n", tri->count_paths);
 	printf("OUI\n");
 	//dig_deep1(bfs, &map, res);
 	//i = -1;

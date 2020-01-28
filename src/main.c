@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 05:35:26 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/28 21:51:06 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,6 +36,7 @@ int		main(void)
 	t_bfs	bfs;
 	t_tripaths tri;
 	int 	ret;
+	int		i = -1;
 
 	init_value(&map);
 	ret = parser(&name, &link, &map, &f_dis);
@@ -60,11 +61,16 @@ int		main(void)
 	tri.nb_subs = NULL;
 	tri.count_paths = 0;
 	tri = ft_bfs(map, &bfs, &tri, &res);
-	printf("count_paths = %d\n", tri.count_paths);
+	//printf("count_paths = %d\n", tri.count_paths);
 	//ft_printallpaths(tri, bfs);
-	ft_printallpaths_name(tri, bfs, &map);
+	//ft_printallpaths_name(tri, bfs, &map);
+	//printf(" map->line_expected = %d\n",  map.line_expected);
+	if (!ft_tri_to_res(&res, tri, bfs))
+		return (print_and_return(ret));
 	//printf("%d\n",tri.paths[1][2].size);
-	//display_algo(map, &res, &bfs);
+	while (++i < res.used_paths)
+		ft_putintstr(res.paths[i], res.size_paths[i]);
+	display_algo(map, &res);
 	//clear(&name, &link, &f_dis);
 	return (ret);
 }

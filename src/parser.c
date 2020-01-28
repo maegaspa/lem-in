@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   parser.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 12:57:54 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:27:20 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/27 19:18:34 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -168,6 +168,7 @@ int		parser(t_name **name, t_link **link, t_map *map, t_file_display	**f_dis)
 			return (-1);
 		if ((check_link_line(link, map, line, split) != 1))
 			return (-1);
+		get_line_expected(map, line);
 		ft_strdel(&line);
 		if (map->cpt.error == 1)
 			return (-1);

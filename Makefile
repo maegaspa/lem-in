@@ -6,7 +6,7 @@
 #    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2020/01/25 11:54:25 by hmichel     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/28 21:37:22 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,7 +16,7 @@
 NAME = lemin
 CC = gcc
 DEBUG = -fsanitize=address
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 INC = include/lemin.h
 HEADER = include
 OPTI = -O3 -march=native -flto -ffast-math
@@ -34,8 +34,8 @@ FILES = src/parser\
 		src/clear_matrix\
 		src/bfs1\
 		src/bfs2\
-		src/bfs3\
 		src/bfs4\
+		src/bfs5\
 		src/display_algo\
 		src/free\
 		src/print\

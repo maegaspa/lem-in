@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 08:35:16 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/28 22:02:00 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,6 +23,7 @@
 # define FALSE		0
 # define SUCCESS	1
 # define FAILURE	0
+# define LIMIT_PATHS 15 //subs_used per start_path //bfs5.c
 
 typedef struct s_file_display
 {
@@ -103,6 +104,7 @@ typedef struct	s_temp_bfs
 {
 	int			actual_path;
 	int			i_queue;
+	int			add_queue;
 	int			size_queue;
 }				t_temp_bfs;
 
@@ -130,6 +132,7 @@ typedef struct s_map
 	int 	**map_co;
 	int		**matrix;
 	int		**new_matrix;
+	int		line_expected;
 	t_info	inf;
 	t_cpt	cpt;
 	t_matrix mat;
@@ -143,7 +146,8 @@ typedef struct	s_res
 {
 	int		**paths;
 	int		*size_paths;
-	int  	*rank_size;
+	int		used_paths;
+	//int  	*rank_size;
 }				t_res;
 
 typedef	struct	s_path
@@ -204,40 +208,50 @@ typedef struct s_dispa
 	int 	occurrence;
 }				t_dispa;
 
+typedef struct s_rank
+{
+	int		i;
+	int		j;
+	int		k;
+	int		size;
+	int		left;
+	int		*ranking[3];
+}				t_rank;
+
 t_tripaths		ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res);
 unsigned int	count_word(const char *s, char c);
-void	print_info_map(t_name **name, t_link **link, t_map *map);
-void	print_tab(char **tab);
-void	free_map(char	**map);
+void			print_info_map(t_name **name, t_link **link, t_map *map);
+void			print_tab(char **tab);
+void			free_map(char	**map);
 t_link			*insert_link(char *val, int i);
 t_name			*insert_name(char **val, int i);
-t_file_display		*insert_line(char *line);
-void	clear(t_name **name, t_link **link, t_file_display **f_dis);
-int		list_len(t_name *name, t_link *link, int chose);
-void	print_list(t_name *name, t_link *link);
-void	init_value(t_map *map);
-int		parser(t_name **name, t_link **link, t_map *map, t_file_display	**f_dis);
-int   	set_map(t_name **name, t_link **link, t_map *map);
-int 	set_matrix(t_map *map);
-int		check_str_number(char *str);
-int 	ft_strcheck(char *s1, char *s2, int chose);
-int		check_valid_co(int **tab, int len);
-void 	print_tab_int(int **tab, int y, int x, t_map *map);
-int 	print_and_return(int i);
-int			check_ant_line(t_map *map, char **line, t_file_display	**f_dis);
-int			check_link_line(t_link **link, t_map *map, char *line, char **split);
-int			check_name_line(t_name **name, t_map *map, char *line, char **split);
-int		check_start_end(t_map *map, char **line, t_file_display	**f_dis);
-int 		insert_line_lst(t_map *map, char **line, t_file_display	**f_dis, int *chose);
-void	init_matrix(t_map *map);
-int		check_all_link_and_name(t_map *map, int i);
-int 	free_and_return(char ***split, int i);
-int 	set_tab_link(t_link *tmp_link, t_map *map);
-int 	set_tab_name_and_co(t_name *tmp_name, t_map *map);
-int		name_cmp(char *s1, char *s2);
-int 	delete_cul_de_sac(t_map *map);
-int 	resize_matrix(t_map *map);
-int		main(void);
+t_file_display	*insert_line(char *line);
+void			clear(t_name **name, t_link **link, t_file_display **f_dis);
+int				list_len(t_name *name, t_link *link, int chose);
+void			print_list(t_name *name, t_link *link);
+void			init_value(t_map *map);
+int				parser(t_name **name, t_link **link, t_map *map, t_file_display	**f_dis);
+int   			set_map(t_name **name, t_link **link, t_map *map);
+int 			set_matrix(t_map *map);
+int				check_str_number(char *str);
+int 			ft_strcheck(char *s1, char *s2, int chose);
+int				check_valid_co(int **tab, int len);
+void 			print_tab_int(int **tab, int y, int x, t_map *map);
+int 			print_and_return(int i);
+int				check_ant_line(t_map *map, char **line, t_file_display	**f_dis);
+int				check_link_line(t_link **link, t_map *map, char *line, char **split);
+int				check_name_line(t_name **name, t_map *map, char *line, char **split);
+int				check_start_end(t_map *map, char **line, t_file_display	**f_dis);
+int 			insert_line_lst(t_map *map, char **line, t_file_display	**f_dis, int *chose);
+void			init_matrix(t_map *map);
+int				check_all_link_and_name(t_map *map, int i);
+int 			free_and_return(char ***split, int i);
+int 			set_tab_link(t_link *tmp_link, t_map *map);
+int 			set_tab_name_and_co(t_name *tmp_name, t_map *map);
+int				name_cmp(char *s1, char *s2);
+int 			delete_cul_de_sac(t_map *map);
+int 			resize_matrix(t_map *map);
+int				main(void);
 
 /*
 **	bfs1.c
@@ -261,17 +275,22 @@ void		ft_freequeue(t_bfs *bfs);
 
 /*
 **	bfs3.c
-*/
+*//*
 int			pre_path1(t_bfs *bfs, t_res *res);
 int			get_lowest_link1(t_bfs *bfs, int actual_room, int path, t_map *map, t_res *res);
 void		get_path1(t_bfs *bfs, int path, t_map *map, t_res *res);
 void		dig_deep1(t_bfs *bfs, t_map *map, t_res *res);
-int			ft_init_res(t_bfs *bfs, t_res *res, t_map *map);
+int			ft_init_res(t_bfs *bfs, t_res *res, t_map *map);*/
 
 /*
 ** bfs4.c
 */
-t_tripaths		*ft_takepaths(t_bfs *bfs, t_res	*res);
+t_tripaths	*ft_takepaths(t_bfs *bfs, t_res	*res);
+
+/*
+** bfs5.c
+*/
+int			ft_tri_to_res(t_res *res, t_tripaths tri, t_bfs bfs);
 
 /*
 **	print.c
@@ -286,10 +305,13 @@ void		ft_putintstr2(int *tab, int size, t_map *map);
 void		ft_printallpaths(t_tripaths tri, t_bfs bfs);
 void		ft_printallpaths_name(t_tripaths tri, t_bfs bfs, t_map *map);
 
-int 	clear_path2(t_res *res, t_bfs *bfs, t_sort *sort/*, t_tripaths *tri*/);
-int 	display_algo(t_map map, t_res *res, t_bfs *bfs/*, t_tripaths *tri*/);
-int		tri_to_res(t_res *res, t_tripaths *tri, t_bfs *bfs);
-void	ft_shortest(t_sort *sort, t_bfs *bfs, t_res *res);
+int 		display_algo(t_map map, t_res *res/*, t_tripaths *tri*/);
+int			tri_to_res(t_res *res, t_tripaths *tri, t_bfs *bfs);
+void		ft_shortest(t_sort *sort, t_bfs *bfs, t_res *res);
 
 void 		free_matrix(t_map *map);
+int			ft_atoi_3(char const *str);
+void        get_line_expected(t_map  *map, char  *line);
+void        compare_line_expected(int nb_line, t_map *map);
+
 #endif

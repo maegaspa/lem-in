@@ -1,92 +1,49 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   display_algo.c                                   .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/01/28 21:22:47 by hmichel      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/28 21:39:03 by hmichel     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
 #include "../include/lemin.h"
 #include <stdio.h>
 
-void	ft_shortest(t_sort *sort, t_bfs *bfs, t_res *res)
-{
-	int		path;
-	int		i;
-	int		size;
-
-	size = 200000000;
-	i = 0;
-	path = -1;
-	while (++path < bfs->count_paths)
-	{
-			printf("gros zob mou = %d\n", res->size_paths[path]);
-			if (res->size_paths[path] < size)
-			{
-				i = path;
-				size = res->size_paths[path];
-			}
-	}
-	sort->first_path[0] = res->paths[i];
-	sort->new_size_first[0] = size;
-	printf("ojdapd = %d\n", sort->new_size_first[0]);
-}
-
-int		tri_to_res(t_res *res, t_tripaths *tri, t_bfs *bfs)
-{
-	int		path;
-	int		sub;
-	int		i_res;
-
-	i_res = 0;
-	path = -1;
-	if (!(res->size_paths = (int*)malloc(sizeof(int) * bfs->count_paths)))
-		return (FAILURE);
-	if (!(res->paths = (int **)malloc(sizeof(int *) * bfs->count_paths)))
-		return (FAILURE);
-	while (++path < bfs->nb_paths)
-	{
-		sub = -1;
-		//printf("tri->nb_subs = %p", &tri->nb_subs[path]);
-		return (0);
-		while (++sub < tri->nb_subs[path])
-		{
-			res->paths[i_res] = tri->paths[path][sub].path;
-			res->size_paths[i_res] = tri->paths[path][sub].size;
-			i_res++;
-		}
-	}
-	return (SUCCESS);
-}
-
-int 	clear_path2(t_res *res, t_bfs *bfs, t_sort *sort/*, t_tripaths *tri*/)
+static int 	clear_path2(t_res *res, t_sort *sort)
 {
 	t_dispa		dis;
 
 	dis.i = 1;
 	dis.occurrence = 0;
-	if (!(sort->new_size_first = malloc(sizeof(int) * bfs->count_paths)))
+	if (!(sort->new_size_first = malloc(sizeof(int) * res->used_paths)))
 		return (0);
-	if (!(sort->new_size_second = malloc(sizeof(int) * bfs->count_paths)))
+	if (!(sort->new_size_second = malloc(sizeof(int) * res->used_paths)))
 		return (0);
-	if (!(sort->first_path = malloc(sizeof(int*) * bfs->count_paths)))
+	if (!(sort->first_path = malloc(sizeof(int*) * res->used_paths)))
 		return (0);
-	if (!(sort->second_path = malloc(sizeof(int*) * bfs->count_paths)))
+	if (!(sort->second_path = malloc(sizeof(int*) * res->used_paths)))
 		return (0);
 	sort->nb_path_first = 1;
 	sort->nb_path_second = 0;
-	// if (!tri_to_res(res, tri, bfs))
-	// 	return (FAILURE);
-	//sort->first_path[0] = res->paths[0];
-	ft_shortest(sort, bfs, res);
-	//sort->new_size_first[0] = res->size_paths[0];
-	while (dis.i < bfs->count_paths)
+	sort->first_path[0] = res->paths[0];
+	sort->new_size_first[0] = res->size_paths[0];
+	while (dis.i < res->used_paths)
 	{
 		dis.count = -1;
 		dis.error = 1;
-		printf("res->path = %p\n", &res->paths[dis.i]);
 		while (++dis.count < sort->nb_path_first/* && j < res->size_paths[i]*/)
 		{
 			dis.j = 0;
 			while (++dis.j < res->size_paths[dis.i] - 1)
 			{
 				dis.k = -1;
-				printf("dbar\n");
 				while (++dis.k < sort->new_size_first[dis.count] - 1)
 				{
-					printf("zob %d ", res->paths[dis.i][dis.j]);
 					if (res->paths[dis.i][dis.j] == sort->first_path[dis.count][dis.k])
 					{
 						dis.occurrence = dis.count;
@@ -94,7 +51,6 @@ int 	clear_path2(t_res *res, t_bfs *bfs, t_sort *sort/*, t_tripaths *tri*/)
 					}
 				}
 			}
-			printf("\n");
 		}
 		if (dis.error == 1)
 		{
@@ -288,15 +244,14 @@ int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 	return (0);
 }
 
-int 	display_algo(t_map map, t_res *res, t_bfs *bfs)
+int 	display_algo(t_map map, t_res *res)
 {
 	t_sort	sort;
 	int 	i;
 	int 	j;
 	int 	nb_line;
 
-	//printf("count_paths = %d\n", bfs->count_paths);
-	clear_path2(res, bfs, &sort);
+	clear_path2(res, &sort);
 	i = -1;
 	printf("----------------------------------------------\n");
 	while (++i < sort.nb_path_first)
@@ -304,7 +259,7 @@ int 	display_algo(t_map map, t_res *res, t_bfs *bfs)
 		j = -1;
 		while (++j < sort.new_size_first[i] + 1)
 		{
-			printf("%d ", sort.first_path[i][j]);
+			printf("%s ", map.map_name[sort.first_path[i][j]]);
 		}
 		printf("\n");
 	}

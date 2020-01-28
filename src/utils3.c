@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:02:07 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 03:14:37 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/27 19:18:36 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -84,4 +84,28 @@ int 	ft_strcheck(char *s1, char *s2, int chose)
 	free(split[1]);
 	free(split);
 	return (0);
+}
+
+int				ft_atoi_3(char const *str)
+{
+	int			i;
+	int			nbr;
+	i = 0;
+	nbr = 0;
+	while (str[i] == ' ' || ft_isalpha(str[i]) || str[i] == '#' || str[i] == ':')
+		i++;
+	if (str[i] == '+')
+		i++;
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	{
+		nbr = nbr * 10 + str[i] - '0';
+		i++;
+	}
+	return (nbr);
+}
+
+void         get_line_expected(t_map  *map, char  *line)
+{
+    if (ft_strstr(line, "#Here is"))
+        map->line_expected = ft_atoi_3(line);
 }

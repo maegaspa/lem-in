@@ -1,0 +1,91 @@
+/*
+void			ft_del_rooms(t_bfs *bfs, t_temp_bfs temp)
+{
+	int		i;
+
+	i = -1;
+	printf("temp.add_queue = %d\n", temp.add_queue);
+	if (temp.add_queue < temp.size_queue)
+	{
+		while (++i < temp.size_queue)
+			bfs->queue[temp.actual_path][i] = -1;
+	}	
+	while(temp.size_queue--)
+	{
+		bfs->queue[temp.actual_path][temp.size_queue] = bfs->queue[temp.actual_path][temp.add_queue + temp.size_queue];
+		bfs->queue[temp.actual_path][temp.add_queue + temp.size_queue] = -1;
+	}
+}*/
+
+void			ft_del_rooms(t_bfs *bfs, t_temp_bfs temp)
+{
+	int		i;
+	int		y;
+
+	i = -1;
+	y = -1;
+	while (bfs->queue[temp.actual_path][++i] != -1)
+	{
+		//printf("i = %d et queue[path][i] = %d\n", i, bfs->queue[temp.actual_path][i]);
+		;
+	}
+	i -= temp.size_queue;
+	if (i < 2 * temp.size_queue - 1) // pour les end et cul de sac, pour queue fini, size = 0 et i est initialise a -1 donc -1 < -1 renvoie false et del_rooms ne fait rien (500IQ)
+	{
+		i = 2 * temp.size_queue - 1;
+		printf ("BRRR temp.actual_path = %d et i = %d\n", temp.actual_path, i);
+	}
+	while (++y < temp.size_queue)
+	{
+		//printf("i + y = %d et y = %d\n", i + y, y);
+		bfs->queue[temp.actual_path][y] = bfs->queue[temp.actual_path][i + y - temp.size_queue]; //MODIF peut etre
+		bfs->queue[temp.actual_path][i + y - temp.size_queue] = -1;
+	}
+}
+
+/*
+void			ft_del_rooms(t_bfs *bfs, t_temp_bfs temp)
+{
+	int		i;
+	int		y;
+
+	i = -1;
+	y = -1;
+	while (bfs->queue[temp.actual_path][++i] != -1)
+	{
+		//printf("i = %d et queue[path][i] = %d\n", i, bfs->queue[temp.actual_path][i]);
+		;
+	}
+	if (i < 2 * temp.size_queue - 1) // pour les end et cul de sac, pour queue fini, size = 0 et i est initialise a -1 donc -1 < -1 renvoie false et del_rooms ne fait rien (500IQ)
+	{
+		i = 2 * temp.size_queue - 1;
+		printf ("BRRR temp.actual_path = %d et i = %d\n", temp.actual_path, i);
+	}
+	while (++y < temp.size_queue)
+	{
+		//printf("i + y = %d et y = %d\n", i + y, y);
+		bfs->queue[temp.actual_path][y] = bfs->queue[temp.actual_path][i + y - temp.size_queue]; //MODIF peut etre
+		bfs->queue[temp.actual_path][i + y - temp.size_queue] = -1;
+	}
+}*/
+
+/*
+void			ft_del_rooms(t_bfs *bfs, t_temp_bfs temp)
+{
+	int		y;
+
+	y = -1;
+	while (bfs->queue[temp.actual_path][temp.size_queue + ++y] != -1)
+	{
+		//printf("i = %d et queue[path][i] = %d\n", i, bfs->queue[temp.actual_path][i]);
+		;
+	}
+	if (y < temp.size_queue)
+		y = temp.size_queue;
+	while (--temp.size_queue >= 0)
+	{
+		//printf("i + y = %d et y = %d\n", i + y, y);
+		bfs->queue[temp.actual_path][temp.size_queue] = bfs->queue[temp.actual_path][temp.size_queue + y]; //MODIF peut etre
+		bfs->queue[temp.actual_path][temp.size_queue + y] = -1;
+	}
+}*/
