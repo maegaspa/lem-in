@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
+#    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/12/28 10:35:03 by seanseau    ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/29 03:14:35 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,6 +16,7 @@
 NAME = libft.a
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
+OPTI = -O3 -march=native -flto -ffast-math
 INC = libft.h
 
 #------------------------------------FILE--------------------------------------#
@@ -164,7 +165,7 @@ $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
 
 %.o: %.c $(INC)
-	@$(CC) $(FLAGS) -o $@ -c $< -I $(INC)
+	@$(CC) $(FLAGS) $(OPTI) -o $@ -c $< -I $(INC)
 
 clean:
 	@echo "\033[1m|---------------------------------|\033[0m"

@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/28 21:22:47 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/28 21:39:03 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:21:48 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -248,12 +248,12 @@ int 	display_algo(t_map map, t_res *res)
 {
 	t_sort	sort;
 	int 	i;
-	int 	j;
+	//int 	j;
 	int 	nb_line;
 
 	clear_path2(res, &sort);
 	i = -1;
-	printf("----------------------------------------------\n");
+	/*printf("----------------------------------------------\n");
 	while (++i < sort.nb_path_first)
 	{
 		j = -1;
@@ -274,7 +274,7 @@ int 	display_algo(t_map map, t_res *res)
 		}
 		printf("\n");
 	}
-	printf("----------------------------------------------\n");
+	printf("----------------------------------------------\n");*/
 	i = -1;
 	if (!(sort.dispache = malloc(sizeof(int) * sort.nb_path_first)))
 		return (0);
@@ -283,5 +283,6 @@ int 	display_algo(t_map map, t_res *res)
 		sort.dispache[i] = 0;
 	nb_line = nb_ant_int_path(map, &sort, 0, 0);
 	dispache_ant(map, &sort, nb_line);
+	printf("Number of lines required: %d | Number of lines done: %d\n", map.line_expected, nb_line);
 	return (0);
 }

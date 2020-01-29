@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/28 22:02:00 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:26:08 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,7 @@
 # define FALSE		0
 # define SUCCESS	1
 # define FAILURE	0
-# define LIMIT_PATHS 15 //subs_used per start_path //bfs5.c
+# define LIMIT_PATHS 20 //subs_used per start_path //bfs5.c
 
 typedef struct s_file_display
 {
@@ -290,7 +290,7 @@ t_tripaths	*ft_takepaths(t_bfs *bfs, t_res	*res);
 /*
 ** bfs5.c
 */
-int			ft_tri_to_res(t_res *res, t_tripaths tri, t_bfs bfs);
+int			ft_tri_to_res(t_res *res, t_tripaths tri, t_bfs bfs, t_map map);
 
 /*
 **	print.c

@@ -6,7 +6,7 @@
 #    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2020/01/28 21:37:22 by hmichel     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/29 03:24:31 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -63,7 +63,7 @@ OBJ = $(addsuffix .o , $(FILES))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(INC)
 	@printf $(RED)"                                                                      ___ \n"
 	@printf "                                _____________________________________ //  \n"
 	@printf "                              / /-----------|  |----------| |--------- \ \n"
@@ -112,7 +112,7 @@ $(NAME): $(OBJ)
 	@$(CC) $(FLAGS) $(SRC) $(OPTI) -L. libft/libftprintf.a -o $(NAME)
 
 
-object/%.o: src/%.c
+object/%.o: src/%.c $(INC)
 	@$(CC) $(FLAGS) $(OPTI) -I $(HEADER) -o $@ -c $<
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/07 15:49:57 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 05:34:13 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:07:25 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,7 +56,7 @@ void			ft_putintstr(int *tab, int size)
 
 	i = -1;
 	while (++i < size)
-		printf("%d ", tab[i]);
+		printf("4%d ", tab[i]);
 	printf("\n");
 }
 

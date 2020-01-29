@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/28 21:51:06 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:22:52 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ int		main(void)
 	t_bfs	bfs;
 	t_tripaths tri;
 	int 	ret;
-	int		i = -1;
+	//int		i = -1;
 
 	init_value(&map);
 	ret = parser(&name, &link, &map, &f_dis);
@@ -65,11 +65,10 @@ int		main(void)
 	//ft_printallpaths(tri, bfs);
 	//ft_printallpaths_name(tri, bfs, &map);
 	//printf(" map->line_expected = %d\n",  map.line_expected);
-	if (!ft_tri_to_res(&res, tri, bfs))
+	if (!ft_tri_to_res(&res, tri, bfs, map))
 		return (print_and_return(ret));
-	//printf("%d\n",tri.paths[1][2].size);
-	while (++i < res.used_paths)
-		ft_putintstr(res.paths[i], res.size_paths[i]);
+	//while (++i < res.used_paths)
+	//	ft_putintstr(res.paths[i], res.size_paths[i]);
 	display_algo(map, &res);
 	//clear(&name, &link, &f_dis);
 	return (ret);

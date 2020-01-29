@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/26 15:54:49 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/28 21:30:00 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:07:54 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -102,7 +102,7 @@ static void	ft_import_coord(t_tripaths tri, t_bfs bfs, t_rank *rank, int limit)
 	}
 }
 
-int			ft_tri_to_res(t_res *res, t_tripaths tri, t_bfs bfs)
+int			ft_tri_to_res(t_res *res, t_tripaths tri, t_bfs bfs, t_map map)
 {
 	int		used_paths;
 	t_rank	rank;
@@ -134,8 +134,10 @@ int			ft_tri_to_res(t_res *res, t_tripaths tri, t_bfs bfs)
 		res->size_paths[i] = rank.ranking[2][i];
 		if (!(res->paths[i] = (int *)malloc(sizeof(int) * res->size_paths[i])))
 			return (0);
-		res->paths[i] = ft_intcpy(res->paths[i], tri.paths[rank.ranking[0][i]][rank.ranking[1][i]].path, res->size_paths[i]);
-		//ft_putintstr(res->paths[i], res->size_paths[i]);
+		if (bfs.start != map.inf.start)
+			res->paths[i] = ft_rev_intcpy(res->paths[i], tri.paths[rank.ranking[0][i]][rank.ranking[1][i]].path, res->size_paths[i]);
+		else
+			res->paths[i] = ft_intcpy(res->paths[i], tri.paths[rank.ranking[0][i]][rank.ranking[1][i]].path, res->size_paths[i]);
 	}
 	res->used_paths = used_paths;
 	return (1);
