@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/28 21:22:47 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/29 03:21:48 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 11:55:48 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-static int 	clear_path2(t_res *res, t_sort *sort)
+int 	clear_path2(t_res *res, t_sort *sort)
 {
 	t_dispa		dis;
 
@@ -104,6 +104,7 @@ int 	nb_ant_int_path(t_map map, t_sort *sort, int ant, int index)
 		{
 			printf("[%d]\n", sort->dispache[0]);
 			printf("[%d]\n", sort->dispache[1]);
+			//printf("[%d]\n", sort->dispache[2]);
 			//need return index
 			//nombre de ligne
 			//printf("%d\n", index - 1);
@@ -166,7 +167,7 @@ int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 				if (dis.status_partion[dis.j] == sort->dispache[dis.j])
 				{
 					if (dis.i < map.inf.nb_fourmi && (!(dis.status_ant[dis.i] == map.inf.start)))
-							dis.j = dis.status_path[dis.i];
+						dis.j = dis.status_path[dis.i];
 					else
 					{
 						dis.q = 0;
@@ -251,7 +252,13 @@ int 	display_algo(t_map map, t_res *res)
 	//int 	j;
 	int 	nb_line;
 
-	clear_path2(res, &sort);
+	//if (map.line_expected != 0)
+	//{
+	//	if (!ft_tri_paths(res, &sort, map.line_expected, map.inf.nb_fourmi))
+	//		return (0);
+	//}
+	//else
+		clear_path2(res, &sort);
 	i = -1;
 	/*printf("----------------------------------------------\n");
 	while (++i < sort.nb_path_first)
@@ -283,6 +290,6 @@ int 	display_algo(t_map map, t_res *res)
 		sort.dispache[i] = 0;
 	nb_line = nb_ant_int_path(map, &sort, 0, 0);
 	dispache_ant(map, &sort, nb_line);
-	printf("Number of lines required: %d | Number of lines done: %d\n", map.line_expected, nb_line);
+	ft_printf("Number of lines required: %d | Number of lines done: %d\n", map.line_expected, nb_line);
 	return (0);
 }

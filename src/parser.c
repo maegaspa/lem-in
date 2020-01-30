@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 12:57:54 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/27 19:18:34 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 06:27:24 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -154,6 +154,7 @@ int		parser(t_name **name, t_link **link, t_map *map, t_file_display	**f_dis)
 	split = NULL;
 	line = NULL;
 	chose = 1;
+	map->line_expected = 0;
 	if ((check_ant_line(map, &line, f_dis) != 1))
 		return (-1);
 	while (get_next_line(0, &line))

@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/26 15:54:49 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/29 03:07:54 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 10:49:32 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -85,7 +85,7 @@ static void	ft_import_coord(t_tripaths tri, t_bfs bfs, t_rank *rank, int limit)
 			while (++rank->k < limit)
 			{
 				rank->j = -1;
-				rank->size = 2147483647;
+				rank->size = 2147483645;
 				while (++rank->j < tri.nb_subs[rank->i])
 				{
 					if (tri.paths[rank->i][rank->j].size < rank->size)
