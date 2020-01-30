@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:01:39 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 01:20:36 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 18:36:11 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,4 +43,30 @@ int				check_str_number(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int				ft_atoi_3(char const *str)
+{
+	int		i;
+	int		nbr;
+
+	i = 0;
+	nbr = 0;
+	while (str[i] == ' ' || ft_isalpha(str[i]) || str[i] == '#' ||
+			str[i] == ':')
+		i++;
+	if (str[i] == '+')
+		i++;
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	{
+		nbr = nbr * 10 + str[i] - '0';
+		i++;
+	}
+	return (nbr);
+}
+
+void			get_line_expected(t_map *map, char *line)
+{
+	if (ft_strstr(line, "#Here is"))
+		map->line_expected = ft_atoi_3(line);
 }

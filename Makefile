@@ -6,7 +6,7 @@
 #    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2020/01/29 23:35:09 by seanseau    ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/30 19:07:55 by seanseau    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -24,19 +24,24 @@ OPTI = -O3 -march=native -flto -ffast-math
 #------------------------------------FILE--------------------------------------#
 
 FILES = src/parser\
+		src/parser2\
 		src/ft_list\
 		src/utils\
 		src/utils2\
 		src/utils3\
 		src/init\
+		src/init2\
 		src/set_all_tab\
 		src/main\
 		src/bfs1\
 		src/set_pre\
 		src/bfs2\
+		src/bfs3\
 		src/bfs4\
-		src/bfs5\
+		src/check_link\
 		src/display_algo\
+		src/display_algo2\
+		src/display_algo3\
 
 #----------------------------------COLOR---------------------------------------#
 

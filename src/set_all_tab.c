@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:48 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 01:26:50 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 18:30:42 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,46 +80,6 @@ int			set_map(t_name **name, t_link **link, t_map *map)
 	if ((map->inf.ret = set_tab_link(tmp_link, map)) && map->inf.ret != 1)
 		return (map->inf.ret);
 	if (check_valid_co(map->map_co, map->inf.size_name) == -1)
-		return (-1);
-	return (1);
-}
-
-int			check_all_link_and_name(t_map *map, int i)
-{
-	if (i == 1)
-		while (map->inf.size_name > map->mat.j)
-		{
-			if (ft_strcheck(map->map_link[map->mat.i],
-						map->map_name[map->mat.j], 1))
-			{
-				map->mat.save_y = map->mat.j;
-				map->mat.name1 = map->map_name[map->mat.j];
-				if (map->mat.name1 == map->map_name[map->inf.start])
-					map->mat.start_link_end++;
-				if (map->mat.name1 == map->map_name[map->inf.end])
-					map->mat.end_link_start++;
-				break ;
-			}
-			map->mat.j++;
-		}
-	if (i == 2)
-		while (map->inf.size_name > map->mat.j)
-		{
-			if (ft_strcheck(map->map_link[map->mat.i],
-						map->map_name[map->mat.j], 2) && map->mat.name1)
-			{
-				map->mat.save_x = map->mat.j;
-				map->mat.name2 = map->map_name[map->mat.j];
-				map->mat.tmp_i = map->mat.i;
-				if (map->mat.name2 == map->map_name[map->inf.start])
-					map->mat.start_link_end++;
-				if (map->mat.name2 == map->map_name[map->inf.end])
-					map->mat.end_link_start++;
-			}
-			map->mat.j++;
-		}
-	if ((!map->mat.name2 && map->mat.save_x == -1) ||
-			(!map->mat.name1 && map->mat.save_y == -1))
 		return (-1);
 	return (1);
 }

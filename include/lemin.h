@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 01:15:35 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 19:13:09 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -249,8 +249,23 @@ int				ft_tri_to_res(t_res *res, t_tripaths tri, t_bfs bfs, t_map map);
 //ft_tri_shell
 //ft_used_paths
 
-//display_algo.c //GROS PARSING INC
+//check_link.c
+int				check_all_link_and_name(t_map *map, int i);
+//
+
+//display_algo.c
 int				display_algo(t_map map, t_res *res);
+//
+
+//display_algo2.c
+void			get_occurence(t_dispa dis, t_sort *sort, t_res *res);
+int				clear_path2(t_res *res, t_sort *sort);
+int				nb_ant_int_path(t_map map, t_sort *sort, int ant, int index);
+//
+
+//display_algo3.c
+void			print_space(t_dispa *dis);
+void			last_ant_finish(t_dispa *dis, t_sort *sort, t_map map);
 //
 
 //ft_list.c
@@ -268,8 +283,22 @@ int				ft_init_tripaths(t_tripaths **tri, t_bfs *bfs, t_temp_paths tp);
 int				insert_line_lst(t_map *m, char **line, t_file_display **dis, int *c);
 //
 
+//init2.c
+int				init_sort(t_sort *sort, t_res *res);
+int				init_dis(t_dispa *dis, t_map map, t_sort *sort);
+int				init_mtx_state(t_bfs *bfs, t_map map);
+//
+
 //parser.c
 int				parser(t_name **name, t_link **link, t_map *map, t_file_display	**f_dis);
+//
+
+//parser2.c
+int				ft_get_map_size(t_map *map, t_name **name, t_link **link);
+int				check_start(t_map *map);
+int				check_end(t_map *map);
+int				check_start_name(t_map *map, t_name **name, char **split);
+
 //
 
 //set_all_tab.c
@@ -287,6 +316,7 @@ void			ft_setqueue(t_bfs *bfs, t_temp_bfs temp, int step);
 //utils.c
 unsigned int	count_word(const char *s, char c);
 int				check_str_number(char *str);
+void			get_line_expected(t_map  *map, char  *line);
 //
 
 //utils2.c
@@ -297,6 +327,5 @@ int 			free_and_return(char ***split, int i);
 
 //utils3.c
 int 			ft_strcheck(char *s1, char *s2, int chose);
-void			get_line_expected(t_map  *map, char  *line);
 //
 #endif

@@ -1,119 +1,143 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   bfs4.c                                           .::    .:/ .      .::   */
+/*   bfs5.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/20 08:26:29 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 00:36:09 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/26 15:54:49 by hmichel      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/30 00:49:52 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
+#include <stdio.h>
 
-int			get_nb_sub_path(t_bfs *bfs, t_temp_paths tp, t_tripaths *tri, int p)
+static int	ft_used_paths(int *nb_subs, int nb_paths, int limit)
 {
-	int		i;
+	int		path;
 	int		count;
 
 	count = 0;
-	i = -1;
-	while (++i < bfs->end_links)
-	{
-		if (bfs->mtx_state[tp.sub_ends[i]][p] != -1)
-			count++;
-	}
-	tri->nb_subs[p] = count;
+	path = -1;
+	while (++path < nb_paths)
+		count += (nb_subs[path] >= limit) ? limit : nb_subs[path];
 	return (count);
 }
 
-static int	ft_sub_ends(t_bfs *bfs, t_temp_paths *tp)
+void		tri_shell(t_rank *rank, int step, int size)
 {
-	int		i;
-	int		j;
+	int i;
+	int j;
+	int val;
+	int val1;
+	int val0;
 
-	i = -1;
-	j = -1;
-	if (!(tp->sub_ends = (int *)malloc(sizeof(int) * bfs->end_links)))
-		return (FAILURE);
-	while (++i < bfs->size_diago)
+	i = step - 1;
+	while (++i < size)
 	{
-		if (bfs->mtx_diago[bfs->end][i])
-			tp->sub_ends[++j] = i;
+		val = rank->ranking[2][i];
+		val1 = rank->ranking[1][i];
+		val0 = rank->ranking[0][i];
+		j = i;
+		while ((j > (step - 1)) && rank->ranking[2][j - step] > val)
+		{
+			rank->ranking[2][j] = rank->ranking[2][j - step];
+			rank->ranking[1][j] = rank->ranking[1][j - step];
+			rank->ranking[0][j] = rank->ranking[0][j - step];
+			j = j - step;
+		}
+		rank->ranking[2][j] = val;
+		rank->ranking[1][j] = val1;
+		rank->ranking[0][j] = val0;
 	}
-	tp->act_path = 0;
-	tp->sub_paths = 0;
-	tp->i_stp = 0;
-	return (SUCCESS);
 }
 
-void		get_state_to_path(t_bfs *bfs, t_temp_paths *tp, t_tripaths *tri)
+static void	ft_tri_shell(t_rank *rank, int size)
 {
-	int		prev;
 	int		step;
-	int		i_state;
 
-	i_state = 0;
-	prev = tp->sub_ends[tp->sub_paths];
-	step = bfs->mtx_state[tp->sub_ends[tp->sub_paths]][tp->act_path];
-	while (--step)
+	step = 0;
+	while (step < size)
+		step = 3 * step + 1;
+	while (step != 0)
 	{
-		i_state = -1;
-		while (++i_state < bfs->size_diago)
+		step = step / 3;
+		tri_shell(rank, step, size);
+	}
+}
+
+static void	ft_import_coord(t_tripaths tri, t_bfs bfs, t_rank *rank, int limit)
+{
+	rank->i = -1;
+	rank->left = 0;
+	while (++rank->i < bfs.nb_paths)
+	{
+		if (tri.nb_subs[rank->i] <= limit)
 		{
-			if (bfs->mtx_state[i_state][tp->act_path] == step &&
-					bfs->mtx_diago[i_state][prev])
+			rank->j = -1;
+			while (++rank->j < tri.nb_subs[rank->i])
 			{
-				tri->paths[tp->act_path][tp->i_stp].path[step] = i_state;
-				prev = i_state;
-				break ;
+				rank->ranking[0][rank->i * limit + rank->j - rank->left] =rank->i;
+				rank->ranking[1][rank->i * limit + rank->j - rank->left] = rank->j;
+				rank->ranking[2][rank->i * limit + rank->j - rank->left] = tri.paths[rank->i][rank->j].size;
+			}
+			rank->left += limit - tri.nb_subs[rank->i];
+		}
+		else
+		{
+			rank->k = -1;
+			while (++rank->k < limit)
+			{
+				rank->j = -1;
+				rank->size = 2147483647;
+				while (++rank->j < tri.nb_subs[rank->i])
+				{
+					if (tri.paths[rank->i][rank->j].size < rank->size)
+					{
+						rank->size = tri.paths[rank->i][rank->j].size;
+						rank->ranking[0][rank->i * limit + rank->k - rank->left] = rank->i;
+						rank->ranking[1][rank->i * limit + rank->k - rank->left] = rank->j;
+						rank->ranking[2][rank->i * limit + rank->k - rank->left] = tri.paths[rank->i][rank->j].size;
+					}
+				}
+				tri.paths[rank->ranking[0][rank->i * limit + rank->k - rank->left]][rank->ranking[1][rank->i * limit + rank->k - rank->left]].size = rank->size = 2147483647; //??????????????????????
 			}
 		}
 	}
 }
 
-static int	ft_states_to_paths(t_bfs *bfs, t_tripaths *tri, t_temp_paths *tp)
+int			ft_tri_to_res(t_res *res, t_tripaths tri, t_bfs bfs, t_map map)
 {
-	if (bfs->mtx_state[tp->sub_ends[tp->sub_paths]][tp->act_path] == -1)
-		return (SUCCESS);
-	tri->paths[tp->act_path][tp->i_stp].size = bfs->mtx_state[tp->sub_ends
-		[tp->sub_paths]][tp->act_path] + 2;
-	if (!(tri->paths[tp->act_path][tp->i_stp].path = (int *)malloc(sizeof(int)
-					* tri->paths[tp->act_path][tp->i_stp].size)))
-		return (FAILURE);
-	tri->paths[tp->act_path][tp->i_stp].path[tri->paths[tp->act_path]
-		[tp->i_stp].size - 1] = bfs->end;
-	tri->paths[tp->act_path][tp->i_stp].path[tri->paths[tp->act_path]
-		[tp->i_stp].size - 2] = tp->sub_ends[tp->sub_paths];
-	get_state_to_path(bfs, tp, tri);
-	tri->paths[tp->act_path][tp->i_stp].path[0] = bfs->start;
-	tp->i_stp++;
-	tri->count_paths++;
-	return (SUCCESS);
-}
+	int		used_paths;
+	t_rank	rank;
+	int		i;
 
-t_tripaths	*ft_takepaths(t_bfs *bfs, t_res *res)
-{
-	t_temp_paths	tp;
-	t_tripaths		*tri;
-	int				i;
-
+	used_paths = ft_used_paths(tri.nb_subs, bfs.nb_paths, LIMIT_PATHS);
+	if (!(rank.ranking[0] = (int *)malloc(sizeof(int) * used_paths)))
+		return (0);
+	if (!(rank.ranking[1] = (int *)malloc(sizeof(int) * used_paths)))
+		return (0);
+	if (!(rank.ranking[2] = (int *)malloc(sizeof(int) * used_paths)))
+		return (0);
+	ft_import_coord(tri, bfs, &rank, LIMIT_PATHS);
+	ft_tri_shell(&rank, used_paths);
+	if (!(res->paths = (int **)malloc(sizeof(int *) * used_paths)))
+		return (0);
+	if (!(res->size_paths = (int *)malloc(sizeof(int) * used_paths)))
+		return (0);
 	i = -1;
-	res = NULL;
-	if (!ft_sub_ends(bfs, &tp))
-		return (NULL);
-	if (!ft_init_tripaths(&tri, bfs, tp))
-		return (NULL);
-	tp.act_path = -1;
-	while (++tp.act_path < bfs->nb_paths)
+	while (++i < used_paths)
 	{
-		tp.i_stp = 0;
-		tp.sub_paths = -1;
-		while (++tp.sub_paths < bfs->end_links)
-			if (!ft_states_to_paths(bfs, tri, &tp))
-				return (NULL);
+		res->size_paths[i] = rank.ranking[2][i];
+		if (!(res->paths[i] = (int *)malloc(sizeof(int) * res->size_paths[i])))
+			return (0);
+		if (bfs.start != map.inf.start)
+			res->paths[i] = ft_rev_intcpy(res->paths[i], tri.paths[rank.ranking[0][i]][rank.ranking[1][i]].path, res->size_paths[i]);
+		else
+			res->paths[i] = ft_intcpy(res->paths[i], tri.paths[rank.ranking[0][i]][rank.ranking[1][i]].path, res->size_paths[i]);
 	}
-	return (tri);
+	res->used_paths = used_paths;
+	return (1);
 }

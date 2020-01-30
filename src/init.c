@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:37 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 01:16:30 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 18:13:07 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,6 +47,7 @@ int			ft_init_queue(t_bfs *bfs)
 	int		i;
 	int		j;
 
+	bfs->found_paths = 0;
 	if (!(bfs->queue = (int **)malloc(sizeof(int *) * bfs->nb_paths)))
 		return (FAILURE);
 	i = -1;

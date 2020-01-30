@@ -6,7 +6,7 @@
 /*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/29 23:33:46 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 01:20:20 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 18:17:05 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,6 @@
 int		ft_setprealgo(t_map map, t_bfs *bfs)
 {
 	int		i;
-	int		j;
 
 	ft_nb_paths(map, bfs);
 	if (!(bfs->mtx_diago = (int **)malloc(sizeof(int *) * map.inf.size_name)))
@@ -26,21 +25,14 @@ int		ft_setprealgo(t_map map, t_bfs *bfs)
 	i = -1;
 	while (++i < map.inf.size_name)
 	{
-		if (!(bfs->mtx_diago[i] = (int *)malloc(sizeof(int) * map.inf.size_name)))
+		if (!(bfs->mtx_diago[i] = (int *)malloc(sizeof(int) *
+						map.inf.size_name)))
 			return (FAILURE);
-		bfs->mtx_diago[i] = ft_intcpy(bfs->mtx_diago[i], map.matrix[i], map.inf.size_name);
+		bfs->mtx_diago[i] = ft_intcpy(bfs->mtx_diago[i], map.matrix[i],
+				map.inf.size_name);
 	}
-	j = -1;
-	while (++j < map.inf.size_name)
-	{
-		if (!(bfs->mtx_state[j] = (int *)malloc(sizeof(int) * (bfs->nb_paths))))
-			return (FAILURE);
-		i = -1;
-		while (++i < bfs->nb_paths)
-			bfs->mtx_state[j][i] = -1;
-	}
+	init_mtx_state(bfs, map);
 	bfs->size_diago = map.inf.size_name;
-	bfs->found_paths = 0;
 	if (!(ft_init_queue(bfs)))
 		return (FAILURE);
 	return (SUCCESS);

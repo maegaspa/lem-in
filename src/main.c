@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 00:59:14 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 19:09:58 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,6 +29,8 @@ void		print_file(t_file_display *f_dis)
 int			ft_one_shot(t_map *map)
 {
 	int fourmi;
+
+//ne pas oublier display fourmiliere
 
 	fourmi = 0;
 	if (map->matrix[map->inf.start][map->inf.end] > 0)
@@ -59,14 +61,17 @@ int			main(void)
 	ret = set_map(&name, &link, &map);
 	if (ret != 1)
 		return (print_and_return(ret));
+
 	ret = set_matrix(&map);
 	if (ret != 1)
 		return (print_and_return(ret));
 	ret = ft_one_shot(&map);
+
 	if (ret != 1)
 		return (print_and_return(ret));
 	printf("\n");
 	ret = print_and_return(ret);
+	
 	tri.paths = NULL;
 	tri.nb_subs = NULL;
 	tri.count_paths = 0;
