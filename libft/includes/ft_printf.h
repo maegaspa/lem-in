@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   ft_printf.h                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/21 08:24:10 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/06 16:40:11 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:02:02 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -266,5 +266,7 @@ void				get_parts(t_check_float *c_float, t_flags flags,
 
 int					ft_printf(const char *format,
 			...) __attribute__((format(printf,1,2)));
+
+int					*ft_rev_intcpy(int *dst, const int *src, int size);
 
 #endif

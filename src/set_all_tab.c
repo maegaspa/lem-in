@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   set_all_tab.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:48 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:33:51 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 01:26:50 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-int 	set_tab_link(t_link *tmp_link, t_map *map)
+int			set_tab_link(t_link *tmp_link, t_map *map)
 {
 	map->cpt.i = 0;
 	if (!(map->map_link = malloc(sizeof(char*) * map->inf.size_link + 1)))
@@ -31,7 +31,7 @@ int 	set_tab_link(t_link *tmp_link, t_map *map)
 	return (1);
 }
 
-int 	set_tab_name_and_co(t_name *tmp_name, t_map *map)
+int			set_tab_name_and_co(t_name *tmp_name, t_map *map)
 {
 	map->cpt.i = 0;
 	if (!(map->map_name = malloc(sizeof(char*) * map->inf.size_name + 1)))
@@ -56,7 +56,7 @@ int 	set_tab_name_and_co(t_name *tmp_name, t_map *map)
 	return (1);
 }
 
-int   set_map(t_name **name, t_link **link, t_map *map)
+int			set_map(t_name **name, t_link **link, t_map *map)
 {
 	t_name *tmp_name;
 	t_link *tmp_link;
@@ -68,26 +68,29 @@ int   set_map(t_name **name, t_link **link, t_map *map)
 		return (0);
 	while (map->cpt.i < map->inf.size_name)
 	{
-		if (!(map->matrix[map->cpt.i] = malloc(sizeof(int) * map->inf.size_name)))
+		if (!(map->matrix[map->cpt.i] = malloc(sizeof(int) *
+						map->inf.size_name)))
 			return (0);
 		ft_bzero(map->matrix[map->cpt.i], sizeof(int) * map->inf.size_name);
 		map->cpt.i++;
 	}
-	if ((map->inf.ret = set_tab_name_and_co(tmp_name, map)) && map->inf.ret != 1)
+	if ((map->inf.ret = set_tab_name_and_co(tmp_name, map)) &&
+			map->inf.ret != 1)
 		return (map->inf.ret);
 	if ((map->inf.ret = set_tab_link(tmp_link, map)) && map->inf.ret != 1)
 		return (map->inf.ret);
-	if (check_valid_co(map->map_co, map->inf.size_name) == -1)//check coord valides
+	if (check_valid_co(map->map_co, map->inf.size_name) == -1)
 		return (-1);
 	return (1);
 }
 
-int		check_all_link_and_name(t_map *map, int i)
+int			check_all_link_and_name(t_map *map, int i)
 {
 	if (i == 1)
 		while (map->inf.size_name > map->mat.j)
 		{
-			if (ft_strcheck(map->map_link[map->mat.i], map->map_name[map->mat.j], 1))
+			if (ft_strcheck(map->map_link[map->mat.i],
+						map->map_name[map->mat.j], 1))
 			{
 				map->mat.save_y = map->mat.j;
 				map->mat.name1 = map->map_name[map->mat.j];
@@ -95,14 +98,15 @@ int		check_all_link_and_name(t_map *map, int i)
 					map->mat.start_link_end++;
 				if (map->mat.name1 == map->map_name[map->inf.end])
 					map->mat.end_link_start++;
-				break;
+				break ;
 			}
 			map->mat.j++;
 		}
 	if (i == 2)
 		while (map->inf.size_name > map->mat.j)
 		{
-			if (ft_strcheck(map->map_link[map->mat.i], map->map_name[map->mat.j], 2) && map->mat.name1)
+			if (ft_strcheck(map->map_link[map->mat.i],
+						map->map_name[map->mat.j], 2) && map->mat.name1)
 			{
 				map->mat.save_x = map->mat.j;
 				map->mat.name2 = map->map_name[map->mat.j];
@@ -114,12 +118,13 @@ int		check_all_link_and_name(t_map *map, int i)
 			}
 			map->mat.j++;
 		}
-	if ((!map->mat.name2 && map->mat.save_x == -1) || (!map->mat.name1 && map->mat.save_y == -1))
+	if ((!map->mat.name2 && map->mat.save_x == -1) ||
+			(!map->mat.name1 && map->mat.save_y == -1))
 		return (-1);
 	return (1);
 }
 
-int 	set_matrix(t_map *map)
+int			set_matrix(t_map *map)
 {
 	init_matrix(map);
 	while (map->inf.size_link > map->mat.i)
@@ -128,10 +133,8 @@ int 	set_matrix(t_map *map)
 		map->mat.name1 = NULL;
 		map->mat.name2 = NULL;
 		check_all_link_and_name(map, 1);
-		if (map->mat.name1 == NULL)
-			return (-1);
 		map->mat.j = 0;
-		if (check_all_link_and_name(map, 2) != 1)
+		if (check_all_link_and_name(map, 2) != 1 || map->mat.name1 == NULL)
 			return (-1);
 		if (map->mat.name1 == map->mat.name2)
 		{
@@ -146,6 +149,5 @@ int 	set_matrix(t_map *map)
 	}
 	if (map->mat.start_link_end == 0 || map->mat.end_link_start == 0)
 		return (-1);
-	print_tab_int(map->matrix, map->inf.size_name, map->inf.size_name);
 	return (1);
 }

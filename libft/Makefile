@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
+#    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/08 13:37:31 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/29 03:16:09 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,6 +16,7 @@
 NAME = libftprintf.a
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
+OPTI = -O3 -march=native -flto -ffast-math
 INC = /includes/ft_printf.h
 HEADER = include
 
@@ -45,6 +46,8 @@ FILES = src/check_caract\
 		src/check_float\
 		src/check_float_param\
 		src/check_float_param2\
+		src/ft_intcpy\
+		src/ft_rev_intcpy\
 
 #----------------------------------COLOR---------------------------------------#
 
@@ -120,7 +123,7 @@ $(NAME): $(OBJ)
 	@ranlib $(NAME)
 
 object/%.o: src/%.c $(HEADER)
-	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
+	@$(CC) $(FLAGS) $(OPTI) -I $(HEADER) -o $@ -c $<
 
 clean:
 	@echo "\033[1m|---------------------------------|\033[0m"

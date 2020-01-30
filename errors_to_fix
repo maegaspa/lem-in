@@ -1,0 +1,7 @@
+map13+map24		-> start doit rejoindre end
+
+map22			-> map vide ---------------------- fixed l.51 parser.c
+
+map33			-> one shot ---------------------- fixed ft_one_shot main.c (ne pas oublier pour display)
+
+map38			->only comments ------------------ fixed l.51 parser.c

@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
+#    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/11 19:05:09 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/29 23:35:09 by seanseau    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -15,10 +15,11 @@
 
 NAME = lemin
 CC = gcc
-DEBUG = -g -fsanitize=address
+DEBUG = -fsanitize=address
 FLAGS = -Wall -Wextra -Werror -g
 INC = include/lemin.h
 HEADER = include
+OPTI = -O3 -march=native -flto -ffast-math
 
 #------------------------------------FILE--------------------------------------#
 
@@ -30,7 +31,12 @@ FILES = src/parser\
 		src/init\
 		src/set_all_tab\
 		src/main\
-		src/clear_matrix\
+		src/bfs1\
+		src/set_pre\
+		src/bfs2\
+		src/bfs4\
+		src/bfs5\
+		src/display_algo\
 
 #----------------------------------COLOR---------------------------------------#
 
@@ -55,7 +61,7 @@ OBJ = $(addsuffix .o , $(FILES))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(INC)
 	@printf $(RED)"                                                                      ___ \n"
 	@printf "                                _____________________________________ //  \n"
 	@printf "                              / /-----------|  |----------| |--------- \ \n"
@@ -101,11 +107,11 @@ $(NAME): $(OBJ)
 	@printf $(RED)"|_/ \n"
 	@printf $(W)"          \_/__\_/                                            \_/__\_/ \n"
 	@make -C libft/
-	@$(CC) $(FLAGS) $(SRC) -L. libft/libftprintf.a -o $(NAME)
+	@$(CC) $(FLAGS) $(SRC) $(OPTI) -L. libft/libftprintf.a -o $(NAME)
 
 
-object/%.o: src/%.c
-	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
+object/%.o: src/%.c $(INC)
+	@$(CC) $(FLAGS) $(OPTI) -I $(HEADER) -o $@ -c $<
 
 clean:
 	@echo "\033[1m|---------------------------------|\033[0m"
