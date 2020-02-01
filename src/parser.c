@@ -61,6 +61,7 @@ int			check_link_line(t_link **link, t_map *map, char *line, char **split)
 		}
 		map->cpt.j++;
 	}
+	free(split);
 	return (1);
 }
 
@@ -82,6 +83,7 @@ int			check_name_line(t_name **name, t_map *map, char *line, char **split)
 	if (map->cpt.j != 0 && line[0] != '#' && line[0] != 'L' &&
 			(count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
 		return (-1);
+	free(split);
 	return (1);
 }
 
@@ -135,5 +137,6 @@ int			parser(t_name **name, t_link **l, t_map *m, t_file_display **f_dis)
 		if (m->cpt.error == 1)
 			return (-1);
 	}
+	ft_strdel(split);
 	return (ft_get_map_size(m, name, l)) == 1 ? 1 : -1;
 }

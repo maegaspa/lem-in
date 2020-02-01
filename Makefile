@@ -13,7 +13,7 @@
 
 .PHONY: all clean fclean re
 
-NAME = lemin
+NAME = lem-in
 CC = gcc
 DEBUG = -fsanitize=address
 FLAGS = -Wall -Wextra -Werror -g

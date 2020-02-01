@@ -14,6 +14,54 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
+void		free_all(t_bfs *bfs, t_map *map, t_res *res/*, t_tripaths **tri*/)
+{
+	int i;
+
+	i = -1;
+	while (++i < bfs->nb_paths)
+	{
+		//free(&(*tri)->paths[i]);
+		free(bfs->queue[i]);
+	}
+	i = -1;
+	while (++i < map->inf.size_link)
+	{
+		free(map->map_link[i]);
+	}
+	i = -1;
+	while (++i < res->used_paths)
+	{
+		free(res->paths[i]);
+	}
+	i = -1;
+	while (++i < map->inf.size_name)
+	{
+		free(bfs->mtx_diago[i]);
+		free(bfs->mtx_state[i]);
+		free(map->matrix[i]);
+		free(map->map_name[i]);
+		free(map->map_co[i]);
+	}
+//	free(&(*tri)->nb_subs);
+//	free(&(*tri)->paths);
+	free(res->paths);
+	free(res->size_paths);
+	free(bfs->mtx_diago);
+	free(bfs->mtx_state);
+	free(map->matrix);
+	free(map->map_co);
+	free(map->map_link);
+	free(map->map_name);
+	free(bfs->queue);
+	bfs->mtx_diago = NULL;
+	bfs->mtx_state = NULL;
+	bfs->queue = NULL;
+	map->matrix = NULL;
+	res->paths = NULL;
+	//&(*tri)->paths = NULL;
+}
+
 void		print_file(t_file_display *f_dis)
 {
 	t_file_display *tmp_f_dis;
@@ -79,5 +127,7 @@ int			main(void)
 	if (!ft_tri_to_res(&res, tri, bfs, map))
 		return (print_and_return(ret));
 	display_algo(map, &res);
+	free_all(&bfs, &map, &res/*, &(*tri)*/);
+	free(&tri);
 	return (ret);
 }
