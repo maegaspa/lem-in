@@ -6,7 +6,7 @@
 #    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2020/01/29 03:16:09 by hmichel     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/04 04:29:52 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,7 +16,7 @@
 NAME = libftprintf.a
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
-OPTI = -O3 -march=native -flto -ffast-math
+OPTI = -O3 -march=native -flto -ffast-math -ffreestanding -fno-builtin
 INC = /includes/ft_printf.h
 HEADER = include
 

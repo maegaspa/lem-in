@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/28 21:22:47 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 11:55:48 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/03 23:49:31 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -252,12 +252,12 @@ int 	display_algo(t_map map, t_res *res)
 	//int 	j;
 	int 	nb_line;
 
-	//if (map.line_expected != 0)
-	//{
-	//	if (!ft_tri_paths(res, &sort, map.line_expected, map.inf.nb_fourmi))
-	//		return (0);
-	//}
-	//else
+	if (map.line_expected != 0)
+	{
+		if (!ft_tri_paths(res, &sort, map.line_expected, map.inf.nb_fourmi))
+			return (0);
+	}
+	else
 		clear_path2(res, &sort);
 	i = -1;
 	/*printf("----------------------------------------------\n");

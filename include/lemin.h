@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 11:59:37 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/04 02:28:15 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,7 @@
 # define SUCCESS	1
 # define FAILURE	0
 # define LIMIT_PATHS 20 //subs_used per start_path //bfs5.c
-# define TRI 10 //nombre de combi test
+# define TRI 15 //nombre de combi test
 
 typedef struct s_file_display
 {

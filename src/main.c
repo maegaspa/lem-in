@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/29 03:22:52 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/04 05:10:15 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,7 +52,7 @@ int		main(void)
 	if (ret != 1)
 		return (print_and_return(ret));
 	//delete_cul_de_sac(&map);
-	printf("\n");
+	printf("1\n");
 	//print_tab_int(map.matrix, map.inf.size_name, map.inf.size_name);
 	//resize_matrix(&map);
 //	print_file(f_dis);
@@ -61,12 +61,14 @@ int		main(void)
 	tri.nb_subs = NULL;
 	tri.count_paths = 0;
 	tri = ft_bfs(map, &bfs, &tri, &res);
+	printf("2\n");
 	//printf("count_paths = %d\n", tri.count_paths);
 	//ft_printallpaths(tri, bfs);
 	//ft_printallpaths_name(tri, bfs, &map);
 	//printf(" map->line_expected = %d\n",  map.line_expected);
 	if (!ft_tri_to_res(&res, tri, bfs, map))
 		return (print_and_return(ret));
+	printf("3\n");
 	//while (++i < res.used_paths)
 	//	ft_putintstr(res.paths[i], res.size_paths[i]);
 	display_algo(map, &res);
