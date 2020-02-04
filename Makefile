@@ -6,7 +6,7 @@
 #    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2020/01/30 10:47:13 by hmichel     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/04 12:59:10 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -37,6 +37,7 @@ FILES = src/parser\
 		src/bfs4\
 		src/bfs5\
 		src/bfs6\
+		src/bfs7\
 		src/display_algo\
 		src/free\
 		src/print\

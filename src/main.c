@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:33:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/04 05:10:15 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/04 14:22:17 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,6 +24,21 @@ void 	print_file(t_file_display *f_dis)
 		ft_printf("%s\n", tmp_f_dis->line);
 		tmp_f_dis = tmp_f_dis->next;
 	}
+}
+
+int 	start_link_to_end(t_map	*map, t_file_display *f_dis)
+{
+	int 	i;
+	i = -1;
+	if (map->matrix[map->inf.start][map->inf.end] == 1)
+	{
+		print_file(f_dis);
+		while (++i < map->inf.nb_fourmi)
+			ft_printf("L%d-%s\n", i + 1, map->map_name[map->inf.end]);
+	}
+	else
+		return (0);
+	return (1);
 }
 
 int		main(void)
@@ -53,6 +68,8 @@ int		main(void)
 		return (print_and_return(ret));
 	//delete_cul_de_sac(&map);
 	printf("1\n");
+	if (start_link_to_end(&map, f_dis))
+		return (0);
 	//print_tab_int(map.matrix, map.inf.size_name, map.inf.size_name);
 	//resize_matrix(&map);
 //	print_file(f_dis);

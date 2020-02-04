@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/04 02:28:15 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/04 12:57:52 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -207,6 +207,7 @@ typedef struct s_dispa
 	int		count;
 	int 	error;
 	int 	occurrence;
+	int		choose;
 }				t_dispa;
 
 typedef struct s_rank
@@ -297,6 +298,11 @@ int			ft_tri_to_res(t_res *res, t_tripaths tri, t_bfs bfs, t_map map);
 ** bfs6.c
 */
 int			ft_tri_paths(t_res *res, t_sort *sort, int nb_line, int total_ants);
+
+/*
+** bfs7.c
+*/
+int			ft_tri_big(t_res *res, t_sort *sort, int nb_line, int total_ants);
 
 /*
 **	print.c

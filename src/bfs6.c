@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/30 05:10:42 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/04 03:59:54 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/04 07:12:42 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -107,6 +107,7 @@ int			ft_tri_paths(t_res *res, t_sort *sort, int nb_line, int total_ants)
 		if (cur_nb < better_nb)
 		{
 			printf("cur_nb = %d\n", cur_nb);
+			printf("step = %d\n", step);
 			better_step = step;
 			better_nb = cur_nb;
 		}
