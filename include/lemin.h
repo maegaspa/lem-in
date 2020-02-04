@@ -254,6 +254,8 @@ int				name_cmp(char *s1, char *s2);
 int 			delete_cul_de_sac(t_map *map);
 int 			resize_matrix(t_map *map);
 int				main(void);
+void		    free_all(t_bfs *bfs, t_map *map, t_res *res/*, t_tripaths **tri*/);
+void            free_struct(t_tripaths *tri, t_bfs *bfs);
 
 /*
 **	bfs1.c

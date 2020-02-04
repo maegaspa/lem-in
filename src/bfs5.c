@@ -140,6 +140,9 @@ int			ft_tri_to_res(t_res *res, t_tripaths tri, t_bfs bfs, t_map map)
 			res->paths[i] = ft_intcpy(res->paths[i], tri.paths[rank.ranking[0][i]][rank.ranking[1][i]].path, res->size_paths[i]);
 	}
 	res->used_paths = used_paths;
+	free(rank.ranking[0]);
+    free(rank.ranking[1]);
+    free(rank.ranking[2]);
 	return (1);
 }
 

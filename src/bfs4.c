@@ -175,5 +175,6 @@ static int	ft_states_to_paths(t_bfs *bfs, t_tripaths *tri, t_temp_paths *tp)
 	//ft_printallpaths(*tri, *bfs);
 	//bfs->count_paths = tri->count_paths;
 	//tri_to_res(res, tri, bfs);
+	free(tp.sub_ends);
 	return (tri);
 }

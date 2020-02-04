@@ -242,6 +242,12 @@ int 	dispache_ant(t_map map, t_sort *sort, int nb_ligne)
 		dis.space = 1;
 		dis.l++;
 	}
+	free(dis.status_ant);
+    free(dis.status_path);
+    free(dis.start_path);
+    free(dis.status_partion);
+    free(sort->new_size_first);
+    free(sort->new_size_second);
 	return (0);
 }
 
@@ -299,6 +305,9 @@ int 	display_algo(t_map map, t_res *res)
 		sort.dispache[i] = 0;
 	nb_line = nb_ant_int_path(map, &sort, 0, 0);
 	dispache_ant(map, &sort, nb_line);
+	free(sort.dispache);
+    free(sort.first_path);
+    free(sort.second_path);
 	ft_printf("Number of lines required: %d | Number of lines done: %d\n", map.line_expected, nb_line);
 	return (0);
 }

@@ -14,6 +14,30 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
+void    free_struct(t_tripaths *tri, t_bfs *bfs)
+{
+    int i;
+    int j;
+    int k;
+
+    i = -1;
+    j = -1;
+    while (++i < bfs->nb_paths)
+    {
+       while (++j < tri->nb_subs[i])
+       {
+            k = -1;
+            while (k < tri->paths[i][k].size)
+                free(tri->paths[i][j].path);
+            free(tri->paths[j]->path);
+       }
+        //free(tri->paths[i]);
+    }
+    free(tri->nb_subs);
+    free(tri->paths);
+    //free(tri);
+}
+
 void 	print_file(t_file_display *f_dis)
 {
 	t_file_display *tmp_f_dis;
@@ -51,7 +75,8 @@ int		main(void)
 	t_bfs	bfs;
 	t_tripaths tri;
 	int 	ret;
-	//int		i = -1;
+//	int j;
+//	int		i = -1;
 
 	init_value(&map);
 	ret = parser(&name, &link, &map, &f_dis);
@@ -66,7 +91,6 @@ int		main(void)
 	ret = set_matrix(&map);
 	if (ret != 1)
 		return (print_and_return(ret));
-	//delete_cul_de_sac(&map);
 	printf("1\n");
 	if (start_link_to_end(&map, f_dis))
 		return (0);
@@ -89,6 +113,8 @@ int		main(void)
 	//while (++i < res.used_paths)
 	//	ft_putintstr(res.paths[i], res.size_paths[i]);
 	display_algo(map, &res);
-	//clear(&name, &link, &f_dis);
+	free_all(&bfs, &map, &res);
+	clear(&name, &link, &f_dis);
+    //free_struct(&tri, &bfs);
 	return (ret);
 }
