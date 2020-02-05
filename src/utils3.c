@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 19:02:07 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/27 19:18:36 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/05 15:05:00 by cgarrot     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include "../include/lemin.h"
 #include <stdio.h>
 
-int		name_cmp(char *s1, char *s2)
+int			name_cmp(char *s1, char *s2)
 {
 	int i;
 	int j;
@@ -29,7 +29,6 @@ int		name_cmp(char *s1, char *s2)
 			j++;
 		i++;
 	}
-	//printf("%d---%d\n", j, len);
 	if (j == len)
 		return (1);
 	return (0);
@@ -102,13 +101,15 @@ int			ft_strcheck(char *s1, char *s2, int chose)
 	return (0);
 }
 
-int				ft_atoi_3(char const *str)
+int			ft_atoi_3(char const *str)
 {
 	int			i;
 	int			nbr;
+
 	i = 0;
 	nbr = 0;
-	while (str[i] == ' ' || ft_isalpha(str[i]) || str[i] == '#' || str[i] == ':')
+	while (str[i] == ' ' || ft_isalpha(str[i]) ||
+			str[i] == '#' || str[i] == ':')
 		i++;
 	if (str[i] == '+')
 		i++;
@@ -118,10 +119,4 @@ int				ft_atoi_3(char const *str)
 		i++;
 	}
 	return (nbr);
-}
-
-void         get_line_expected(t_map  *map, char  *line)
-{
-    if (ft_strstr(line, "#Here is"))
-        map->line_expected = ft_atoi_3(line);
 }

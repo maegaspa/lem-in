@@ -1,5 +1,35 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   free.c                                           .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/02/05 14:48:43 by cgarrot      #+#   ##    ##    #+#       */
+/*   Updated: 2020/02/05 14:53:18 by cgarrot     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
 #include "../include/lemin.h"
-#include <stdio.h>
+
+void		free_simple(t_bfs *bfs, t_map *map, t_res *res)
+{
+	free(res->paths);
+	free(res->size_paths);
+	free(bfs->mtx_diago);
+	free(bfs->mtx_state);
+	free(map->matrix);
+	free(map->map_co);
+	free(map->map_link);
+	free(map->map_name);
+	free(bfs->queue);
+	bfs->mtx_diago = NULL;
+	bfs->mtx_state = NULL;
+	bfs->queue = NULL;
+	map->matrix = NULL;
+	res->paths = NULL;
+}
 
 void		free_all(t_bfs *bfs, t_map *map, t_res *res)
 {
@@ -23,37 +53,43 @@ void		free_all(t_bfs *bfs, t_map *map, t_res *res)
 		free(map->map_name[i]);
 		free(map->map_co[i]);
 	}
-	free(res->paths);
-	free(res->size_paths);
-	free(bfs->mtx_diago);
-	free(bfs->mtx_state);
-	free(map->matrix);
-	free(map->map_co);
-	free(map->map_link);
-	free(map->map_name);
-	free(bfs->queue);
-	bfs->mtx_diago = NULL;
-	bfs->mtx_state = NULL;
-	bfs->queue = NULL;
-	map->matrix = NULL;
-	res->paths = NULL;
+	free_simple(bfs, map, res);
 }
 
-//
-//void 	free_matrix(t_map *map)
-//{
-//	int i;
-//
-//	i = -1;
-//	while (map->map_name[++i])
-//		ft_strdel(&map->map_name[i]);
-//	free(&map->map_name);
-//	i = -1;
-//	while (map->map_link[++i])
-//		ft_strdel(&map->map_link[i]);
-//	free(&map->map_link);
-//	i = -1;
-//	while (++i < map->inf.size_name)
-//		free(&map->matrix[i]);
-//	free(&map->matrix);
-//}
+void		clear_display(t_file_display **f_dis)
+{
+	t_file_display *f_dis_temp;
+
+	f_dis_temp = *f_dis;
+	while (*f_dis)
+	{
+		f_dis_temp = (*f_dis)->next;
+		free((*f_dis)->line);
+		free(*f_dis);
+		*f_dis = f_dis_temp;
+	}
+}
+
+void		clear(t_name **name, t_link **link, t_file_display **f_dis)
+{
+	t_name *name_temp;
+	t_link *link_temp;
+
+	name_temp = *name;
+	link_temp = *link;
+	while (name_temp)
+	{
+		name_temp = (*name)->next;
+		free((*name)->name);
+		free(*name);
+		*name = name_temp;
+	}
+	while (*link)
+	{
+		link_temp = (*link)->next;
+		free((*link)->link);
+		free(*link);
+		*link = link_temp;
+	}
+	clear_display(f_dis);
+}
