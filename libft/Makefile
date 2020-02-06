@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
+#    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/08 13:37:31 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/06 13:57:51 by seanseau    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,6 +16,7 @@
 NAME = libftprintf.a
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
+OPTI = -O3 -march=native -flto -ffast-math -ffreestanding -fno-builtin
 INC = /includes/ft_printf.h
 HEADER = include
 
@@ -45,17 +46,8 @@ FILES = src/check_caract\
 		src/check_float\
 		src/check_float_param\
 		src/check_float_param2\
-
-#----------------------------------COLOR---------------------------------------#
-
-GREY='\x1b[30m'
-RED='\x1b[37m'
-GREEN='\x1b[32m'
-YELLOW='\x1b[33m'
-BLUE='\x1b[34m'
-PURPLE='\x1b[35m'
-CYAN='\x1b[36m'
-W='\x1b[37m'
+		src/ft_intcpy\
+		src/ft_rev_intcpy\
 
 #----------------------------------SOURCE--------------------------------------#
 
@@ -70,70 +62,19 @@ OBJ = $(addsuffix .o , $(FILES))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf $(RED)"                                                                      ___ \n"
-	@printf "                                _____________________________________ //  \n"
-	@printf "                              / /-----------|  |----------| |--------- \ \n"
-	@printf "                            / /             |  |          | |           \ \n"
-	@printf "                          / /               |  |          | |           | \n"
-	@printf "               _________/ /                 |  |          | |           | \n"
-	@printf "      _______"
-	@printf $(YELLOW)"("
-	@printf $(RED)"|___________\_________________|  |----------===============\          "
-	@printf $(W)"(@)\n"
-	@printf $(RED)"    /                  |                 (=) |           (=)|            "
-	@printf $(YELLOW)"/\ "
-	@printf $(RED)"       "
-	@printf $(W)"(@) (@)\n"
-	@printf $(RED)"  /                   | "
-	@printf $(PURPLE)"cgarrot && seanseau"
-	@printf $(RED)" |                |           "
-	@printf $(YELLOW)"\/"
-	@printf $(RED)"\     "
-	@printf $(W)"(@) (@)\n"
-	@printf $(RED)" /"
-	@printf $(YELLOW)"<>"
-	@printf $(RED)"      ________    |       "
-	@printf $(PURPLE)"ft_printf"
-	@printf $(RED)"     |                |________      \     "
-	@printf $(W)"(@)\n"
-	@printf $(RED)" |      /  "
-	@printf $(W)"______"
-	@printf $(RED)"  \   |  <==================|===========>  /  "
-	@printf $(W)"______"
-	@printf $(RED)"  \   -/   "
-	@printf $(W)"(@)\n"
-	@printf $(RED)" |)    |  "
-	@printf $(W)"/ \  / \ "
-	@printf $(RED)" |__|_____________________|_____________|  "
-	@printf $(W)"/ \  / \ "
-	@printf $(RED)" | [ "
-	@printf $(W)"(@)\n"
-	@printf $(RED)" \____ | "
-	@printf $(W)"|   ()   | "
-	@printf $(RED)"|______________________________________| "
-	@printf $(W)"|   ()   | "
-	@printf $(RED)"|_/ \n"
-	@printf $(W)"          \_/__\_/                                            \_/__\_/ \n"
 	@make -C libft/
 	@cp libft/libft.a ./$(NAME)
 	@ar rcs $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
 object/%.o: src/%.c $(HEADER)
-	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
+	@$(CC) $(FLAGS) $(OPTI) -I $(HEADER) -o $@ -c $<
 
 clean:
-	@echo "\033[1m|---------------------------------|\033[0m"
-	@echo "\033[1m|-------Supprimer les OBJECT------|\033[0m"
-	@echo "\033[1m|---------------------------------|\033[0m"
 	@rm -f $(OBJ)
 	@make clean -C libft/
 
 fclean: clean
-	@echo "\n"
-	@echo "\033[1m|---------------------------------------|\033[0m"
-	@echo "\033[1m|-------Supprimer la libftprintf.a------|\033[0m"
-	@echo "\033[1m|---------------------------------------|\033[0m"
 	@rm -f $(NAME)
 	@make fclean -C libft/
 

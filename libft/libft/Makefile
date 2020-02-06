@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
+#    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/08 13:37:54 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/06 13:59:25 by seanseau    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,6 +16,7 @@
 NAME = libft.a
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
+OPTI = -O3 -march=native -flto -ffast-math
 INC = libft.h
 
 #------------------------------------FILE--------------------------------------#
@@ -91,17 +92,7 @@ FILES = ft_atoi\
 		ft_strsubfree\
 		ft_ftoa\
 		get_next_line\
-
-#----------------------------------COLOR---------------------------------------#
-
-GREY='\x1b[30m'
-RED='\x1b[31m'
-GREEN='\x1b[32m'
-YELLOW='\x1b[33m'
-BLUE='\x1b[34m'
-PURPLE='\x1b[35m'
-CYAN='\x1b[36m'
-W='\x1b[37m'
+		ft_intcpy\
 
 #----------------------------------SOURCE--------------------------------------#
 
@@ -116,66 +107,15 @@ OBJ = $(addsuffix .o , $(FILES))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf $(RED)"                                                                      ___ \n"
-	@printf "                                _____________________________________ //  \n"
-	@printf "                              / /-----------|  |----------| |--------- \ \n"
-	@printf "                            / /             |  |          | |           \ \n"
-	@printf "                          / /               |  |          | |           | \n"
-	@printf "               _________/ /                 |  |          | |           | \n"
-	@printf "      _______"
-	@printf $(YELLOW)"("
-	@printf $(RED)"|___________\_________________|  |----------===============\          "
-	@printf $(W)"(@)\n"
-	@printf $(RED)"    /                  |                 (=) |           (=)|            "
-	@printf $(YELLOW)"/\ "
-	@printf $(RED)"       "
-	@printf $(W)"(@) (@)\n"
-	@printf $(RED)"  /                   |      "
-	@printf $(PURPLE)"cgarrot"
-	@printf $(RED)"        |                |           "
-	@printf $(YELLOW)"\/"
-	@printf $(RED)"\     "
-	@printf $(W)"(@) (@)\n"
-	@printf $(RED)" /"
-	@printf $(YELLOW)"<>"
-	@printf $(RED)"      ________    |           "
-	@printf $(PURPLE)"Libft"
-	@printf $(RED)"     |                |________      \     "
-	@printf $(W)"(@)\n"
-	@printf $(RED)" |      /  "
-	@printf $(W)"______"
-	@printf $(RED)"  \   |  <==================|===========>  /  "
-	@printf $(W)"______"
-	@printf $(RED)"  \   -/   "
-	@printf $(W)"(@)\n"
-	@printf $(RED)" |)    |  "
-	@printf $(W)"/ \  / \ "
-	@printf $(RED)" |__|_____________________|_____________|  "
-	@printf $(W)"/ \  / \ "
-	@printf $(RED)" | [ "
-	@printf $(W)"(@)\n"
-	@printf $(RED)" \____ | "
-	@printf $(W)"|   ()   | "
-	@printf $(RED)"|______________________________________| "
-	@printf $(W)"|   ()   | "
-	@printf $(RED)"|_/ \n"
-	@printf $(W)"          \_/__\_/                                            \_/__\_/ \n"
 	@ar rcs $(NAME) $(OBJ)
 
 %.o: %.c $(INC)
-	@$(CC) $(FLAGS) -o $@ -c $< -I $(INC)
+	@$(CC) $(FLAGS) $(OPTI) -o $@ -c $< -I $(INC)
 
 clean:
-	@echo "\033[1m|---------------------------------|\033[0m"
-	@echo "\033[1m|-------Supprimer les OBJECT------|\033[0m"
-	@echo "\033[1m|---------------------------------|\033[0m"
 	@rm -f $(OBJ)
 
 fclean: clean
-	@echo "\n"
-	@echo "\033[1m|---------------------------------|\033[0m"
-	@echo "\033[1m|-------Supprimer la libft.a------|\033[0m"
-	@echo "\033[1m|---------------------------------|\033[0m"
 	@rm -f $(NAME) 
 
 re: fclean all
