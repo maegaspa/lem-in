@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include <stdio.h>
 
 int			name_cmp(char *s1, char *s2)
 {

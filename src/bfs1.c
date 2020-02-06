@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include <stdio.h>
 
 void		ft_visited(t_bfs *bfs, t_temp_bfs temp, int step)
 {
@@ -93,6 +92,6 @@ t_tripaths	ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res)
 	res++;
 	ft_setprealgo(map, bfs);
 	ft_foundpaths(bfs, 2, &map);
-	tri = ft_takepaths(bfs, res);
+	ft_takepaths(bfs, res, tri);
 	return (*tri);
 }

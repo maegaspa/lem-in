@@ -6,7 +6,7 @@
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/05 14:48:43 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/05 14:53:18 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/06 11:53:09 by cgarrot     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,4 +92,23 @@ void		clear(t_name **name, t_link **link, t_file_display **f_dis)
 		*link = link_temp;
 	}
 	clear_display(f_dis);
+}
+
+void		free_tri(t_tripaths *tri, t_bfs *bfs)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++i < bfs->nb_paths)
+	{
+		j = -1;
+		while (++j < tri->nb_subs[i])
+		{
+			free(tri->paths[i][j].path);
+		}
+		free(tri->paths[i]);
+	}
+	free(tri->nb_subs);
+	free(tri->paths);
 }

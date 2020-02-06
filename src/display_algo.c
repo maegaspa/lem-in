@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include <stdio.h>
 
 int		nb_ant_int_path(t_map map, t_sort *sort, int ant, int index)
 {
@@ -75,7 +74,11 @@ int		select_tri_path(t_map map, t_res *res, t_sort *sort)
 			return (0);
 	}
 	else
+	{
 		clear_path2(res, sort);
+		free(sort->second_path);
+		free(sort->new_size_second);
+	}
 	return (1);
 }
 

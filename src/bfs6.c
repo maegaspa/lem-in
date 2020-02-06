@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include <stdio.h>
 
 static void	path_occurence(t_res *res, t_sort *sort, t_dispa *dis, int step)
 {

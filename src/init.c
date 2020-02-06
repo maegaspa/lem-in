@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include <stdio.h>
 
 void	init_value(t_map *map)
 {
@@ -29,6 +28,7 @@ void	init_value(t_map *map)
 	map->n_mat.size_reduct = 0;
 	map->cpt.nb1 = 0;
 	map->cpt.nb2 = 0;
+	map->ret = 0;
 }
 
 void	init_matrix(t_map *map)

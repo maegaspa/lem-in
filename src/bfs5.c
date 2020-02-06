@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include <stdio.h>
 
 void	ft_tri_shell_proc(t_rank *rank)
 {
