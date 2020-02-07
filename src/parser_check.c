@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   parser_check.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:52:07 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 14:12:33 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 22:02:12 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,29 +76,28 @@ int		check_ant_line(t_map *map, char **l, t_file_display **f_dis)
 	return (1);
 }
 
-int		check_link_line(t_link **link, t_map *map, char *line, char **split)
+int		check_link_line(t_link **link, t_map *map, char *line)
 {
 	if (line[0] != '#' && line[0] != 'L' && count_word(line, ' ') == 1 &&
 			count_word(line, '-') == 2 && ft_strchr(line, '-'))
 	{
-		split = ft_strsplit(line, ' ');
 		if (map->cpt.start_link)
 		{
-			if (!(*link = insert_link(split[0], 0)))
+			if (!(*link = insert_link(line, 0)))
 				return (-1);
 			map->cpt.start_link = 0;
 			map->tmp_link = *link;
 		}
 		else
 		{
-			if (!(map->tmp_link->next = insert_link(split[0], map->cpt.j)))
+			if (!(map->tmp_link->next = insert_link(line, map->cpt.j)))
 				return (-1);
 			map->tmp_link = map->tmp_link->next;
 		}
 		map->cpt.j++;
-		free(split[0]);
-		free(split[1]);
-		free(split);
+		//free(split[0]);
+		//free(split[1]);
+		//free(split);
 	}
 	return (1);
 }

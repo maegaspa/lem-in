@@ -3,15 +3,16 @@
 /*                                                              /             */
 /*   set_all_tab.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:52:12 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 13:52:15 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 21:31:26 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
+#include <stdio.h>//
 
 int		set_tab_link(t_link *tmp_link, t_map *map)
 {
@@ -104,6 +105,25 @@ void	set_check_name_link(t_map *map, int i)
 			map->mat.start_link_end++;
 		if (map->mat.name2 == map->map_name[map->inf.end])
 			map->mat.end_link_start++;
+	}
+}
+
+void 	print_tab_int(int **tab, int y, int x, t_map *map)//
+{
+	int i = 0;
+	int j = 0;
+
+	while (i < y)
+	{
+		j = 0;
+		ft_printf("|%3s| : ", map->map_name[i]);
+		while (j < x)
+		{
+			ft_printf("%d ", tab[i][j]);
+			j++;
+		}
+		ft_printf("\n");
+		i++;
 	}
 }
 

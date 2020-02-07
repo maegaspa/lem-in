@@ -3,15 +3,18 @@
 /*                                                              /             */
 /*   main.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 14:30:48 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 15:36:28 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 22:03:49 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
+
+
+void 	print_tab_int(int **tab, int y, int x, t_map *map);//
 
 void		print_file(t_file_display *f_dis)
 {
@@ -75,10 +78,12 @@ int			main(void)
 		return (print_and_return(map.ret));
 	if (!(map.ret = set_map(&name, &link, &map)))
 		return (print_and_return(map.ret));
-	if (!(map.ret = set_matrix(&map)))
+	if ((map.ret = set_matrix(&map)) <= 0)
 		return (print_and_return(map.ret));
 	if ((start_link_to_end(&map, f_dis) == 1))
 		return (0);
+	ft_printf("oui\n");
+	//print_tab_int(map.matrix, map.inf.size_name, map.inf.size_name, &map);
 	if ((map.ret = resolution(&map, f_dis)) <= 0)
 		return (print_and_return(map.ret));
 	clear(&name, &link, &f_dis);

@@ -6,17 +6,17 @@
 #    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by seanseau     #+#   ##    ##    #+#        #
-#    Updated: 2020/02/06 14:06:18 by seanseau    ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/07 22:22:02 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re
 
-NAME = lemin
+NAME = lem-in
 CC = gcc
-DEBUG = -fsanitize=address
-FLAGS = -Wall -Wextra -Werror -g
+DEBUG = -fsanitize=address -g
+FLAGS = -Wall -Wextra -Werror
 INC = include/lemin.h
 HEADER = include
 OPTI = -O3 -march=native -flto -ffast-math

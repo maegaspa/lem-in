@@ -6,25 +6,12 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 16:22:24 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 16:18:01 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-
-void		ft_visited(t_bfs *bfs, t_temp_bfs temp, int step)
-{
-	int node_to_sign;
-
-	temp.i_queue = 0;
-	while (bfs->queue[temp.actual_path][temp.i_queue] != -1)
-	{
-		node_to_sign = bfs->queue[temp.actual_path][temp.i_queue];
-		bfs->mtx_state[node_to_sign][temp.actual_path] = step;
-		temp.i_queue++;
-	}
-}
 
 void		ft_setprematrix(t_bfs *bfs, t_temp_bfs temp)
 {

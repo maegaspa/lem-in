@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   parser.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:52:01 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 14:25:23 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 22:02:43 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -108,7 +108,7 @@ int		parser(t_name **name, t_link **l, t_map *m, t_file_display **f_dis)
 			m->cpt.error = 1;
 		if ((check_start_end(m, &line, f_dis) != 1)
 			|| (check_name_line(name, m, line, split) != 1)
-			|| (check_link_line(l, m, line, split) != 1))
+			|| (check_link_line(l, m, line) != 1))
 			return (-1);
 		get_line_expected(m, line);
 		ft_strdel(&line);

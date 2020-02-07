@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   utils4.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:52:57 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 13:53:00 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 21:27:54 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,4 +68,24 @@ void	get_line_expected(t_map *map, char *line)
 		map->line_expected = ft_atoi_3(line);
 	else
 		map->line_expected = -1;
+}
+
+int         check_extrem_links(t_map map)
+{
+    int room = -1;
+    int end_possible;
+	int start_possible;
+
+    end_possible = 0;
+    start_possible = 0;
+    while (++room < map.inf.size_name)
+    {
+        if (map.matrix[map.inf.end][room] == 1)
+            end_possible = 1;
+        if (map.matrix[map.inf.start][room] == 1)
+            start_possible = 1;
+    }
+    if (start_possible == 0 || end_possible == 0)
+        return (-1);
+    return (SUCCESS);
 }

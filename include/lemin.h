@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 16:31:31 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 22:17:58 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -123,7 +123,6 @@ typedef struct			s_bfs
 	int						**mtx_state;
 	int						found_paths;
 	int						**queue;
-	int						*room_lowest;
 	int						count_paths;
 }						t_bfs;
 
@@ -253,7 +252,7 @@ int						check_start_name(t_map *map,
 int						check_ant_line(t_map *map, char **l,
 	t_file_display **f_dis);
 int						check_link_line(t_link **link, t_map *map,
-	char *line, char **split);
+	char *line);
 
 /*
 **	set_all_tab.c
@@ -272,7 +271,6 @@ int						check_all_link_and_name(t_map *map, int i);
 /*
 **	bfs1.c
 */
-void					ft_visited(t_bfs *bfs, t_temp_bfs temp, int step);
 void					ft_setprematrix(t_bfs *bfs, t_temp_bfs temp);
 void					ft_foundpaths(t_bfs *bfs, int step, t_map *map);
 t_tripaths				ft_bfs(t_map map, t_bfs *bfs,
