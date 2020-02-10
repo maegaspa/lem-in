@@ -6,7 +6,7 @@
 #    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by seanseau     #+#   ##    ##    #+#        #
-#    Updated: 2020/02/10 05:47:52 by hmichel     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/10 15:29:25 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -63,11 +63,11 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(INC)
 	@make -C libft/
-	@$(CC) $(FLAGS) -g $(SRC) -L. libft/libftprintf.a -o $(NAME)
+	@$(CC) $(FLAGS) $(OPTI) $(SRC) -L. libft/libftprintf.a -o $(NAME)
 
 
 object/%.o: src/%.c $(INC)
-	@$(CC) $(FLAGS) -g -I $(HEADER) -o $@ -c $<
+	@$(CC) $(FLAGS) $(OPTI) -I $(HEADER) -o $@ -c $<
 
 clean:
 	@rm -f $(OBJ)
