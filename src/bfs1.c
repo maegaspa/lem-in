@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/07 16:18:01 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 05:54:26 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,6 +82,10 @@ t_tripaths	ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res)
 	if (is_path_possible(bfs) == 1)
 		ft_takepaths(bfs, res, tri);
 	else
+	{
+		ft_printf("DAMN\n");
+		free_no_solution(bfs, &map);
 		tri->count_paths = 0;
+	}
 	return (*tri);
 }

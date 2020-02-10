@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/07 22:17:58 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 11:44:53 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -359,6 +359,19 @@ void					free_all(t_bfs *bfs, t_map *map, t_res *res);
 void					clear(t_name **name, t_link **link,
 	t_file_display **f_dis);
 void					free_tri(t_tripaths *tri, t_bfs *bfs);
+
+/*
+**	free_error.c
+*/
+void					free_no_solution(t_bfs *bfs, t_map *map);
+int						free_print1(t_file_display **f_dis, t_name **name,
+						t_link **link, t_map *map);
+int						free_print3(t_file_display **f_dis, t_name **name,
+						t_link **link, t_map *map);
+int						free_line(char	**line);
+int						ft_free_split(char ***split, int nb_words);
+int						free_end_start(t_file_display **f_dis, t_name **name,
+						t_link **link, t_map *map);
 
 /*
 **	utils.c

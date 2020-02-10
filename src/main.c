@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 14:30:48 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/07 22:03:49 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 13:41:41 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -74,18 +74,36 @@ int			main(void)
 	t_map			map;
 
 	init_value(&map);
+	link = NULL;
+	f_dis = NULL;
+	name = NULL;
 	if ((map.ret = parser(&name, &link, &map, &f_dis)) <= 0)
-		return (print_and_return(map.ret));
+	{
+		ft_printf("ERROR 1;\n");
+		return (free_print1(&f_dis, &name, &link, &map));
+	}
 	if (!(map.ret = set_map(&name, &link, &map)))
-		return (print_and_return(map.ret));
+	{
+		ft_printf("ERROR 2;\n");
+		return (free_print3(&f_dis, &name, &link, &map));
+	}
 	if ((map.ret = set_matrix(&map)) <= 0)
-		return (print_and_return(map.ret));
+	{
+		ft_printf("ERROR 3;\n");
+		return (free_print3(&f_dis, &name, &link, &map));
+	}
 	if ((start_link_to_end(&map, f_dis) == 1))
-		return (0);
-	ft_printf("oui\n");
+	{
+		ft_printf("ERROR 4;\n");
+		return (free_end_start(&f_dis, &name, &link, &map));
+	}
 	//print_tab_int(map.matrix, map.inf.size_name, map.inf.size_name, &map);
 	if ((map.ret = resolution(&map, f_dis)) <= 0)
+	{
+		ft_printf("ERROR 5;\n");
+		clear(&name, &link, &f_dis);
 		return (print_and_return(map.ret));
+	}
 	clear(&name, &link, &f_dis);
 	return (0);
 }

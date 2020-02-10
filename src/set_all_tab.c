@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:52:12 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/07 21:31:26 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 09:52:42 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -141,13 +141,17 @@ int		set_matrix(t_map *map)
 		map->mat.j = -1;
 		if (check_all_link_and_name(map, 2) != 1)
 			return (-1);
-		if (map->mat.name1 == map->mat.name2)
+		//ft_printf("OUI %s et %s\n", map->mat.name1, map->mat.name1);
+		/*if (map->mat.name1 == map->mat.name2)
 		{
+			return (-1);
 			map->mat.split = ft_strsplit(map->map_link[map->mat.tmp_i], '-');
-			if (ft_strcmp(map->mat.split[0], map->mat.split[1]) != 0)
+			ft_printf("1\n");
+			if (ft_strcmp(map->mat.split[0], map->mat.split[1]) == 0) //!=0
 				return (free_and_return(&map->mat.split, 2));
-			free_and_return(&map->mat.split, 0);
-		}
+			ft_printf("%s et %s\n", map->mat.split[0], map->mat.split[1]);
+			ft_printf("2\n");
+		}*/
 		map->matrix[map->mat.save_y][map->mat.save_x] = 1;
 		map->matrix[map->mat.save_x][map->mat.save_y] = 1;
 	}

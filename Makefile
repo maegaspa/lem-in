@@ -6,7 +6,7 @@
 #    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by seanseau     #+#   ##    ##    #+#        #
-#    Updated: 2020/02/07 22:22:02 by hmichel     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/10 05:47:52 by hmichel     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -45,6 +45,7 @@ FILES = src/parser\
 		src/bfs7\
 		src/display_algo\
 		src/free\
+		src/free_error\
 		src/dispatch_ant\
 		src/clear_path\
 
@@ -62,11 +63,11 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(INC)
 	@make -C libft/
-	@$(CC) $(FLAGS) $(SRC) -L. libft/libftprintf.a -o $(NAME)
+	@$(CC) $(FLAGS) -g $(SRC) -L. libft/libftprintf.a -o $(NAME)
 
 
 object/%.o: src/%.c $(INC)
-	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
+	@$(CC) $(FLAGS) -g -I $(HEADER) -o $@ -c $<
 
 clean:
 	@rm -f $(OBJ)

@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   init.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:51:39 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 13:51:40 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 12:59:13 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,6 +29,7 @@ void	init_value(t_map *map)
 	map->cpt.nb1 = 0;
 	map->cpt.nb2 = 0;
 	map->ret = 0;
+	map->tmp_link = 0;
 }
 
 void	init_matrix(t_map *map)
