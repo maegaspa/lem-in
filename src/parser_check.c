@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:52:07 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/07 22:02:12 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 15:16:35 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -95,9 +95,6 @@ int		check_link_line(t_link **link, t_map *map, char *line)
 			map->tmp_link = map->tmp_link->next;
 		}
 		map->cpt.j++;
-		//free(split[0]);
-		//free(split[1]);
-		//free(split);
 	}
 	return (1);
 }

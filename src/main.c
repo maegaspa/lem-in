@@ -6,15 +6,12 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 14:30:48 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/10 13:41:41 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 14:15:29 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-
-
-void 	print_tab_int(int **tab, int y, int x, t_map *map);//
 
 void		print_file(t_file_display *f_dis)
 {
@@ -78,29 +75,15 @@ int			main(void)
 	f_dis = NULL;
 	name = NULL;
 	if ((map.ret = parser(&name, &link, &map, &f_dis)) <= 0)
-	{
-		ft_printf("ERROR 1;\n");
 		return (free_print1(&f_dis, &name, &link, &map));
-	}
 	if (!(map.ret = set_map(&name, &link, &map)))
-	{
-		ft_printf("ERROR 2;\n");
-		return (free_print3(&f_dis, &name, &link, &map));
-	}
+		return (free_print2(&f_dis, &name, &link, &map));
 	if ((map.ret = set_matrix(&map)) <= 0)
-	{
-		ft_printf("ERROR 3;\n");
-		return (free_print3(&f_dis, &name, &link, &map));
-	}
+		return (free_print2(&f_dis, &name, &link, &map));
 	if ((start_link_to_end(&map, f_dis) == 1))
-	{
-		ft_printf("ERROR 4;\n");
 		return (free_end_start(&f_dis, &name, &link, &map));
-	}
-	//print_tab_int(map.matrix, map.inf.size_name, map.inf.size_name, &map);
 	if ((map.ret = resolution(&map, f_dis)) <= 0)
 	{
-		ft_printf("ERROR 5;\n");
 		clear(&name, &link, &f_dis);
 		return (print_and_return(map.ret));
 	}

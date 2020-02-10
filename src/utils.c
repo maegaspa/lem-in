@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   utils.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:52:31 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 13:52:34 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 15:16:13 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,4 +54,10 @@ int				check_str_number(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int				free_line(char **line)
+{
+	ft_strdel(line);
+	return (-1);
 }

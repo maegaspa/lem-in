@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:52:21 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/10 11:39:37 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 14:49:12 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,7 +77,7 @@ int			ft_setprealgo(t_map map, t_bfs *bfs)
 	init_mtx_state(bfs, map);
 	bfs->size_diago = map.inf.size_name;
 	bfs->found_paths = 0;
-	if (!(ft_init_queue(bfs)))
+	if (!(ft_init_queue(bfs, -1)))
 		return (FAILURE);
 	return (SUCCESS);
 }

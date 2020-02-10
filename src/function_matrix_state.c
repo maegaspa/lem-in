@@ -3,31 +3,39 @@
 /*                                                              /             */
 /*   function_matrix_state.c                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:51:32 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 14:48:39 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 14:46:58 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 
-int		ft_init_queue(t_bfs *bfs)
+int		ft_init_queue(t_bfs *bfs, int i)
 {
-	int		i;
 	int		j;
 
-	i = -1;
 	if (!(bfs->queue = (int **)malloc(sizeof(int *) * bfs->nb_paths)))
 		return (FAILURE);
 	while (++i < bfs->nb_paths)
 	{
 		j = -1;
-		if (!(bfs->queue[i] = (int *)malloc(sizeof(int) * bfs->size_diago)))
-			return (FAILURE);
-		while (++j < bfs->size_diago)
-			bfs->queue[i][j] = -1;
+		if (bfs->size_diago < 20)
+		{
+			if (!(bfs->queue[i] = (int *)malloc(sizeof(int) * 20)))
+				return (FAILURE);
+			while (++j < 20)
+				bfs->queue[i][j] = -1;
+		}
+		else
+		{
+			if (!(bfs->queue[i] = (int *)malloc(sizeof(int) * bfs->size_diago)))
+				return (FAILURE);
+			while (++j < bfs->size_diago)
+				bfs->queue[i][j] = -1;
+		}
 		bfs->queue[i][0] = bfs->start;
 	}
 	return (SUCCESS);

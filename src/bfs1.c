@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:13:41 by hmichel      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/10 05:54:26 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 14:47:43 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,14 +76,12 @@ void		ft_foundpaths(t_bfs *bfs, int step, t_map *map)
 t_tripaths	ft_bfs(t_map map, t_bfs *bfs, t_tripaths *tri, t_res *res)
 {
 	tri->count_paths = 0;
-	res++;
 	ft_setprealgo(map, bfs);
 	ft_foundpaths(bfs, 2, &map);
 	if (is_path_possible(bfs) == 1)
 		ft_takepaths(bfs, res, tri);
 	else
 	{
-		ft_printf("DAMN\n");
 		free_no_solution(bfs, &map);
 		tri->count_paths = 0;
 	}

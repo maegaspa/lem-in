@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/06 13:52:01 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/10 12:27:53 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 15:17:17 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,13 +46,11 @@ int		check_name_line(t_name **name, t_map *map, char *line, char **split)
 			(count_word(line, ' ') >= 1 && !(ft_strchr(line, '-'))))
 	{
 		split = ft_strsplit(line, ' ');
-		//ft_printf("line = |%s|\n", line);
 		if (!split[1] || !split[2] || count_word(line, ' ') > 3 ||
 				!check_str_number(split[1]) || !check_str_number(split[2]))
 			return (ft_free_split(&split, count_word(line, ' ')));
 		if (check_start_name(map, name, split) != 1)
 			return (ft_free_split(&split, count_word(line, ' ')));
-		//ft_printf("free\n");
 		free(split[0]);
 		free(split[1]);
 		free(split[2]);
@@ -62,7 +60,7 @@ int		check_name_line(t_name **name, t_map *map, char *line, char **split)
 	else if (line[0] == 'L')
 		return (-1);
 	if (map->cpt.j != 0 && line[0] != '#' && line[0] != 'L' &&
-			(count_word(line, '-') == 1 && !(ft_strchr(line, '-')))) //line[0] != 'L' useless
+		(count_word(line, '-') == 1 && !(ft_strchr(line, '-'))))
 		return (-1);
 	return (1);
 }

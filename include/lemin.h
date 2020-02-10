@@ -6,7 +6,7 @@
 /*   By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 13:30:44 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/10 11:44:53 by hmichel     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/10 14:48:25 by hmichel     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -297,7 +297,7 @@ void					ft_freequeue(t_bfs *bfs);
 /*
 **	function_matrix_state.c
 */
-int						ft_init_queue(t_bfs *bfs);
+int						ft_init_queue(t_bfs *bfs, int i);
 int						ft_foundroom(t_bfs *bfs, t_temp_bfs temp, int room);
 int						ft_size_queue(t_bfs bfs, int path);
 void					ft_roomto_queue(t_bfs *bfs, t_temp_bfs temp, int room);
@@ -366,9 +366,8 @@ void					free_tri(t_tripaths *tri, t_bfs *bfs);
 void					free_no_solution(t_bfs *bfs, t_map *map);
 int						free_print1(t_file_display **f_dis, t_name **name,
 						t_link **link, t_map *map);
-int						free_print3(t_file_display **f_dis, t_name **name,
+int						free_print2(t_file_display **f_dis, t_name **name,
 						t_link **link, t_map *map);
-int						free_line(char	**line);
 int						ft_free_split(char ***split, int nb_words);
 int						free_end_start(t_file_display **f_dis, t_name **name,
 						t_link **link, t_map *map);
@@ -379,7 +378,7 @@ int						free_end_start(t_file_display **f_dis, t_name **name,
 unsigned int			count_word(const char *s, char c);
 void					free_map(char **map);
 int						check_str_number(char *str);
-
+int						free_line(char **line);
 /*
 **	utils2.c
 */
