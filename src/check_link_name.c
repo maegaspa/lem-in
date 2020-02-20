@@ -1,63 +1,41 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils.c                                          .::    .:/ .      .::   */
+/*   check_link_name.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/02/10 15:53:42 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/10 15:53:44 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/02/10 15:51:42 by cgarrot      #+#   ##    ##    #+#       */
+/*   Updated: 2020/02/10 15:51:43 by cgarrot     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 
-unsigned int	count_word(const char *s, char c)
+int		check_all_link_and_name(t_map *map, int i)
 {
-	unsigned int	i;
+	int		j;
 
-	i = 0;
-	while (*s)
+	j = 0;
+	while (map->inf.size_name > ++map->mat.j)
 	{
-		while (*s == c)
-			s++;
-		if (*s != '\0')
-			i++;
-		while (*s && *s != c)
-			s++;
+		if (i == 1 && ft_strcheck(map->map_link[map->mat.i],
+			map->map_name[map->mat.j], 1))
+		{
+			j = 1;
+			set_check_name_link(map, i);
+			break ;
+		}
+		if (i == 2 && ft_strcheck(map->map_link[map->mat.i],
+			map->map_name[map->mat.j], 2) && map->mat.name1)
+		{
+			j = 1;
+			set_check_name_link(map, i);
+		}
 	}
-	return (i);
-}
-
-void			free_map(char **map)
-{
-	int		i;
-
-	i = 0;
-	while (map[i])
-	{
-		ft_strdel(&map[i]);
-		i++;
-	}
-}
-
-int				check_str_number(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!(48 <= str[i] && str[i] <= 57))
-			return (0);
-		i++;
-	}
+	if ((j == 0) || (!map->mat.name2 && map->mat.save_x == -1) ||
+		(!map->mat.name1 && map->mat.save_y == -1))
+		return (-1);
 	return (1);
-}
-
-int				free_line(char **line)
-{
-	ft_strdel(line);
-	return (-1);
 }

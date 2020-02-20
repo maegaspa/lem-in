@@ -5,38 +5,19 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/10/11 19:02:07 by cgarrot      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 19:06:06 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/02/10 15:53:51 by cgarrot      #+#   ##    ##    #+#       */
+/*   Updated: 2020/02/10 15:53:53 by cgarrot     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include <stdio.h>
-
-void 	print_tab_int(int **tab, int y, int x)
-{
-	int i = 0;
-	int j = 0;
-
-	while (i < y)
-	{
-		j = 0;
-		while (j < x)
-		{
-			printf("%d ", tab[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
 
 int		check_valid_co(int **tab, int len)
 {
-	int i;
-	int found;
-	int a;
+	int		i;
+	int		found;
+	int		a;
 
 	a = -1;
 	while (++a < len)
@@ -54,7 +35,7 @@ int		check_valid_co(int **tab, int len)
 	return (1);
 }
 
-int 	print_and_return(int i)
+int		print_and_return(int i)
 {
 	if (i == 0)
 	{
@@ -69,17 +50,13 @@ int 	print_and_return(int i)
 	return (1);
 }
 
-
-int 	free_and_return(char ***split, int i)
+int		free_and_return(char ***split, int i)
 {
-	int 	j;
+	int		j;
 
 	j = 0;
 	if (i == 1)
-	{
-		//free split for all blocks
 		return (-1);
-	}
 	if (i == 2)
 	{
 		free(*split[0]);

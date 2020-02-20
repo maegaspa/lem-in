@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: cgarrot <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
+#    By: hmichel <hmichel@student.le-101.fr>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/10 19:59:22 by cgarrot      #+#   ##    ##    #+#        #
-#    Updated: 2019/10/08 13:37:31 by cgarrot     ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/10 17:27:28 by cgarrot     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,6 +16,7 @@
 NAME = libftprintf.a
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
+OPTI = -O3 -march=native -flto -ffast-math -ffreestanding -fno-builtin
 INC = /includes/ft_printf.h
 HEADER = include
 
@@ -45,6 +46,8 @@ FILES = src/check_caract\
 		src/check_float\
 		src/check_float_param\
 		src/check_float_param2\
+		src/ft_intcpy\
+		src/ft_rev_intcpy\
 
 #----------------------------------COLOR---------------------------------------#
 
